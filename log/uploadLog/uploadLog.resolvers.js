@@ -16,36 +16,30 @@ export default {
                 userId: loggedInUser.userId
               }
             },
-            title
+            title,
+            photologs: {
+              create: photoLogsUrls.map((urls, index) => (
+                {
+                  imageUrls: urls,
+                  text: texts[index],
+                  splace: {
+                    connect : {
+                      splaceId: splaceIds[index]
+                    }
+                  },
+                  hashtags: {
+                    connectOrCreate: hashtags[index].map(hashtag => ({
+                      create: { name: hashtag },
+                      where: { name: hashtag }
+                    }))
+                  }
+              }))
+            }
           },
         });
-        await client.photolog.createMany({
-          data: photoLogsUrls.map((urls, index) => (
-            {
-              imageUrls: urls,
-              text: texts[index],
-              splace: {
-                connect : {
-                  splaceId: splaceIds[index]
-                }
-              },
-              log: {
-                connect: {
-                  logId
-                }
-              },
-              user: {
-                connect: {
-                  userId: loggedInUser.userId
-                }
-              },
-              // hashtags: hashtags[index].map(hashtag => ({
-              //   connect:{
-              //     name: hashtag
-              //   }
-              // }))
-          }))
-        });
+        // await client.photolog.createMany({
+        //   data: 
+        // });
         return {
           ok: true,
         };

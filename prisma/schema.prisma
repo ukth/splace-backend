@@ -28,6 +28,8 @@ model User {
   // Profile_log    Profile_log[]
   photologs      Photolog[]
   logs           Log[]
+  Liked          Liked[]
+  Save           Save[]
 }
 
 // model Following {
@@ -66,14 +68,15 @@ model Log {
 model Splace {
   splaceId      Int            @id @default(autoincrement())
   name          String         @db.VarChar(255)
-  geolog        Decimal        @db.Decimal(10, 6)
-  geolat        Decimal        @db.Decimal(10, 6)
+  geolog        Decimal        @db.Decimal(10, 8)
+  geolat        Decimal        @db.Decimal(10, 8)
   fixedcontents FixedContent[]
   badges        Badge[]
   hashtags      Hashtag[]
   photologs     Photolog[]
   opentime      String         @db.VarChar(255)
   createdAt     DateTime       @default(now())
+  Save          Save[]
 }
 
 model FixedContent {
@@ -86,11 +89,12 @@ model FixedContent {
 }
 
 model Liked {
-  likedId   Int      @id @default(autoincrement())
-  log       Log      @relation(fields: [logId], references: [logId])
-  userId    Int      @db.Int
-  createdAt DateTime @default(now())
-  logId     Int
+  likedId    Int      @id @default(autoincrement())
+  log        Log      @relation(fields: [logId], references: [logId])
+  user       User     @relation(fields: [userUserId], references: [userId])
+  createdAt  DateTime @default(now())
+  logId      Int
+  userUserId Int
 }
 
 model Badge {
@@ -102,10 +106,13 @@ model Badge {
 
 model Save {
   saveId    Int      @id @default(autoincrement())
-  userId    Int      @db.Int
-  splaceId  Int      @db.Int
-  folderId  Int      @db.Int
+  user      User     @relation(fields: [userId], references: [userId])
+  splace    Splace   @relation(fields: [splaceId], references: [splaceId])
+  folder    Folder   @relation(fields: [folderId], references: [folderId])
   createdAt DateTime @default(now())
+  userId    Int
+  splaceId  Int
+  folderId  Int
 }
 
 model Folder {
@@ -113,6 +120,7 @@ model Folder {
   title     String   @db.VarChar(255)
   members   User[]
   createdAt DateTime @default(now())
+  Save      Save[]
 }
 
 model Hashtag {
