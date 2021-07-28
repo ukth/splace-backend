@@ -5,13 +5,13 @@ import { protectedResolver } from "../users.utils";
 
 const resolverFn = async (
   _,
-  { firstName, lastName, userName, email, password: newPassword, profileMessage, profilePhoto },
+  { firstname, lastname, username, email, password: newPassword, profileMessage, profilePhoto },
   { loggedInUser }
 ) => {
   let profilePhotoUrl = null;
   if (profilePhoto) {
     const { filename, createReadStream } = await profilePhoto;
-    const newFilename = `${loggedInUser.user_id}-${Date.now()}-${filename}`;
+    const newFilename = `${loggedInUser.userId}-${Date.now()}-${filename}`;
     const readStream = createReadStream();
     const writeStream = createWriteStream(
       process.cwd() + "/uploads/" + newFilename
@@ -25,19 +25,19 @@ const resolverFn = async (
   }
   const updatedUser = await client.user.update({
     where: {
-      user_id: loggedInUser.user_id,
+      userId: loggedInUser.userId,
     },
     data: {
-      first_name: firstName,
-      last_name: lastName,
-      user_name: userName,
+      firstname,
+      lastname,
+      username,
       email,
-      profile_message: profileMessage,
+      profileMessage,
       ...(hashedPassword && { password: hashedPassword }),
-      ...(profilePhotoUrl && { profile_photo: profilePhotoUrl }),
+      ...(profilePhotoUrl && { profilePhoto: profilePhotoUrl }),
     },
   });
-  if (updatedUser.user_id) {
+  if (updatedUser.userId) {
     return {
       ok: true,
     };

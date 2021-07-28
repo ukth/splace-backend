@@ -2,30 +2,152 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "mysql"
+  // provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["nativeTypes"]
 }
 
 model User {
-  user_id        Int      @id @default(autoincrement())
-  first_name String
-  last_name  String?
-  user_name  String   @unique
-  email     String   @unique
-  password  String
-  profile_message       String?
-  profile_photo    String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  userId         Int        @id @default(autoincrement())
+  username       String     @unique
+  firstname      String     @db.VarChar(255)
+  lastname       String     @db.VarChar(255)
+  email          String     @db.VarChar(255)
+  password       String     @db.VarChar(255)
+  profileMessage String?    @db.VarChar(255)
+  profilePhoto   String?    @db.VarChar(255)
+  folders        Folder[]
+  joinedAt       DateTime   @default(now())
+  followers      User[]     @relation("followRelation")
+  followings     User[]     @relation("followRelation")
+  // Profile_log    Profile_log[]
+  photologs      Photolog[]
+  logs           Log[]
 }
 
-model Followings {
-  following_id Int @id @default(autoincrement())
-  user_id Int
-  target_id Int
-  created_at DateTime @default(now())
+// model Following {
+//   followingId Int      @id @default(autoincrement())
+//   user      User
+//   target    User
+//   createdAt   DateTime @default(now())
+//   // Following_log Following_log[]
+// }
+
+model Photolog {
+  photologId Int       @id @default(autoincrement())
+  imageUrls  String[]  @db.VarChar(255)
+  text       String    @db.Text
+  splace     Splace    @relation(fields: [splaceId], references: [splaceId])
+  hashtags   Hashtag[]
+  createdAt  DateTime  @default(now())
+  log        Log       @relation(fields: [logId], references: [logId])
+  logId      Int
+  splaceId   Int
+  user       User?     @relation(fields: [userId], references: [userId])
+  userId     Int?
 }
+
+model Log {
+  logId     Int        @id @default(autoincrement())
+  user      User       @relation(fields: [userId], references: [userId])
+  title     String     @db.VarChar(255)
+  createdAt DateTime   @default(now())
+  photologs Photolog[]
+  liked     Liked[]
+  // Content_log Content_log[]
+  userId    Int
+}
+
+model Splace {
+  splaceId      Int            @id @default(autoincrement())
+  name          String         @db.VarChar(255)
+  geolog        Decimal        @db.Decimal(10, 6)
+  geolat        Decimal        @db.Decimal(10, 6)
+  fixedcontents FixedContent[]
+  badges        Badge[]
+  hashtags      Hashtag[]
+  photologs     Photolog[]
+  opentime      String         @db.VarChar(255)
+  createdAt     DateTime       @default(now())
+}
+
+model FixedContent {
+  fixedContentId Int      @id @default(autoincrement())
+  splace         Splace   @relation(fields: [splaceId], references: [splaceId])
+  title          String   @db.VarChar(255)
+  imageUrl       String   @db.VarChar(255)
+  createdAt      DateTime @default(now())
+  splaceId       Int
+}
+
+model Liked {
+  likedId   Int      @id @default(autoincrement())
+  log       Log      @relation(fields: [logId], references: [logId])
+  userId    Int      @db.Int
+  createdAt DateTime @default(now())
+  logId     Int
+}
+
+model Badge {
+  badgeId  Int      @id @default(autoincrement())
+  name     String   @db.VarChar(255)
+  splace   Splace[]
+  splaceId Int?
+}
+
+model Save {
+  saveId    Int      @id @default(autoincrement())
+  userId    Int      @db.Int
+  splaceId  Int      @db.Int
+  folderId  Int      @db.Int
+  createdAt DateTime @default(now())
+}
+
+model Folder {
+  folderId  Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  members   User[]
+  createdAt DateTime @default(now())
+}
+
+model Hashtag {
+  name     String     @id @db.VarChar(255)
+  photolog Photolog[]
+  splace   Splace?    @relation(fields: [splaceId], references: [splaceId])
+  splaceId Int?
+}
+
+// data logs
+
+// model Profile_log {
+//   logId    Int      @id @default(autoincrement())
+//   user     User     @relation(fields: [userId], references: [userId])
+//   action   Int      @db.Int //password change / profile message change / profile photo change
+//   etcStr_1 String   @db.VarChar(255)
+//   etcStr_2 String   @db.VarChar(255)
+//   date     DateTime @default(now())
+//   userId   Int
+// }
+
+// model Following_log {
+//   logId       Int       @id @default(autoincrement())
+//   following   Following @relation(fields: [followingId], references: [followingId])
+//   action      Int       @db.Int // follow / unfollow
+//   etcInt_1    Int?      @db.Int // user id
+//   etcInt_2    Int?      @db.Int // target id
+//   followingId Int
+// }
+
+// model Content_log {
+//   logId     Int  @id @default(autoincrement())
+//   content   Log  @relation(fields: [contentId], references: [logId])
+//   action    Int  @db.Int // follow / unfollow
+//   etcInt_1  Int? @db.Int // user id
+//   etcInt_2  Int? @db.Int // target id
+//   contentId Int
+// }

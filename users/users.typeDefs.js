@@ -3,9 +3,9 @@ import { gql } from "apollo-server";
 export default gql`
   type User {
     userId: String!
-    firstName: String!
-    lastName: String
-    userName: String!
+    firstname: String!
+    lastname: String
+    username: String!
     email: String!
     createdAt: String!
     updatedAt: String!
@@ -16,7 +16,7 @@ export default gql`
   type Followings {
     followingId: Int!
     userId: Int!
-    target_id: Int!
+    targetId: Int!
     createdAt: String!
   }
 `;
