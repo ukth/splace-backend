@@ -3,7 +3,7 @@ export default {
   Query: {
     seeProfile: (_, { userId }) => client.user.findFirst({
       where: {
-        userId: userId,
+        userId,
       }
     })
   }
