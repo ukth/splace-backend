@@ -10,6 +10,11 @@ export default gql`
     opentime:      String     
     createdAt:  String!     
   }
+  type Hashtag {
+    name:     String!
+    photolog: [Photolog]
+  }
+
   type Photolog {
     photologId: Int!   
     imageUrls:  [String]  

@@ -126,7 +126,7 @@ model Folder {
 model Hashtag {
   name     String     @id @db.VarChar(255)
   photolog Photolog[]
-  splace   Splace?    @relation(fields: [splaceId], references: [splaceId])
+  splace   Splace[]   @relation(fields: [splaceId], references: [splaceId])
   splaceId Int?
 }
 

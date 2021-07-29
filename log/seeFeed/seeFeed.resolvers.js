@@ -25,7 +25,11 @@ export default {
                   name: true,
                 }
               },
-              hashtags:   true,
+              hashtags: {
+                select: {
+                  name: true
+                }
+              },
               createdAt:  true
             }
           }
