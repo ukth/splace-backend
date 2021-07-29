@@ -17,6 +17,9 @@ const apollo = new ApolloServer({
           loggedInUser: await getUser(req.headers.token),
         };
     },
+	formatError: (err) => {
+		console.log(err);
+	},
 });
 
 const app = express();
@@ -34,7 +37,7 @@ app.post('/upload', upload.array('photos'), (req, res, next) => {
   // console.log(req.files)
   // console.log(req.body.operations);
   // console.log(JSON.parse(req.body.operations).query);
-
+//console.log(req.body)
   res.send(req.files);
 })
 

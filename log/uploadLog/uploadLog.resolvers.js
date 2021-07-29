@@ -9,6 +9,7 @@ export default {
       { loggedInUser  }
     ) => {
       try {
+	console.log("in upload!")
         const logId = await client.log.create({
           data: {
             user: {
