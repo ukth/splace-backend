@@ -20,7 +20,7 @@ export default gql`
     imageUrls:  [String]  
     text:       String   
     splace:     Splace  
-    hashtags:   [String]
+    hashtags:   [Hashtag]
     createdAt:  String
     log:       Log      
     user:       User
