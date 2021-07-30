@@ -36,7 +36,7 @@ export default {
                   },
                   user: {
                     connect: {
-                      loggedInUser.userId
+                      userId: loggedInUser.userId
                     }
                   }
               }))
