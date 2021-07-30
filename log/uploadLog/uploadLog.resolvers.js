@@ -33,6 +33,11 @@ export default {
                       create: { name: hashtag },
                       where: { name: hashtag }
                     }))
+                  },
+                  user: {
+                    connect: {
+                      loggedInUser.userId
+                    }
                   }
               }))
             }
