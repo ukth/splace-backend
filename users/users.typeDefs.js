@@ -11,12 +11,7 @@ export default gql`
     updatedAt: String!
     profileMessage: String
     profilePhoto: String
-  }
-
-  type Followings {
-    followingId: Int!
-    userId: Int!
-    targetId: Int!
-    createdAt: String!
+    followers: [User]
+    followings: [User]
   }
 `;

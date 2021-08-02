@@ -4,7 +4,11 @@ export default {
     seeProfile: (_, { userId }) => client.user.findFirst({
       where: {
         userId,
-      }
+      },
+      include: {
+        followers: true,
+        followings: true
+      },
     })
   }
 }

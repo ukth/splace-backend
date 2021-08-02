@@ -10,32 +10,16 @@ export default {
         where: {
           userId,
         },
-        select: {
-          logId: true,
-          title: true,
-          createdAt: true,
+        include: {
           photologs: {
-            select: {
-              photologId: true,
-              imageUrls: true,
-              text: true,
-              splace: {
-                select: {
-                  splaceId: true,
-                  name: true,
-                }
-              },
-              hashtags: {
-                select: {
-                  name: true
-                }
-              },
-              createdAt:  true
+            include: {
+              hashtags: true,
+              splace: true
             }
-          }
-        },
+          },
+          user: true
+        }
       })
-      console.log(feed);
       return feed;
     }
   )
