@@ -1,15 +1,14 @@
-import bcrypt from "bcrypt";
 import client from "../../client";
+import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    uploadLog: async (
+    uploadLog: protectedResolver(async(
       _,
       { title, texts, photoLogsUrls, splaceIds, hashtags }, 
       { loggedInUser  }
     ) => {
       try {
-	console.log("in upload!")
         const logId = await client.log.create({
           data: {
             user: {
@@ -43,9 +42,6 @@ export default {
             }
           },
         });
-        // await client.photolog.createMany({
-        //   data: 
-        // });
         return {
           ok: true,
         };
@@ -53,9 +49,9 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create account",
+          error: "cant create log",
         };
       }
-    },
+    }),
   }
 };
