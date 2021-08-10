@@ -5,7 +5,7 @@ import { protectedResolver } from "../users.utils";
 
 const resolverFn = async (
   _,
-  { firstname, lastname, username, email, password: newPassword, profileMessage, profilePhoto },
+  { name, username, email, password: newPassword, profileMessage, profilePhoto },
   { loggedInUser }
 ) => {
   let profilePhotoUrl = null;
@@ -28,8 +28,7 @@ const resolverFn = async (
       userId: loggedInUser.userId,
     },
     data: {
-      firstname,
-      lastname,
+      name,
       username,
       email,
       profileMessage,
