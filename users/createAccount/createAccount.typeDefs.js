@@ -7,8 +7,7 @@ export default gql`
   }
   type Mutation {
     createAccount(
-      firstname: String!
-      lastname: String
+      name: String!
       username: String!
       email: String!
       password: String!
