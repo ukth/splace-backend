@@ -21,3 +21,6 @@ package-lock.json
 
 # prisma migrations
 prisma/migrations
+
+#logs
+*.log
