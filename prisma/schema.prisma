@@ -2,21 +2,18 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  // provider = "mysql"
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["nativeTypes"]
+  provider = "prisma-client-js"
 }
 
 model User {
   userId         Int        @id @default(autoincrement())
   username       String     @unique
-  firstname      String     @db.VarChar(255)
-  lastname       String     @db.VarChar(255)
+  name           String     @db.VarChar(255)
   email          String     @db.VarChar(255)
   password       String     @db.VarChar(255)
   profileMessage String?    @db.VarChar(255)
@@ -25,20 +22,11 @@ model User {
   joinedAt       DateTime   @default(now())
   followers      User[]     @relation("followRelation")
   followings     User[]     @relation("followRelation")
-  // Profile_log    Profile_log[]
   photologs      Photolog[]
-  logs           Log[]
-  Liked          Liked[]
+  likedPhotologs Photolog[] @relation("likedRelation")
   Save           Save[]
+  Series         Series[]
 }
-
-// model Following {
-//   followingId Int      @id @default(autoincrement())
-//   user      User
-//   target    User
-//   createdAt   DateTime @default(now())
-//   // Following_log Following_log[]
-// }
 
 model Photolog {
   photologId Int       @id @default(autoincrement())
@@ -47,36 +35,45 @@ model Photolog {
   splace     Splace    @relation(fields: [splaceId], references: [splaceId])
   hashtags   Hashtag[]
   createdAt  DateTime  @default(now())
-  log        Log       @relation(fields: [logId], references: [logId])
-  logId      Int
+  series     Series    @relation(fields: [seriesId], references: [seriesId])
   splaceId   Int
-  user       User?     @relation(fields: [userId], references: [userId])
-  userId     Int?
+  user       User      @relation(fields: [userId], references: [userId])
+  userId     Int
+  likedUser  User[]    @relation("likedRelation")
+  seriesId   Int
 }
 
-model Log {
-  logId     Int        @id @default(autoincrement())
+model Series {
+  seriesId  Int        @id @default(autoincrement())
   user      User       @relation(fields: [userId], references: [userId])
+  userId    Int
   title     String     @db.VarChar(255)
   createdAt DateTime   @default(now())
   photologs Photolog[]
-  liked     Liked[]
-  // Content_log Content_log[]
-  userId    Int
 }
 
 model Splace {
-  splaceId      Int            @id @default(autoincrement())
-  name          String         @db.VarChar(255)
-  geolog        Decimal        @db.Decimal(10, 8)
-  geolat        Decimal        @db.Decimal(10, 8)
-  fixedcontents FixedContent[]
-  badges        Badge[]
+  splaceId Int     @id @default(autoincrement())
+  name     String  @db.VarChar(255)
+  geolog   Decimal @db.Decimal(10, 8)
+  geolat   Decimal @db.Decimal(10, 8)
+
+  address        String   @db.VarChar(255)
+  operatingTimes String[] @db.VarChar(255)
+  menu           String?  @db.VarChar(255)
+  item           String?  @db.VarChar(255)
+  Badges         Badge[]
+
+  RatingTags    RatingTag      @relation(fields: [ratingTagId], references: [ratingTagId])
   hashtags      Hashtag[]
-  photologs     Photolog[]
-  opentime      String         @db.VarChar(255)
-  createdAt     DateTime       @default(now())
-  Save          Save[]
+  fixedcontents FixedContent[]
+  // badges        Badge[]
+
+  photologs Photolog[]
+
+  createdAt   DateTime @default(now())
+  Saves       Save[]
+  ratingTagId Int
 }
 
 model FixedContent {
@@ -88,20 +85,25 @@ model FixedContent {
   splaceId       Int
 }
 
-model Liked {
-  likedId    Int      @id @default(autoincrement())
-  log        Log      @relation(fields: [logId], references: [logId])
-  user       User     @relation(fields: [userUserId], references: [userId])
-  createdAt  DateTime @default(now())
-  logId      Int
-  userUserId Int
+// model Liked {
+//   likedId    Int      @id @default(autoincrement())
+//   log        Log      @relation(fields: [logId], references: [logId])
+//   user       User     @relation(fields: [userUserId], references: [userId])
+//   createdAt  DateTime @default(now())
+//   logId      Int
+//   userUserId Int
+// }
+
+model RatingTag {
+  ratingTagId Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  splace      Splace[]
 }
 
 model Badge {
-  badgeId  Int      @id @default(autoincrement())
-  name     String   @db.VarChar(255)
-  splace   Splace[]
-  splaceId Int?
+  badgeId Int      @id @default(autoincrement())
+  name    String   @db.VarChar(255)
+  splace  Splace[]
 }
 
 model Save {
@@ -131,31 +133,3 @@ model Hashtag {
 }
 
 // data logs
-
-// model Profile_log {
-//   logId    Int      @id @default(autoincrement())
-//   user     User     @relation(fields: [userId], references: [userId])
-//   action   Int      @db.Int //password change / profile message change / profile photo change
-//   etcStr_1 String   @db.VarChar(255)
-//   etcStr_2 String   @db.VarChar(255)
-//   date     DateTime @default(now())
-//   userId   Int
-// }
-
-// model Following_log {
-//   logId       Int       @id @default(autoincrement())
-//   following   Following @relation(fields: [followingId], references: [followingId])
-//   action      Int       @db.Int // follow / unfollow
-//   etcInt_1    Int?      @db.Int // user id
-//   etcInt_2    Int?      @db.Int // target id
-//   followingId Int
-// }
-
-// model Content_log {
-//   logId     Int  @id @default(autoincrement())
-//   content   Log  @relation(fields: [contentId], references: [logId])
-//   action    Int  @db.Int // follow / unfollow
-//   etcInt_1  Int? @db.Int // user id
-//   etcInt_2  Int? @db.Int // target id
-//   contentId Int
-// }

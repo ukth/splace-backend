@@ -17,8 +17,8 @@ const upload = multer({
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: async(req, file, cb) => {
-		console.log(req.headers)
-	const loggedInUser = await getUser(req.headers.token);
+		    // console.log(req.headers)
+      	const loggedInUser = await getUser(req.headers.token);
           if (!loggedInUser){
             cb(null, "failed_"+Date.now());
           } else{

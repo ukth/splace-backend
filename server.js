@@ -24,33 +24,13 @@ const apollo = new ApolloServer({
 
 const app = express();
 
-// app.use(function (req, res, next) {
-//   console.log('\n\nreq!:\n', Object.keys(req.rawHeaders));
-//   // console.log('\n\nres:\n', res);
-//   next();
-// });
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.post('/upload', upload.array('photos'), (req, res, next) => {
-  // console.log(Object.keys(req));
-  // console.log(req.files)
-  // console.log(req.body.operations);
-  // console.log(JSON.parse(req.body.operations).query);
-//console.log(req.body)
+  console.log(req);
   res.send(req.files);
 })
-
-// app.get('/red', (req, res, next) => {
-//   console.log(req.body);
-// })
-
-// app.post('/graphql', (req,res,next) => {
-//   // console.log("post!");
-//   // console.log(req);
-//   next();
-// })
-
 
 
 app.use(logger("tiny"));
