@@ -20,6 +20,7 @@ export default {
           ...(lastId && { cursor: { userId: lastId } }),
           skip: lastId ? 1 : 0,
         });
+
       return {
         ok: true,
         followings,
