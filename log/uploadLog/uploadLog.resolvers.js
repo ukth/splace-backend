@@ -3,10 +3,10 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    uploadLog: protectedResolver(async(
+    uploadLog: protectedResolver(async (
       _,
-      { title, texts, photoLogsUrls, splaceIds, hashtags }, 
-      { loggedInUser  }
+      { title, texts, photoLogsUrls, splaceIds, hashtags },
+      { loggedInUser }
     ) => {
       try {
         const logId = await client.log.create({
@@ -18,26 +18,25 @@ export default {
             },
             title,
             photologs: {
-              create: photoLogsUrls.map((urls, index) => (
-                {
-                  imageUrls: urls,
-                  text: texts[index],
-                  splace: {
-                    connect : {
-                      splaceId: splaceIds[index]
-                    }
-                  },
-                  hashtags: {
-                    connectOrCreate: hashtags[index].map(hashtag => ({
-                      create: { name: hashtag },
-                      where: { name: hashtag }
-                    }))
-                  },
-                  user: {
-                    connect: {
-                      userId: loggedInUser.userId
-                    }
+              create: photoLogsUrls.map((urls, index) => ({
+                imageUrls: urls,
+                text: texts[index],
+                splace: {
+                  connect: {
+                    splaceId: splaceIds[index]
                   }
+                },
+                hashtags: {
+                  connectOrCreate: hashtags[index].map(hashtag => ({
+                    create: { name: hashtag },
+                    where: { name: hashtag }
+                  }))
+                },
+                user: {
+                  connect: {
+                    userId: loggedInUser.userId
+                  }
+                }
               }))
             }
           },

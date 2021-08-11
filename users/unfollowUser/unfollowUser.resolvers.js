@@ -5,7 +5,7 @@ export default {
   Mutation: {
     unfollowUser: protectedResolver(async (_, { userId }, { loggedInUser }) => {
       const target = await client.user.findUnique({ where: { userId: userId } });
-      if (userId === loggedInUser.userId){
+      if (userId === loggedInUser.userId) {
         return {
           ok: false,
           error: "You can't follow yourself"
@@ -21,7 +21,7 @@ export default {
         where: {
           userId: loggedInUser.userId
         },
-        data:{
+        data: {
           followings: {
             disconnect: {
               userId
