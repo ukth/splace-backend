@@ -8,7 +8,7 @@ export default {
       if (userId === loggedInUser.userId) {
         return {
           ok: false,
-          error: "You can't follow yourself"
+          error: "You can't unfollow yourself"
         }
       }
       if (!target) {
