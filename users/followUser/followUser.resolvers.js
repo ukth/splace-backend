@@ -4,7 +4,7 @@ import { protectedResolver } from "../users.utils";
 export default {
   Mutation: {
     followUser: protectedResolver(async (_, { userId }, { loggedInUser }) => {
-      if (userId === loggedInUser.userId){
+      if (userId === loggedInUser.userId) {
         return {
           ok: false,
           error: "You can't follow yourself"
@@ -21,7 +21,7 @@ export default {
         where: {
           userId: loggedInUser.userId
         },
-        data:{
+        data: {
           followings: {
             connect: {
               userId

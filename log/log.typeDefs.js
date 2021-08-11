@@ -24,7 +24,6 @@ export default gql`
     createdAt:  String
     log:       Log      
     user:       User
-
   }
   type Log {
     logId:     Int!
