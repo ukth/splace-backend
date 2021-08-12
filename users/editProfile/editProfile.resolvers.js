@@ -5,7 +5,7 @@ import { protectedResolver } from "../users.utils";
 
 const resolverFn = async (
   _,
-  { name, username, email, password: newPassword, profileMessage, profilePhoto },
+  { name, username, email, password: newPassword, profileMessage, profileImageUrl },
   { loggedInUser }
 ) => {
 /*  let profilePhotoUrl = null;
@@ -33,7 +33,7 @@ const resolverFn = async (
       email,
       profileMessage,
       ...(hashedPassword && { password: hashedPassword }),
-      ...(profilePhoto && { profilePhoto: profilePhoto }),
+      ...(profileImageUrl && { profileImageUrl: profileImageUrl }),
     },
   });
   if (updatedUser.userId) {

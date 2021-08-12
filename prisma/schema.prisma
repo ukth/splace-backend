@@ -17,7 +17,7 @@ model User {
   email          String     @db.VarChar(255)
   password       String     @db.VarChar(255)
   profileMessage String?    @db.VarChar(255)
-  profilePhoto   String?    @db.VarChar(255)
+  profileImageUrl   String?    @db.VarChar(255)
   folders        Folder[]
   joinedAt       DateTime   @default(now())
   followers      User[]     @relation("followRelation")
@@ -41,6 +41,7 @@ model Photolog {
   userId     Int
   likedUser  User[]    @relation("likedRelation")
   seriesId   Int
+  photoSize  Int
 }
 
 model Series {

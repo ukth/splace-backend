@@ -8,7 +8,7 @@ export default gql`
     email:          String!   
     password:       String!   
     profileMessage: String    
-    profilePhoto:   String  
+    profileImageUrl:   String  
     joinedAt:       String!  
     followers:      [User]     
     followings:     [User]     
