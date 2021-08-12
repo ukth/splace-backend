@@ -8,7 +8,7 @@ const resolverFn = async (
   { name, username, email, password: newPassword, profileMessage, profilePhoto },
   { loggedInUser }
 ) => {
-  let profilePhotoUrl = null;
+/*  let profilePhotoUrl = null;
   if (profilePhoto) {
     const { filename, createReadStream } = await profilePhoto;
     const newFilename = `${loggedInUser.userId}-${Date.now()}-${filename}`;
@@ -18,7 +18,7 @@ const resolverFn = async (
     );
     readStream.pipe(writeStream);
     profilePhotoUrl = `http://localhost:4000/static/${newFilename}`;
-  }
+  } */
   let hashedPassword = null;
   if (newPassword) {
     hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -33,7 +33,7 @@ const resolverFn = async (
       email,
       profileMessage,
       ...(hashedPassword && { password: hashedPassword }),
-      ...(profilePhotoUrl && { profilePhoto: profilePhotoUrl }),
+      ...(profilePhoto && { profilePhoto: profilePhoto }),
     },
   });
   if (updatedUser.userId) {
