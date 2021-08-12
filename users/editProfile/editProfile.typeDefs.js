@@ -12,6 +12,7 @@ export default gql`
       email: String
       password: String
       profileMessage: String
+      profileImageUrl: String
     ): EditProfileResult!
   }
 `;
