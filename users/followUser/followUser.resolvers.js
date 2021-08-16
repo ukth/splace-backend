@@ -3,14 +3,14 @@ import { protectedResolver } from "../users.utils";
 
 export default {
   Mutation: {
-    followUser: protectedResolver(async (_, { userId }, { loggedInUser }) => {
-      if (userId === loggedInUser.userId) {
+    followUser: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
+      if (targetId === loggedInUser.userId) {
         return {
           ok: false,
           error: "You can't follow yourself"
         }
       }
-      const target = await client.user.findUnique({ where: { userId: userId } });
+      const target = await client.user.findUnique({ where: { userId: targetId } });
       if (!target) {
         return {
           ok: false,
@@ -24,7 +24,7 @@ export default {
         data: {
           followings: {
             connect: {
-              userId
+              userId: targetId
             }
           }
         }

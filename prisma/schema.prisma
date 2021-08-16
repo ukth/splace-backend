@@ -39,6 +39,7 @@ model User {
 
 model Photolog {
   photologId Int       @id @default(autoincrement())
+  title String @db.VarChar(255)
   imageUrls  String[]  @db.VarChar(255)
   photoSize  Int
   text       String?    @db.Text

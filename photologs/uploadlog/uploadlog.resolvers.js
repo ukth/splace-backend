@@ -5,42 +5,43 @@ export default {
   Mutation: {
     uploadLog: protectedResolver(async (
       _,
-      { title, texts, photoLogsUrls, splaceIds, hashtags },
+      { title, imageUrls, photoSize, text, splaceId, seriesId, hashtagIds },
       { loggedInUser }
     ) => {
       try {
-        const logId = await client.log.create({
+        const a = await client.photolog.create({
           data: {
-            user: {
+            author: {
               connect: {
                 userId: loggedInUser.userId
               }
             },
             title,
-            photologs: {
-              create: photoLogsUrls.map((urls, index) => ({
-                imageUrls: urls,
-                text: texts[index],
-                splace: {
-                  connect: {
-                    splaceId: splaceIds[index]
-                  }
-                },
-                hashtags: {
-                  connectOrCreate: hashtags[index].map(hashtag => ({
-                    create: { name: hashtag },
-                    where: { name: hashtag }
-                  }))
-                },
-                user: {
-                  connect: {
-                    userId: loggedInUser.userId
-                  }
+            imageUrls,
+            text,
+            photoSize,
+            ...(splaceId != null && {
+              splace: {
+                connect: {
+                  splaceId
                 }
+              },
+            }),
+            ...(seriesId != null && {
+              series: {
+                connect: {
+                  seriesId
+                }
+              },
+            }),
+            hashtags: {
+              connect: hashtagIds.map(id => ({
+                hashtagId: id
               }))
             }
           },
         });
+        console.log(a);
         return {
           ok: true,
         };

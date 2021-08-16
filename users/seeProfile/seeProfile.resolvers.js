@@ -7,7 +7,8 @@ export default {
       },
       include: {
         followers: true,
-        followings: true
+        followings: true,
+        likedPhotologs: true,
       },
     })
   }

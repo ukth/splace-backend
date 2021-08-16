@@ -3,9 +3,9 @@ import { protectedResolver } from "../users.utils";
 
 export default {
   Mutation: {
-    unfollowUser: protectedResolver(async (_, { userId }, { loggedInUser }) => {
-      const target = await client.user.findUnique({ where: { userId: userId } });
-      if (userId === loggedInUser.userId) {
+    unfollowUser: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
+      const target = await client.user.findUnique({ where: { userId: targetId } });
+      if (targetId === loggedInUser.userId) {
         return {
           ok: false,
           error: "You can't unfollow yourself"
@@ -24,7 +24,7 @@ export default {
         data: {
           followings: {
             disconnect: {
-              userId
+              targetId
             }
           }
         }

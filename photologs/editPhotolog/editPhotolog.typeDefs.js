@@ -1,19 +1,20 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type uploadLogResult {
+  type editPhotologResult {
     ok: Boolean!
     error: String
   }
   type Mutation {
-    uploadLog(
-      title: String!
+    editPhotolog(
+      photologId: Int!
+      title: String
       imageUrls: [String]
-      photoSize: Int!
+      photoSize: Int
       text: String
       splaceId: Int
       seriesId: Int
       hashtagIds: [Int]
-    ): uploadLogResult!
+    ): editPhotologResult!
   }
 `;
