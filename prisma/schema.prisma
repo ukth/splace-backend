@@ -31,6 +31,10 @@ model User {
   likedPhotologs Photolog[] @relation("likedRelation")
   
   Series         Series[]
+
+  scraps       Scrap[]
+
+  comments     Comment[]
 }
 
 model Photolog {
@@ -54,6 +58,8 @@ model Photolog {
   likedUser  User[]    @relation("likedRelation")
 
   scrap Scrap[]
+
+  comments Comment[]
 }
 
 model Series {
@@ -133,8 +139,8 @@ model Scrap {
   photolog    Photolog   @relation(fields: [photologId], references: [photologId])
   photologId  Int
   
-  folder    Folder   @relation(fields: [folderId], references: [folderId])
-  folderId  Int
+  master User @relation(fields: [masterId], references: [userId])
+  masterId Int
 }
 
 model Folder {
@@ -145,8 +151,6 @@ model Folder {
   members   User[]
   
   saves     Save[]
-
-  scraps    Scrap[]
 }
 
 model Hashtag {
@@ -159,8 +163,19 @@ model Hashtag {
 }
 
 model Item {
-  itemId Int @id
+  itemId Int @id @default(autoincrement())
   
   splace Splace @relation(fields: [splaceId], references: [splaceId])
   splaceId Int
+}
+
+
+model Comment {
+  commentId Int @id @default(autoincrement())
+
+  author User @relation(fields: [authorId], references: [userId])
+  authorId Int
+
+  photolog Photolog @relation(fields: [photologId], references: [photologId])
+  photologId Int
 }
