@@ -5,7 +5,7 @@ export default {
   Mutation: {
     editPhotolog: protectedResolver(async (
       _,
-      { photologId, title, imageUrls, photoSize, text, splaceId, seriesId, hashtagIds },
+      { photologId, title, imageUrls, photoSize, text, splaceId, seriesId, hashtags },
       { loggedInUser }
     ) => {
       const previous = await client.photolog.findUnique( { where : { photologId } } );
@@ -41,11 +41,11 @@ export default {
                 }
               },
             }),
-            ...(hashtagIds != null && {
+            ...(hashtags != null && {
               hashtags: {
-                disconnect: true,
-                connect: hashtagIds.map(id => ({
-                  hashtagId: id
+                connectOrCreate: hashtags.map(hashtag => ({
+                  create: { name: hashtag },
+                  where: { name: hashtag  }
                 }))
               }
             }),

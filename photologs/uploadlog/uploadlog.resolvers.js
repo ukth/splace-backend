@@ -5,7 +5,7 @@ export default {
   Mutation: {
     uploadLog: protectedResolver(async (
       _,
-      { title, imageUrls, photoSize, text, splaceId, seriesId, hashtagIds },
+      { title, imageUrls, photoSize, text, splaceId, seriesId, hashtags },
       { loggedInUser }
     ) => {
       try {
@@ -34,11 +34,14 @@ export default {
                 }
               },
             }),
-            hashtags: {
-              connect: hashtagIds.map(id => ({
-                hashtagId: id
-              }))
-            }
+            ...(hashtags != null && {
+              hashtags: {
+                connectOrCreate: hashtags.map(hashtag => ({
+                  create: { name: hashtag },
+                  where: { name: hashtag  }
+                }))
+              }
+            }),
           },
         });
         console.log(a);
