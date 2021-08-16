@@ -18,119 +18,149 @@ model User {
   password       String     @db.VarChar(255)
   profileMessage String?    @db.VarChar(255)
   profileImageUrl   String?    @db.VarChar(255)
-  folders        Folder[]
   joinedAt       DateTime   @default(now())
+  
   followers      User[]     @relation("followRelation")
+  
   followings     User[]     @relation("followRelation")
+  
+  folders        Folder[]
+  
   photologs      Photolog[]
+  
   likedPhotologs Photolog[] @relation("likedRelation")
-  Save           Save[]
+  
   Series         Series[]
 }
 
 model Photolog {
   photologId Int       @id @default(autoincrement())
   imageUrls  String[]  @db.VarChar(255)
-  text       String    @db.Text
-  splace     Splace    @relation(fields: [splaceId], references: [splaceId])
-  hashtags   Hashtag[]
-  createdAt  DateTime  @default(now())
-  series     Series    @relation(fields: [seriesId], references: [seriesId])
-  splaceId   Int
-  user       User      @relation(fields: [userId], references: [userId])
-  userId     Int
-  likedUser  User[]    @relation("likedRelation")
-  seriesId   Int
   photoSize  Int
+  text       String?    @db.Text
+  createdAt  DateTime  @default(now())
+  
+  author       User      @relation(fields: [authorId], references: [userId])
+  authorId     Int
+  
+  splace     Splace?    @relation(fields: [splaceId], references: [splaceId])
+  splaceId   Int?
+  
+  series     Series?    @relation(fields: [seriesId], references: [seriesId])
+  seriesId   Int?
+  
+  hashtags   Hashtag[]
+  
+  likedUser  User[]    @relation("likedRelation")
+
+  scrap Scrap[]
 }
 
 model Series {
   seriesId  Int        @id @default(autoincrement())
-  user      User       @relation(fields: [userId], references: [userId])
-  userId    Int
   title     String     @db.VarChar(255)
   createdAt DateTime   @default(now())
+  
+  author      User       @relation(fields: [authorId], references: [userId])
+  authorId    Int
+  
   photologs Photolog[]
 }
 
 model Splace {
   splaceId Int     @id @default(autoincrement())
   name     String  @db.VarChar(255)
-  geolog   Decimal @db.Decimal(10, 8)
-  geolat   Decimal @db.Decimal(10, 8)
-
-  address        String   @db.VarChar(255)
+  geolog   Decimal? @db.Decimal(10, 8)
+  geolat   Decimal? @db.Decimal(10, 8)
+  address        String?   @db.VarChar(255)
   operatingTimes String[] @db.VarChar(255)
-  menu           String?  @db.VarChar(255)
-  item           String?  @db.VarChar(255)
-  Badges         Badge[]
-
-  RatingTags    RatingTag      @relation(fields: [ratingTagId], references: [ratingTagId])
-  hashtags      Hashtag[]
-  fixedcontents FixedContent[]
-  // badges        Badge[]
-
-  photologs Photolog[]
-
   createdAt   DateTime @default(now())
-  Saves       Save[]
-  ratingTagId Int
+  
+  items           Item[]
+  
+  badges         Badge[]
+  
+  ratingtags    Ratingtag[]   
+  
+  hashtags      Hashtag[]
+  
+  fixedContents FixedContent[]
+  
+  photologs Photolog[]
+  
+  saves       Save[]
 }
 
 model FixedContent {
   fixedContentId Int      @id @default(autoincrement())
-  splace         Splace   @relation(fields: [splaceId], references: [splaceId])
   title          String   @db.VarChar(255)
-  imageUrl       String   @db.VarChar(255)
+  imageUrl       String?   @db.VarChar(255)
   createdAt      DateTime @default(now())
+  
+  splace         Splace   @relation(fields: [splaceId], references: [splaceId])
   splaceId       Int
 }
 
-// model Liked {
-//   likedId    Int      @id @default(autoincrement())
-//   log        Log      @relation(fields: [logId], references: [logId])
-//   user       User     @relation(fields: [userUserId], references: [userId])
-//   createdAt  DateTime @default(now())
-//   logId      Int
-//   userUserId Int
-// }
-
-model RatingTag {
-  ratingTagId Int      @id @default(autoincrement())
-  name        String   @db.VarChar(255)
+model Ratingtag {
+  ratingtagId Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255) @unique
+  
   splace      Splace[]
 }
 
 model Badge {
   badgeId Int      @id @default(autoincrement())
-  name    String   @db.VarChar(255)
+  name    String   @db.VarChar(255) @unique
+  
   splace  Splace[]
 }
 
 model Save {
   saveId    Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [userId])
-  splace    Splace   @relation(fields: [splaceId], references: [splaceId])
-  folder    Folder   @relation(fields: [folderId], references: [folderId])
   createdAt DateTime @default(now())
-  userId    Int
+  
+  splace    Splace   @relation(fields: [splaceId], references: [splaceId])
   splaceId  Int
+  
+  folder    Folder   @relation(fields: [folderId], references: [folderId])
+  folderId  Int
+}
+
+model Scrap {
+  scrapId    Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  
+  photolog    Photolog   @relation(fields: [photologId], references: [photologId])
+  photologId  Int
+  
+  folder    Folder   @relation(fields: [folderId], references: [folderId])
   folderId  Int
 }
 
 model Folder {
   folderId  Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
-  members   User[]
   createdAt DateTime @default(now())
-  Save      Save[]
+  
+  members   User[]
+  
+  saves     Save[]
+
+  scraps    Scrap[]
 }
 
 model Hashtag {
-  name     String     @id @db.VarChar(255)
-  photolog Photolog[]
-  splace   Splace[]   @relation(fields: [splaceId], references: [splaceId])
-  splaceId Int?
+  hashtagId Int @id @default(autoincrement())
+  name     String   @db.VarChar(255) @unique
+  
+  photologs Photolog[]
+  
+  splaces   Splace[]
 }
 
-// data logs
+model Item {
+  itemId Int @id
+  
+  splace Splace @relation(fields: [splaceId], references: [splaceId])
+  splaceId Int
+}
