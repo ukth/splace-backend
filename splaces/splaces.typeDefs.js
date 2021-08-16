@@ -10,7 +10,7 @@ export default gql`
     opearatingTimes: [String]
     createdAt:  String!     
     items: [Item]
-    Badges: [Badge]
+    badges: [Badge]
     ratingtags: [Ratingtag]
     hashtags: [Hashtag]
     fixedContents: [FixedContent]

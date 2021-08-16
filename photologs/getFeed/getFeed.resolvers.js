@@ -5,18 +5,17 @@ import { protectedResolver } from "../../users/users.utils";
 export default {
   Query: {
     getFeed: protectedResolver(async (_, { userId }) => {
-      const feed = await client.log.findMany({
+      const feed = await client.photolog.findMany({
         where: {
-          userId,
+          author: userId,
         },
         include: {
-          photologs: {
-            include: {
-              hashtags: true,
-              splace: true
-            }
-          },
-          user: true
+          hashtags: true,
+          splace: true,
+          user: true,
+          series: true,
+          likedUser: true,
+          scrap: true,
         }
       })
       return feed;
