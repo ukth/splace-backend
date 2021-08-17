@@ -22,5 +22,6 @@ export default gql`
     members: [User]
     saves: [Save]
     scraps: [Scrap]
+    totalmember: Int
   }
 `;
