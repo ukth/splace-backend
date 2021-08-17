@@ -4,10 +4,10 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getFeed: protectedResolver(async (_, { authorId, lastId }) => {
+    getFeed: protectedResolver(async (_, { userId, lastId }) => {
       const feed = await client.photolog.findMany({
         where: {
-          authorId
+          authorId: userId
         },
         include: {
           hashtags: true,
