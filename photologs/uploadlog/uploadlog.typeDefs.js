@@ -13,7 +13,7 @@ export default gql`
       text: String
       splaceId: Int
       seriesId: Int
-      hashtagIds: [Int]
+      hashtags: [String]
     ): uploadLogResult!
   }
 `;
