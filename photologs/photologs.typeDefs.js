@@ -9,6 +9,7 @@ export default gql`
     text: String   
     createdAt: String! 
     totalLiked: Int
+    isILiked: Boolean
     author: User!
     splace: Splace  
     series: Series
