@@ -9,16 +9,16 @@ export default {
         where: {
           OR: [
             {
-              user: {
+              author: {
                 followers: {
                   some: {
-                    id: loggedInUser.id,
+                    userId: loggedInUser.userId,
                   },
                 },
               },
             },
             {
-              userId: loggedInUser.id,
+              authorId: loggedInUser.userId,
             },
           ],
         },
