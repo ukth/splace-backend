@@ -6,11 +6,17 @@ export default {
   Mutation: {
     login: async (_, { username, password }) => {
       const user = await client.user.findFirst({
-          where: { username: username },
-          include: {
-            photologs: true,
-          },
-        });
+        where: {
+          OR: [
+            {
+              username
+            },
+            {
+              email: username
+            },
+          ],
+        },
+      });
       if (!user) {
         return {
           ok: false,
