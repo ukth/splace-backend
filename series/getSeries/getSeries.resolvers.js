@@ -10,11 +10,7 @@ export default {
           seriesId
         },
         include: {
-          hashtags: true,
           splace: true,
-          author: true,
-          series: true,
-          likedUser: true,
         },
         take: 5,
         ...(lastId && { cursor: { photologId: lastId } }),
