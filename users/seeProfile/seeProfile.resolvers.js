@@ -5,10 +5,8 @@ export default {
       where: {
         userId,
       },
-      include: {
-        followers: true,
-        followings: true,
-        likedPhotologs: true,
+      include:{
+        photologs: true,
       },
     })
   }

@@ -5,7 +5,12 @@ import client from "../../client";
 export default {
   Mutation: {
     login: async (_, { username, password }) => {
-      const user = await client.user.findFirst({ where: { username: username } });
+      const user = await client.user.findFirst({
+          where: { username: username },
+          include: {
+            photologs: true,
+          },
+        });
       if (!user) {
         return {
           ok: false,
@@ -23,6 +28,7 @@ export default {
       return {
         ok: true,
         token,
+        user: user,
       };
     },
   },
