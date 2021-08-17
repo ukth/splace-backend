@@ -7,7 +7,20 @@ export default {
     getFeed: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
       const feed = await client.photolog.findMany({
         where: {
-          authorId: loggedInUser.userId
+          OR: [
+            {
+              user: {
+                followers: {
+                  some: {
+                    id: loggedInUser.id,
+                  },
+                },
+              },
+            },
+            {
+              userId: loggedInUser.id,
+            },
+          ],
         },
         include: {
           hashtags: true,
