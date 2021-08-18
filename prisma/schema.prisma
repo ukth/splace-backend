@@ -35,6 +35,8 @@ model User {
   scraps       Scrap[]
 
   comments     Comment[]
+
+  likedComments Comment[] @relation("likedRelation")
 }
 
 model Photolog {
@@ -173,9 +175,14 @@ model Item {
 
 model Comment {
   commentId Int @id @default(autoincrement())
+  
+  text String @db.VarChar(255)
+  createdAt DateTime @default(now())
 
   author User @relation(fields: [authorId], references: [userId])
   authorId Int
+
+  likedUsers User[] @relation("likedRelation")
 
   photolog Photolog @relation(fields: [photologId], references: [photologId])
   photologId Int
