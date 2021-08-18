@@ -8,6 +8,16 @@ export default {
       { photologId },
       { loggedInUser }
     ) => {
+      const isLiked = await client.photolog.findUnique({ where: { photologId } })
+      .likedUser({
+        where: { userId: loggedInUser.userId }
+      })
+      if(isLiked.length == 0){
+        return {
+          ok: false,
+          error: "you already unliked this photolog"
+        }
+      }
       const photolog = await client.photolog.findUnique({ where : { photologId } });
       if(photolog.authorId === loggedInUser.userId){
         return {

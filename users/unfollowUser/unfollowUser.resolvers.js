@@ -4,6 +4,17 @@ import { protectedResolver } from "../users.utils";
 export default {
   Mutation: {
     unfollowUser: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
+      const isFollowing = await client.user.findUnique({ where: { userId: loggedInUser.userId } })
+      .followings({
+        where: { userId: targetId }
+      })
+      console.log(isFollowing)
+      if(isFollowing.length == 0){
+        return{
+          ok: false,
+          error: "this user is not your following"
+        }
+      }
       const target = await client.user.findUnique({ where: { userId: targetId } });
       if (targetId === loggedInUser.userId) {
         return {
@@ -24,7 +35,7 @@ export default {
         data: {
           followings: {
             disconnect: {
-              targetId
+              userId: targetId
             }
           }
         }
