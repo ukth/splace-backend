@@ -23,7 +23,9 @@ const apollo = new ApolloServer({
 });
 
 const app = express();
+var helmet = require('helmet')
 
+app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
