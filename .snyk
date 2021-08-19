@@ -4,10 +4,30 @@ version: v1.22.0
 ignore:
   SNYK-JS-ISSVG-1085627:
     - multer-s3 > is-svg:
-        reason: None given
-        expires: '2021-09-17T07:48:16.613Z'
+        reason: need more info for is-svg@2.1.0
+        expires: '2021-09-18T04:31:33.063Z'
   SNYK-JS-ISSVG-1243891:
     - multer-s3 > is-svg:
-        reason: need more info for is-svg
-        expires: '2021-09-17T07:48:16.614Z'
-patch: {}
+        reason: need for info for is-svg
+        expires: '2021-09-18T04:31:33.063Z'
+  SNYK-JS-LODASH-1018905:
+    - merge-graphql-schemas > @graphql-toolkit/schema-merging > @graphql-toolkit/common > lodash:
+        reason: None given
+        expires: '2021-09-18T04:31:33.063Z'
+  SNYK-JS-LODASH-1040724:
+    - merge-graphql-schemas > @graphql-toolkit/schema-merging > @graphql-toolkit/common > lodash:
+        reason: None given
+        expires: '2021-09-18T04:31:33.064Z'
+  SNYK-JS-LODASH-590103:
+    - merge-graphql-schemas > @graphql-toolkit/schema-merging > @graphql-toolkit/common > lodash:
+        reason: None given
+        expires: '2021-09-18T04:31:33.064Z'
+  SNYK-JS-LODASH-608086:
+    - merge-graphql-schemas > @graphql-toolkit/schema-merging > @graphql-toolkit/common > lodash:
+        reason: None given
+        expires: '2021-09-18T04:31:33.064Z'
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - merge-graphql-schemas > @graphql-toolkit/schema-merging > @graphql-toolkit/common > lodash:
+        patched: '2021-08-19T04:30:05.411Z'
