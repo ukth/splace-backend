@@ -8,13 +8,6 @@ export default gql`
     folder: Folder!
   }
 
-  type Scrap {
-    scrapId: Int!
-    createdAt: String!
-    photolog: Splace!
-    folder: Folder!
-  }
-
   type Folder {
     folderId: Int!
     title: String!

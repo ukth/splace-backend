@@ -20,4 +20,11 @@ export default gql`
     isMe: Boolean!
     isFollowing: Boolean!
   }
+  
+  type Scrap {
+    scrapId: Int!
+    createdAt: String!
+    photolog: Splace!
+    folder: Folder!
+  }
 `;
