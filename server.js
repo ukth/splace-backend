@@ -10,8 +10,8 @@ import upload from './multer';
 const PORT = process.env.PORT;
 
 const apollo = new ApolloServer({
-  resolvers,
   typeDefs,
+  resolvers,
   context: async ({ req }) => {
     return {
       loggedInUser: await getUser(req.headers.token),

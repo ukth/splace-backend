@@ -36,7 +36,7 @@ model User {
 
   comments     Comment[]
 
-  likedComments Comment[] @relation("likedRelation")
+  likedComments Comment[] @relation("likedCommentRelation")
 }
 
 model Photolog {
@@ -182,7 +182,7 @@ model Comment {
   author User @relation(fields: [authorId], references: [userId])
   authorId Int
 
-  likedUsers User[] @relation("likedRelation")
+  likedUsers User[] @relation("likedCommentRelation")
 
   photolog Photolog @relation(fields: [photologId], references: [photologId])
   photologId Int
