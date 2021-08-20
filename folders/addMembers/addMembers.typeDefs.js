@@ -1,11 +1,11 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type addMemberResult {
+  type addMembersResult {
     ok: Boolean!
     error: String
   }
   type Mutation {
-    addMember(targetId: Int!, folderId: Int!): addMemberResult!
+    addMembers(memberIds: [Int]!, folderId: Int!): addMembersResult!
   }
 `;

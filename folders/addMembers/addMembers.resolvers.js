@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    addMember: protectedResolver(async (_, { targetId, folderId }, { loggedInUser }) => {
+    addMembers: protectedResolver(async (_, { memberIds, folderId }, { loggedInUser }) => {
       const ok = await client.folder.findUnique({ where: { folderId } })
       .members({
         where: { userId: loggedInUser.userId }
@@ -11,7 +11,7 @@ export default {
       if (!ok) {
         return {
           ok: false,
-          error: "you dont have authentication for adding member."
+          error: "you dont have authentication to edit member."
         };
       }
       await client.folder.update({
@@ -20,9 +20,9 @@ export default {
         },
         data: {
           members: {
-            connect: {
-              userId: targetId
-            }
+            connect: memberIds.map(memberId => ({
+              userId: memberId
+            }))
           }
         }
       });

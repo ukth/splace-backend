@@ -3,21 +3,24 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    createSplaces: protectedResolver(async (
+    scrapLog: protectedResolver(async (
       _,
-      { name },
+      { photologId },
       { loggedInUser }
     ) => {
-      if(loggedInUser.authority != "root"){
-        return {
-          ok: false,
-          error: "only root user can create splace"
-        }
-      }
       try {
-        const a = await client.splace.create({
+        const a = await client.scrap.create({
           data: {
-            name,
+            photolog: {
+              connect: {
+                photologId
+              }
+            },
+            savedUser: {
+              connect: {
+                userId: loggedInUser.userId
+              }
+            },
           },
         });
         console.log(a);
@@ -28,7 +31,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create splace",
+          error: "cant scrap photolog",
         };
       }
     }),

@@ -3,42 +3,54 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    editPhotolog: protectedResolver(async (
+    editSplaces: protectedResolver(async (
       _,
-      { photologId, title, imageUrls, photoSize, text, splaceId, seriesId, hashtags },
+      { splaceId, name, geolog, geolat, address, timeSetIds, itemIds, badgeIds, ratingtagIds, hashtags },
       { loggedInUser }
     ) => {
-      const previous = await client.photolog.findUnique( { where : { photologId } } );
-      if(previous.authorId != loggedInUser.userId){
+      const previous = await client.splace.findUnique( { where : { splaceId } } );
+      if(previous.ownerId != loggedInUser.userId){
         return{
           ok: false,
-          error: "you can edit only yours!"
+          error: "you are not the owner of this splace!"
         };
       }
       try {
-        const a = await client.photolog.update({
+        const a = await client.splace.update({
           where: {
-            photologId
+            splaceId
           },
           data: {
-            title,
-            imageUrls,
-            text,
-            photoSize,
-            ...(splaceId != null && {
-              splace: {
-                disconnect: true,                
-                connect: {
-                  splaceId
-                },
+            name,
+            geolat,
+            geolog,
+            address,
+            ...(timeSetIds != null && {
+              timeSets: {              
+                connect: timeSetIds.map(timeSetId => ({
+                  timeSetId
+                })),
               },
             }),
-            ...(seriesId != null && {
-              series: {
-                disconnect: true,
-                connect: {
-                  seriesId
-                }
+            ...(itemIds != null && {
+              items: {               
+                connect: itemIds.map(itemId => ({
+                  itemId
+                })),
+              },
+            }),
+            ...(ratingtagIds != null && {
+              ratingtags: {                
+                connect: ratingtagIds.map(ratingtagId => ({
+                  ratingtagId
+                })),
+              },
+            }),
+            ...(badgeIds != null && {
+              badges: {              
+                connect: badgeIds.map(badgeId => ({
+                  badgeId
+                })),
               },
             }),
             ...(hashtags != null && {

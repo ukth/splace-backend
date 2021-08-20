@@ -1,13 +1,13 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type createSplacesResult {
+  type scrapLogResult {
     ok: Boolean!
     error: String
   }
   type Mutation {
-    createSplaces(
-      name: String!
-    ): createSplacesResult!
+    scrapLog(
+      photologId: Int!
+    ): scrapLogResult!
   }
 `;

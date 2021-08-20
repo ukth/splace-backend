@@ -8,7 +8,9 @@ export default gql`
     geolat:        Float
     address: String
     opearatingTimes: [String]
-    createdAt:  String!     
+    createdAt:  String!
+    ownerId: Int
+    timeSets: [TimeSet]
     items: [Item]
     badges: [Badge]
     ratingtags: [Ratingtag]
@@ -23,6 +25,7 @@ export default gql`
     imageUrl: String
     createdAt: String!
     splace: Splace!
+    text: String
   }
   type Item {
     itemId: Int!
@@ -31,11 +34,19 @@ export default gql`
   type Badge {
     badgeId: Int!
     name: String!
-    splace: [Splace]
+    splaces: [Splace]
   }
   type Ratingtag {
     ratingtagId: Int!
     name: String!
-    splace: [Splace]
+    splaces: [Splace]
+  }
+  type TimeSet {
+    timeSetId: Int!
+    open: Int!
+    close: Int!
+    day: Int!
+    splace: Splace!
+    splaceId: Int!
   }
 `;

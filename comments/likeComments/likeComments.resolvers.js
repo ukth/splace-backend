@@ -8,8 +8,8 @@ export default {
       { commentId },
       { loggedInUser }
     ) => {
-      const isLiked = await client.comment.findUnique({ where: { commentId } })
-      .likedUser({
+      /*const isLiked = await client.comment.findUnique({ where: { commentId } })
+      .likedUsers({
         where: { userId: loggedInUser.userId }
       })
       if(isLiked.length == 1){
@@ -17,7 +17,7 @@ export default {
           ok: false,
           error: "you already liked this comment"
         }
-      }
+      }*/
       try {
         const a = await client.user.update({
           where: {

@@ -8,7 +8,7 @@ export default {
       { photologId },
       { loggedInUser }
     ) => {
-      const isLiked = await client.photolog.findUnique({ where: { photologId } })
+      /*const isLiked = await client.photolog.findUnique({ where: { photologId } })
       .likedUser({
         where: { userId: loggedInUser.userId }
       })
@@ -17,14 +17,7 @@ export default {
           ok: false,
           error: "you already unliked this photolog"
         }
-      }
-      const photolog = await client.photolog.findUnique({ where : { photologId } });
-      if(photolog.authorId === loggedInUser.userId){
-        return {
-          ok: false,
-          error: "you cant like your photolog!"
-        };
-      }
+      }*/
       try {
         const a = await client.user.update({
           where: {
