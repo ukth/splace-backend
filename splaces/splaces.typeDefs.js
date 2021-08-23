@@ -43,8 +43,8 @@ export default gql`
   }
   type TimeSet {
     timeSetId: Int!
-    open: Int!
-    close: Int!
+    open: String!
+    close: String!
     day: Int!
     splace: Splace!
     splaceId: Int!
