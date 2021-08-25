@@ -16,8 +16,8 @@ export default {
             timeSetId
           },
           data: {
-            open:dayjs(open,'HH:mm').toISOString(),
-            close:dayjs(close,'HH:mm').toISOString(),
+            open:dayjs.utc(open,'HH:mm').toISOString(),
+            close:dayjs.utc(close,'HH:mm').toISOString(),
           },
         });
         console.log(a);
