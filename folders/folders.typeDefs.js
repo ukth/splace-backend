@@ -14,6 +14,5 @@ export default gql`
     createdAt: String!
     members: [User]
     saves: [Save]
-    scraps: [Scrap]
   }
 `;

@@ -13,6 +13,8 @@ export default gql`
       password: String
       profileMessage: String
       profileImageUrl: String
+      currentLog: Float
+      currentLat: Float
     ): EditProfileResult!
   }
 `;

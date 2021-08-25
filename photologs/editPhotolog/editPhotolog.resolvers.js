@@ -8,14 +8,14 @@ export default {
       { photologId, title, imageUrls, photoSize, text, splaceId, seriesId, hashtags },
       { loggedInUser }
     ) => {
-      const previous = await client.photolog.findUnique( { where : { photologId } } );
-      if(previous.authorId != loggedInUser.userId){
-        return{
-          ok: false,
-          error: "you can edit only yours!"
-        };
-      }
       try {
+        const previous = await client.photolog.findUnique({ where: { photologId } });
+        if (previous.authorId != loggedInUser.userId) {
+          return {
+            ok: false,
+            error: "you can edit only yours!"
+          };
+        }
         const a = await client.photolog.update({
           where: {
             photologId
@@ -27,7 +27,7 @@ export default {
             photoSize,
             ...(splaceId != null && {
               splace: {
-                disconnect: true,                
+                disconnect: true,
                 connect: {
                   splaceId
                 },
@@ -45,7 +45,7 @@ export default {
               hashtags: {
                 connectOrCreate: hashtags.map(hashtag => ({
                   create: { name: hashtag },
-                  where: { name: hashtag  }
+                  where: { name: hashtag }
                 }))
               }
             }),

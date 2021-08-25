@@ -4,7 +4,7 @@ import { protectedResolver } from "../users.utils";
 export default {
   Mutation: {
     unfollowUser: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
-      const isFollowing = await client.user.findUnique({ where: { userId: loggedInUser.userId } })
+      /*const isFollowing = await client.user.findUnique({ where: { userId: loggedInUser.userId } })
         .followings({
           where: { userId: targetId }
         })
@@ -14,21 +14,21 @@ export default {
           ok: false,
           error: "this user is not your following"
         }
-      }
-      const target = await client.user.findUnique({ where: { userId: targetId } });
-      if (targetId === loggedInUser.userId) {
-        return {
-          ok: false,
-          error: "You can't unfollow yourself"
-        }
-      }
-      if (!target) {
-        return {
-          ok: false,
-          error: "That user does not exist."
-        };
-      }
+      }*/
       try {
+        const target = await client.user.findUnique({ where: { userId: targetId } });
+        if (targetId === loggedInUser.userId) {
+          return {
+            ok: false,
+            error: "You can't unfollow yourself"
+          }
+        }
+        if (!target) {
+          return {
+            ok: false,
+            error: "That user does not exist."
+          };
+        }
         await client.user.update({
           where: {
             userId: loggedInUser.userId

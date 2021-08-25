@@ -20,6 +20,8 @@ model User {
   profileImageUrl   String?    @db.VarChar(255)
   joinedAt       DateTime   @default(now())
   authority      String     @db.VarChar(255) @default("user")
+  currentLog   Decimal? @db.Decimal(11, 8)
+  currentLat   Decimal? @db.Decimal(11, 8)
   
   followers      User[]     @relation("followRelation")
   
@@ -80,8 +82,8 @@ model Series {
 model Splace {
   splaceId Int     @id @default(autoincrement())
   name     String  @db.VarChar(255)
-  geolog   Decimal? @db.Decimal(10, 8)
-  geolat   Decimal? @db.Decimal(10, 8)
+  geolog   Decimal? @db.Decimal(11, 8)
+  geolat   Decimal? @db.Decimal(11, 8)
   address        String?   @db.VarChar(255)
   createdAt   DateTime @default(now())
   ownerId Int?

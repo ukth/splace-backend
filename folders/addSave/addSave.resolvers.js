@@ -8,17 +8,18 @@ export default {
       { splaceId, folderId },
       { loggedInUser }
     ) => {
-      const ok = await client.folder.findUnique({ where: { folderId } })
-      .members({
-        where: { userId: loggedInUser.userId }
-      });
-      if (!ok) {
-        return {
-          ok: false,
-          error: "you dont have authentication for adding save."
-        };
-      }
       try {
+        const ok = await client.folder.findUnique({ where: { folderId } })
+          .members({
+            where: { userId: loggedInUser.userId }
+          });
+
+        if (ok.length == 0) {
+          return {
+            ok: false,
+            error: "you dont have authentication for adding save."
+          };
+        }
         const a = await client.save.create({
           data: {
             splace: {

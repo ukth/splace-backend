@@ -9,6 +9,8 @@ export default gql`
     password:       String!   
     profileMessage: String    
     profileImageUrl:   String
+    currentLat: Float
+    currentLog: Float
     folders: [Folder]
     joinedAt:       String!  
     followers:      [User]     

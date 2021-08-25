@@ -1,6 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 
+
 export default {
   Mutation: {
     editSplaces: protectedResolver(async (
@@ -8,14 +9,14 @@ export default {
       { splaceId, name, geolog, geolat, address, timeSetIds, itemIds, badgeIds, ratingtagIds, hashtags },
       { loggedInUser }
     ) => {
-      const previous = await client.splace.findUnique( { where : { splaceId } } );
-      if(previous.ownerId != loggedInUser.userId){
-        return{
-          ok: false,
-          error: "you are not the owner of this splace!"
-        };
-      }
       try {
+        const previous = await client.splace.findUnique({ where: { splaceId } });
+        if (previous.ownerId != loggedInUser.userId) {
+          return {
+            ok: false,
+            error: "you are not the owner of this splace!"
+          };
+        }
         const a = await client.splace.update({
           where: {
             splaceId
@@ -26,28 +27,28 @@ export default {
             geolog,
             address,
             ...(timeSetIds != null && {
-              timeSets: {              
+              timeSets: {
                 connect: timeSetIds.map(timeSetId => ({
                   timeSetId
                 })),
               },
             }),
             ...(itemIds != null && {
-              items: {               
+              items: {
                 connect: itemIds.map(itemId => ({
                   itemId
                 })),
               },
             }),
             ...(ratingtagIds != null && {
-              ratingtags: {                
+              ratingtags: {
                 connect: ratingtagIds.map(ratingtagId => ({
                   ratingtagId
                 })),
               },
             }),
             ...(badgeIds != null && {
-              badges: {              
+              badges: {
                 connect: badgeIds.map(badgeId => ({
                   badgeId
                 })),
@@ -57,7 +58,7 @@ export default {
               hashtags: {
                 connectOrCreate: hashtags.map(hashtag => ({
                   create: { name: hashtag },
-                  where: { name: hashtag  }
+                  where: { name: hashtag }
                 }))
               }
             }),
@@ -71,7 +72,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant edit log",
+          error: "cant edit splace",
         };
       }
     }),

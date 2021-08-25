@@ -6,15 +6,16 @@ import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils";
 import upload from './multer';
 
-
 const PORT = process.env.PORT;
 
 const apollo = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => {
+    const a = await getUser(req.headers.token);
+    // console.log(a);
     return {
-      loggedInUser: await getUser(req.headers.token),
+      loggedInUser:a,
     };
   },
   formatError: (err) => {

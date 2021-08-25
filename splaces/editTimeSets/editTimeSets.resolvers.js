@@ -1,5 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import dayjs from 'dayjs';
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 export default {
   Mutation: {
@@ -14,8 +16,8 @@ export default {
             timeSetId
           },
           data: {
-            open,
-            close,
+            open:dayjs(open,'HH:mm').toISOString(),
+            close:dayjs(close,'HH:mm').toISOString(),
           },
         });
         console.log(a);

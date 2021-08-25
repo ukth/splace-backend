@@ -6,6 +6,7 @@ export default gql`
     name:          String!      
     geolog:        Float      
     geolat:        Float
+    dist: Int
     address: String
     opearatingTimes: [String]
     createdAt:  String!
