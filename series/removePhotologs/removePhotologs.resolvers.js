@@ -6,11 +6,8 @@ export default {
     removePhotologs: protectedResolver(async (_, { photologIds, seriesId }, { loggedInUser }) => {
       try {
         const ok = await client.series.findUnique({ where: { seriesId } })
-          .author({
-            where: { userId: loggedInUser.userId }
-          });
         console.log(ok);
-        if (ok == null) {
+        if (ok.authorId != loggedInUser.userId) {
           return {
             ok: false,
             error: "you are not author."

@@ -6,10 +6,8 @@ export default {
   Query: {
     getSeries: protectedResolver(async (_, { seriesId, lastId }, { loggedInUser }) => {
       try {
-        const series = await client.photolog.findMany({
-          where: {
-            seriesId
-          },
+        const logs = await client.series.findUnique({ where: { seriesId } })
+        .photologs({
           include: {
             splace: true,
           },
@@ -20,8 +18,9 @@ export default {
             createdAt: "asc",
           },
         })
-        return series;
+        return logs;
       } catch (e) {
+        console.log(e)
         return null;
       }
     })
