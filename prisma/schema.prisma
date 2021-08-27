@@ -56,8 +56,7 @@ model Photolog {
   splace     Splace?    @relation(fields: [splaceId], references: [splaceId])
   splaceId   Int?
   
-  series     Series?    @relation(fields: [seriesId], references: [seriesId])
-  seriesId   Int?
+  series     Series[]    @relation("seriesRelation")
   
   hashtags   Hashtag[]
   
@@ -76,7 +75,7 @@ model Series {
   author      User       @relation(fields: [authorId], references: [userId])
   authorId    Int
   
-  photologs Photolog[]
+  photologs Photolog[]   @relation("seriesRelation")
 }
 
 model Splace {

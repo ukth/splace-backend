@@ -1,18 +1,29 @@
-import client from "../../client";
+import client from "../../client";;
 
 export default {
   Query: {
-    searchUsers: async (_, { keyword }) =>
-      client.user.findMany({
-        take: 61,
-        where: {
-          username: {
-            startsWith: keyword.toLowerCase(),
-          },
-        },
-        orderBy: {
-          username: "asc",
-        },
-      }),
+    searchSplaces: async (_, { keyword, lat, long }) => {
+      try {
+        const starts = keyword + '%'
+        const result = await client.$queryRaw`SELECT 
+        *,
+        ENDPAGE,
+        ROUND(CAST(DISTANCE AS NUMERIC),0) AS DISTANCE
+        FROM(                                                             
+        SELECT 
+            (CASE WHEN 1 * 10 < COUNT(*) OVER() THEN 'FALSE' 
+                 WHEN 1 * 10 >= COUNT(*) OVER() THEN 'TRUE' END) AS ENDPAGE,
+            *,
+            (select earth_distance(ll_to_earth(${lat}, ${long}), ll_to_earth(s.geolat,s.geolog))) AS DISTANCE
+        FROM "public"."Splace" AS s
+        WHERE s.name LIKE ${starts}
+        ORDER BY DISTANCE ASC
+        LIMIT 10 OFFSET (1 - 1) * 10
+        ) Splace`
+        return result;
+      } catch (e) {
+        console.log(e);
+      }
+    }
   },
 };

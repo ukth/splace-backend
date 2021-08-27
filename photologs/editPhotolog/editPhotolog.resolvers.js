@@ -35,7 +35,6 @@ export default {
             }),
             ...(seriesId != null && {
               series: {
-                disconnect: true,
                 connect: {
                   seriesId
                 }
