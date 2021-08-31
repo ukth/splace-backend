@@ -12,7 +12,8 @@ export default gql`
     currentLat: Float
     currentLog: Float
     folders: [Folder]
-    joinedAt:       String!  
+    joinedAt:       String!
+    updatedAt:      String!  
     followers:      [User]     
     followings:     [User]     
     photologs:      [Photolog]

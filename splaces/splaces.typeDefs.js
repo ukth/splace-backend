@@ -9,6 +9,7 @@ export default gql`
     address: String
     opearatingTimes: [String]
     createdAt:  String!
+    updatedAt: String!
     ownerId: Int
     timeSets: [TimeSet]
     items: [Item]
@@ -24,6 +25,7 @@ export default gql`
     title: String!
     imageUrl: String
     createdAt: String!
+    updatedAt: String!
     splace: Splace!
     text: String
   }

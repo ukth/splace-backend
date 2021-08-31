@@ -5,6 +5,7 @@ export default gql`
     seriesId: Int!
     title: String!
     createdAt: String!
+    updatedAt: String!
     author: User!
     photologs: [Photolog]
   }

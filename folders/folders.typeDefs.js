@@ -12,6 +12,7 @@ export default gql`
     folderId: Int!
     title: String!
     createdAt: String!
+    updatedAt: String!
     members: [User]
     saves: [Save]
   }

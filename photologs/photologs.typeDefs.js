@@ -8,6 +8,7 @@ export default gql`
     photoSize: Int!
     text: String   
     createdAt: String! 
+    updatedAt: String!
     totalLiked: Int
     isILiked: Boolean
     author: User!
