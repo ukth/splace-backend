@@ -64,7 +64,7 @@ export default {
         } else {
           return {
             ok: false,
-            error: "fuck you"
+            error: "invalid request"
           }
         }
 
