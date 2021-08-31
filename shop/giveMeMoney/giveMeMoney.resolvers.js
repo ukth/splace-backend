@@ -14,12 +14,7 @@ export default {
 
         const paymentData = await iamport.payment.getByImpUid({
           imp_uid: impUId
-        }).then(function (paymentData) {
-          return paymentData
-        }).catch(function (error) {
-          console.log(error);
-          return null
-        });
+        })
         console.log(paymentData)
 
         const paymentlog = await client.paymentLog.findUnique({ where: { merchantUId } });
@@ -33,11 +28,7 @@ export default {
             imp_uid: impUId,
             merchant_uid: merchantUId,
             reason: reason
-          }).then(function (result) {
-            return result;
-          }).catch(function (error) {
-            return null
-          });
+          })
 
           if (cancelResult == null) {
             return {

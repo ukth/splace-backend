@@ -14,12 +14,7 @@ export default {
 
         const paymentData = await iamport.payment.getByImpUid({
           imp_uid: impUId
-        }).then(function (paymentData) {
-          return paymentData
-        }).catch(function (error) {
-          console.log(error);
-          return null;
-        });
+        })
 
         const paymentlog = await client.paymentLog.findUnique({ where: { merchantUId } });
         const custom_data = JSON.parse(paymentData.custom_data)
