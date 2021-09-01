@@ -242,8 +242,8 @@ model BuyLog {
 model Chatroom {
   chatroomId Int @id @default(autoincrement())
   title String   @db.VarChar(255)
-  users User[]
-  message Message[]
+  members User[]
+  messages Message[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -256,6 +256,8 @@ model Message {
 
   chatroom Chatroom @relation(fields: [chatroomId], references: [chatroomId])
   chatroomId Int
+
+  unreadCount Int
 
   createdAt DateTime  @default(now())
 }
