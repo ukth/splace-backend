@@ -17,6 +17,9 @@ export default {
           orderBy: {
             createdAt: "desc",
           },
+          include:{
+            author: true,
+          }
         })
         return {
           ok: true,

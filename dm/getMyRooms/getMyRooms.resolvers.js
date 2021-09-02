@@ -13,7 +13,7 @@ export default {
               },
             },
             take: 5,
-            ...(lastId && { cursor: { photologId: lastId } }),
+            ...(lastId && { cursor: { chatroomId: lastId } }),
             skip: lastId ? 1 : 0,
             orderBy: {
               updatedAt: "asc",

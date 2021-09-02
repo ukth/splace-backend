@@ -66,7 +66,7 @@ export default {
             photologs: true,
           },
           take: 2,
-          ...(lastId && { cursor: { photologId: lastId } }),
+          ...(lastId && { cursor: { seriesId: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",
