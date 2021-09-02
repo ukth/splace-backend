@@ -22,7 +22,7 @@ export default {
           ...(lastId && { cursor: { photologId: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
-            createdAt: "asc",
+            updatedAt: "asc",
           },
         })
         return {

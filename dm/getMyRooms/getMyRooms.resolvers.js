@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getMyRooms: protectedResolver(async (_, __, { loggedInUser }) => {
+    getMyRooms: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
       try {
         const rooms = await client.chatroom.findMany({
           where: {
@@ -11,6 +11,12 @@ export default {
               some: {
                 userId: loggedInUser.userId,
               },
+            },
+            take: 5,
+            ...(lastId && { cursor: { photologId: lastId } }),
+            skip: lastId ? 1 : 0,
+            orderBy: {
+              updatedAt: "asc",
             },
           },
           include: {
