@@ -49,6 +49,7 @@ export default {
         pubsub.publish(NEW_MESSAGE, { newMessage: { ...sendedMessage } });
         return {
           ok: true,
+          message: sendedMessage
         };
       } catch (e) {
         console.log(e);
