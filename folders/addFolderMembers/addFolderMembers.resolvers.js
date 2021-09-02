@@ -5,12 +5,18 @@ export default {
   Mutation: {
     addFolderMembers: protectedResolver(async (_, { memberIds, folderId }, { loggedInUser }) => {
       try {
-        const ok = await client.folder.findUnique({ where: { folderId } })
-          .members({
-            where: { userId: loggedInUser.userId }
-          });
+        const ok = await client.folder.findUnique({ 
+          where: { 
+            folderId,
+            members: {
+              some: {
+                userId: loggedInUser.userId
+              }
+            } 
+          } 
+        })
         console.log(ok);
-        if (ok.length == 0) {
+        if(!ok) {
           return {
             ok: false,
             error: "you dont have authentication to edit member."

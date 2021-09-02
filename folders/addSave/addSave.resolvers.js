@@ -9,15 +9,21 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const ok = await client.folder.findUnique({ where: { folderId } })
-          .members({
-            where: { userId: loggedInUser.userId }
-          });
-
-        if (ok.length == 0) {
+        const ok = await client.folder.findUnique({ 
+          where: { 
+            folderId,
+            members: {
+              some: {
+                userId: loggedInUser.userId
+              }
+            } 
+          } 
+        })
+        console.log(ok);
+        if(!ok) {
           return {
             ok: false,
-            error: "you dont have authentication for adding save."
+            error: "you dont have authentication to add save."
           };
         }
         const a = await client.save.create({

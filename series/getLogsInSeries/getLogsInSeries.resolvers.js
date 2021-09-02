@@ -4,7 +4,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getSeries: protectedResolver(async (_, { seriesId, lastId }, { loggedInUser }) => {
+    getLogsInSeries: protectedResolver(async (_, { seriesId, lastId }, { loggedInUser }) => {
       try {
         const logs = await client.series.findUnique({ where: { seriesId } })
         .photologs({
@@ -18,10 +18,15 @@ export default {
             createdAt: "asc",
           },
         })
-        return logs;
+        return {
+          ok: true,
+          logs: logs
+        };
       } catch (e) {
-        console.log(e)
-        return null;
+        return {
+          ok: false,
+          error: "cant get series"
+        };
       }
     })
   }

@@ -26,7 +26,10 @@ export default {
             createdAt: "desc",
           },
         })
-        return feed;
+        return {
+          ok: true,
+          logs: feed
+        };
       } catch (e) {
         return {
           ok: false,

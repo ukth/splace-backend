@@ -1,7 +1,7 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type searchSplaceResult{
+  type searchedSplace{
     endPage: Boolean!,
     splaceId: Int!,
     name: String!,
@@ -12,7 +12,12 @@ export default gql`
     ownerId: Int,
     distance: Int
   }
+  type searchSpalcesResult {
+    ok: Boolean!
+    error: String
+    searchedSplaces: [searchedSplace]
+  }
   type Query {
-    searchSplaces(keyword: String!, lat: Float!, long: Float!): [searchSplaceResult]
+    searchSplaces(keyword: String!, lat: Float!, long: Float!): searchSplacesResult!
   }
 `;

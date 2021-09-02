@@ -2,6 +2,11 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Query {
-    getMyLogs(lastId: Int): [Photolog]
+    type getMyLogsResult {
+      ok: Boolean!
+      error: String
+      mine: [Photolog]
+    }
+    getMyLogs(lastId: Int): getMyLogsResult!
   }
 `;
