@@ -39,11 +39,11 @@ export default {
                 chatroomId
               }
             },
-            unreadCount,
-            include: {
-              author: true,
-            }
-          }
+            unreadCount
+          },
+          include: {
+            author: true,
+          },
         });
         // console.log(client);
         pubsub.publish(NEW_MESSAGE, { newMessage: { ...sendedMessage } });
