@@ -4,8 +4,8 @@ export default gql`
   type Chatroom {
     chatroomId: Int!
     title: String!
-    users: [User]
-    message: [Message]
+    members: [User]
+    messages: [Message]
     createdAt: String!
     updatedAt: String!
   }
@@ -14,7 +14,8 @@ export default gql`
     messageId: Int!
     text: String!   
     author: User! 
-    chatroom: Chatroom! 
+    chatroom: Chatroom!
+    unreadCount: Int!
     createdAt: String!
   }
 `;

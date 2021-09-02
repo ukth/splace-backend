@@ -3,9 +3,9 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    addMembers: protectedResolver(async (_, { memberIds, folderId }, { loggedInUser }) => {
+    addChatMembers: protectedResolver(async (_, { memberIds, chatroomId }, { loggedInUser }) => {
       try {
-        const ok = await client.folder.findUnique({ where: { folderId } })
+        const ok = await client.chatroom.findUnique({ where: { chatroomId } })
           .members({
             where: { userId: loggedInUser.userId }
           });
@@ -16,9 +16,9 @@ export default {
             error: "you dont have authentication to edit member."
           };
         }
-        await client.folder.update({
+        await client.chatroom.update({
           where: {
-            folderId
+            chatroomId
           },
           data: {
             members: {
