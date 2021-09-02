@@ -4,23 +4,23 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getLogsInSeries: protectedResolver(async (_, { seriesId, lastId }, { loggedInUser }) => {
+    getSeries: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
       try {
-        const logs = await client.series.findUnique({ where: { seriesId } })
-        .photologs({
-          include: {
-            splace: true,
+        const series = await client.series.findMany({
+          where: {
+            authorId: loggedInUser.userId,
           },
-          take: 5,
+          take: 2,
           ...(lastId && { cursor: { photologId: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
-            createdAt: "asc",
+            createdAt: "desc",
           },
         })
         return {
           ok: true,
-          logs: logs
+          logs: logs,
+          series: series,
         };
       } catch (e) {
         return {

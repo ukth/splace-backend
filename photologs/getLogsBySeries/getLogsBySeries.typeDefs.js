@@ -1,13 +1,12 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type getFeedResult {
+  type getLogsBySeriesResult {
     ok: Boolean!
     error: String
     logs: [Photolog]
-    series: [Series]
   }
   type Query {
-    getFeed(lastId: Int): getFeedResult!
+    getLogsBySeries(seriesId: Int!, lastId: Int): getLogsBySeriesResult!
   }
 `;
