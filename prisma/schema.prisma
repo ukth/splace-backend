@@ -13,7 +13,7 @@ generator client {
 model User {
   userId         Int        @id @default(autoincrement())
   username       String     @unique
-  name           String     @db.VarChar(255)
+  name           String?     @db.VarChar(255)
   email          String     @db.VarChar(255)
   password       String     @db.VarChar(255)
   profileMessage String?    @db.VarChar(255)

@@ -7,7 +7,7 @@ export default gql`
   }
   type Mutation {
     createChatroom(
-      title: String!
+      title: String
       memberIds: [Int]!
     ): createChatroomResult!
   }

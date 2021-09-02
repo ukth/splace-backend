@@ -37,9 +37,15 @@ export default {
             createdAt: "desc",
           },
         })
-        return feed;
+        return {
+          ok: true,
+          feed: feed
+        };
       } catch (e) {
-        return null;
+        return {
+          ok: false,
+          error: "cant get feed"
+        };
       }
     })
   }

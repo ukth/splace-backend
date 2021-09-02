@@ -7,11 +7,18 @@ export default {
   Mutation: {
     sendMessage: protectedResolver(async (_, { chatroomId, text }, { loggedInUser }) => {
       try {
-        const ok = await client.chatroom.findUnique({ where: { chatroomId } })
-          .members({
-            where: { userId: loggedInUser.userId }
-          });
-        if (ok.length == 0) {
+        const ok = await client.chatroom.findFirst({ 
+          where: { 
+            chatroomId,
+            members: {
+              some: {
+                userId: loggedInUser.userId
+              }
+            } 
+          } 
+        })
+        console.log(ok)
+        if (!ok) {
           return {
             ok: false,
             error: "you dont have authentication to send message."
@@ -32,7 +39,10 @@ export default {
                 chatroomId
               }
             },
-            unreadCount
+            unreadCount,
+            include: {
+              author: true,
+            }
           }
         });
         // console.log(client);

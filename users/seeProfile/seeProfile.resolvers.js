@@ -1,13 +1,26 @@
 import client from "../../client";
 export default {
   Query: {
-    seeProfile: (_, { userId }) => client.user.findFirst({
-      where: {
-        userId,
-      },
-      include:{
-        photologs: true,
-      },
-    })
+    seeProfile: async (_, { userId }) => {
+      try {
+        const profile = await client.user.findFirst({
+          where: {
+            userId,
+          },
+          include: {
+            photologs: true,
+          },
+        })
+        return {
+          ok: true,
+          profile: profile
+        };
+      } catch (e) {
+        return {
+          ok: false,
+          error: "cant get profile"
+        }
+      }
+    }
   }
 }

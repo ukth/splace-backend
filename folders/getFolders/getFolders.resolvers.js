@@ -25,9 +25,15 @@ export default {
             createdAt: "asc",
           },
         })
-        return folders;
+        return {
+          ok: true,
+          folders: folders
+        };
       } catch (e) {
-        return null;
+        return {
+          ok: false,
+          error: "cant get folders"
+        };
       }
     })
   }

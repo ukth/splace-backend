@@ -20,9 +20,16 @@ export default {
         ORDER BY DISTANCE ASC
         LIMIT 10 OFFSET (1 - 1) * 10
         ) Splace`
-        return result;
+        return {
+          ok: true,
+          searchedSplaces: result
+        };
       } catch (e) {
         console.log(e);
+        return {
+          ok: false,
+          error: "cant search splace"
+        }
       }
     }
   },

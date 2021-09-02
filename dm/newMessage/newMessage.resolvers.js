@@ -7,13 +7,22 @@ export default {
   Subscription: {
     newMessage: {
       subscribe: async (_, { chatroomId }, { loggedInUser }, info) => {
-        const ok = await client.chatroom.findUnique({ where: { chatroomId } })
-          .members({
-            where: { userId: loggedInUser.userId }
-          });
-        console.log(ok);
-        if (ok.length == 0) {
-          throw new error("you are not member.")
+        const ok = await client.chatroom.findFirst({ 
+          where: { 
+            chatroomId,
+            members: {
+              some: {
+                userId: loggedInUser.userId
+              }
+            } 
+          } 
+        })
+        console.log(ok)
+        if (!ok) {
+          return {
+            ok: false,
+            error: "you are not a member."
+          };
         }
         return withFilter(
           () => pubsub.asyncIterator(NEW_MESSAGE),

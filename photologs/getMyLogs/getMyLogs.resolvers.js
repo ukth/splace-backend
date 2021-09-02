@@ -6,7 +6,7 @@ export default {
   Query: {
     getMyLogs: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
       try {
-        const Mine = await client.photolog.findMany({
+        const mine = await client.photolog.findMany({
           where: {
             authorId: loggedInUser.userId
           },
@@ -24,9 +24,15 @@ export default {
             createdAt: "desc",
           },
         })
-        return Mine;
+        return {
+          ok: true,
+          mine: mine
+        };
       } catch (e) {
-        return null;
+        return {
+          ok: false,
+          error: "cant get my logs"
+        };
       }
     })
   }
