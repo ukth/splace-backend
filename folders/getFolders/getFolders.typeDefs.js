@@ -7,6 +7,6 @@ export default gql`
     folders: [Folder]
   }
   type Query {
-    getFolders(lastId: Int): getFolderResult!
+    getFolders(lastId: Int): getFoldersResult!
   }
 `;

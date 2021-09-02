@@ -12,7 +12,7 @@ export default gql`
     ownerId: Int,
     distance: Int
   }
-  type searchSpalcesResult {
+  type searchSplacesResult {
     ok: Boolean!
     error: String
     searchedSplaces: [searchedSplace]
