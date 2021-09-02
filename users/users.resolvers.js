@@ -48,5 +48,13 @@ export default {
         return false;
       }
     },
+    totalLogsNumber: ({ userId }) =>
+      client.photolog.count({
+        where: {
+          author: {
+            userId
+          },
+        },
+      }),
   },
 };
