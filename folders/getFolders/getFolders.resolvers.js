@@ -19,7 +19,7 @@ export default {
             saves: true,
           },
           take: 5,
-          ...(lastId && { cursor: { photologId: lastId } }),
+          ...(lastId && { cursor: { folderId: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             updatedAt: "asc",
