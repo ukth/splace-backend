@@ -17,5 +17,6 @@ export default gql`
     chatroom: Chatroom!
     unreadCount: Int!
     createdAt: String!
+    isMine: Boolean!
   }
 `;
