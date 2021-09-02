@@ -7,6 +7,6 @@ export default gql`
     rooms: [Chatroom]
   }
   type Query {
-    getMyRooms: getMyRoomsResult!
+    getMyRooms(lastId: Int): getMyRoomsResult!
   }
 `;
