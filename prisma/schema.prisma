@@ -261,7 +261,7 @@ model Chatroom {
 }
 
 model Message {
-  messageId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   text String   @db.Text
   author User @relation(fields: [authorId], references: [userId])
   authorId Int

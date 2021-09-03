@@ -11,7 +11,7 @@ export default gql`
   }
 
   type Message {
-    messageId: Int!
+    id: Int!
     text: String!   
     author: User! 
     chatroom: Chatroom!
