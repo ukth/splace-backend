@@ -19,6 +19,9 @@ export default gql`
     fixedContents: [FixedContent]
     photologs:     [Photolog]
     saves: [Save]
+    parking: Boolean
+    pets: Boolean
+    kids: Boolean
   }
   type FixedContent {
     fixedContentid: Int!

@@ -8,7 +8,7 @@ export default {
         const messages = await client.message.findMany({
           where: {
             chatroom: {
-              chatroomId
+              id: chatroomId
             },
           },
           take: 50,

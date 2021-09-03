@@ -17,7 +17,7 @@ export default {
       try {
         await client.chatroom.update({
           where: {
-            chatroomId
+            id: chatroomId
           },
           data: {
             members: {

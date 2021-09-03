@@ -9,7 +9,7 @@ export default {
       subscribe: async (_, { chatroomId }, { loggedInUser }, info) => {
         const ok = await client.chatroom.findFirst({ 
           where: { 
-            chatroomId,
+            id: chatroomId,
             members: {
               some: {
                 userId: loggedInUser.userId

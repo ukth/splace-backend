@@ -4,7 +4,7 @@ export default gql`
   type User {
     userId:         Int!      
     username:       String!   
-    name:           String!   
+    name:           String   
     email:          String!   
     password:       String!   
     profileMessage: String    
