@@ -269,7 +269,7 @@ model Message {
   author User @relation(fields: [authorId], references: [userId])
   authorId Int
 
-  chatroom Chatroom @relation(fields: [chatroomId], references: [chatroomId])
+  chatroom Chatroom @relation(fields: [chatroomId], references: [id])
   chatroomId Int
 
   unreadCount Int
