@@ -1,10 +1,11 @@
 import client from "../../client";
+import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    deleteFolder: async (
+    deleteFolder: protectedResolver(async (
       _,
-      { userId }
+      { folderId }
     ) => {
       try {
         const a = await client.folder.delete({
@@ -12,17 +13,17 @@ export default {
             folderId
           }
         });
-        console.log(a);
+        //console.log(a);
         return {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant delete folder",
         };
       }
-    },
+    }),
   },
 };

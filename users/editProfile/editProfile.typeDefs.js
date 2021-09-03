@@ -1,10 +1,6 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type EditProfileResult {
-    ok: Boolean!
-    error: String
-  }
   type Mutation {
     editProfile(
       name: String
@@ -15,6 +11,6 @@ export default gql`
       profileImageUrl: String
       currentLog: Float
       currentLat: Float
-    ): EditProfileResult!
+    ): defaultResult!
   }
 `;

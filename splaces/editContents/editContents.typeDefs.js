@@ -1,10 +1,6 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type editContentsResult {
-    ok: Boolean!
-    error: String
-  }
   type Mutation {
     editContents (
       title: String
@@ -12,6 +8,6 @@ export default gql`
       text: String
       splaceId: Int!
       fixedContentId: Int!
-    ): editContentsResult!
+    ): defaultResult!
   }
 `;

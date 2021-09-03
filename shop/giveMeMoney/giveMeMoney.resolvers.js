@@ -15,7 +15,7 @@ export default {
         const paymentData = await iamport.payment.getByImpUid({
           imp_uid: impUId
         })
-        console.log(paymentData)
+        //console.log(paymentData)
 
         const paymentlog = await client.paymentLog.findUnique({ where: { merchantUId } });
         const custom_data = JSON.parse(paymentData.custom_data)
@@ -37,7 +37,7 @@ export default {
             }
           }
 
-          console.log(cancelResult);
+          //console.log(cancelResult);
 
           const a = await client.paymentLog.update({
             where: {
@@ -47,7 +47,7 @@ export default {
               creditGiven: false
             }
           });
-          console.log(a);
+          //console.log(a);
 
           const b = await client.user.update({
             where: { userId: loggedInUser.userId },
@@ -55,7 +55,7 @@ export default {
               credit: loggedInUser.credit - custom_data.credit
             }
           })
-          console.log(b);
+          //console.log(b);
 
           return {
             ok: true,
@@ -69,7 +69,7 @@ export default {
         }
 
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant give you credits",

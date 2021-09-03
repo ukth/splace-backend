@@ -19,7 +19,7 @@ export default {
             } 
           } 
         })
-        console.log(ok);
+        //console.log(ok);
         if(!ok) {
           return {
             ok: false,
@@ -40,12 +40,12 @@ export default {
             },
           },
         });
-        console.log(a);
+        //console.log(a);
         return {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant add save",

@@ -9,7 +9,13 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        memberIds.push(loggedInUser.userId);
+        //memberIds.push(loggedInUser.userId);
+        if(!memberIds.includes(loggedInUser.userId)){
+          return{
+            ok: false,
+            error: "to create chatroom, you have to include yourself"
+          }
+        }
         const a = await client.chatroom.create({
           data: {
             title,
@@ -20,12 +26,12 @@ export default {
             }
           },
         });
-        console.log(a);
+        //console.log(a);
         return {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant create chatroom",

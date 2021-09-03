@@ -6,8 +6,49 @@ export default {
   Query: {
     getLogsBySeries: protectedResolver(async (_, { seriesId, lastId }, { loggedInUser }) => {
       try {
-        const logs = await client.series.findUnique({ where: { seriesId } })
-        .photologs({
+        const logs = await client.series.findUnique({ 
+          where: { 
+            seriesId,
+            NOT: [
+              {
+                author: {
+                  blockingUser: {
+                    some: {
+                      userId: loggedInUser.userId
+                    }
+                  }
+                },
+              },
+              {
+                hiddenUsers: {
+                  some: {
+                    userId: loggedInUser.userId
+                  }
+                }
+              },
+            ] 
+          } 
+        }).photologs({
+          where: {
+            NOT: [
+              {
+                author: {
+                  blockingUser: {
+                    some: {
+                      userId: loggedInUser.userId
+                    }
+                  }
+                },
+              },
+              {
+                hiddenUsers: {
+                  some: {
+                    userId: loggedInUser.userId
+                  }
+                }
+              },
+            ]
+          },
           include: {
             splace: true,
           },

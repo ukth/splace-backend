@@ -1,8 +1,9 @@
 import client from "../../client";
+import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    deletePhotolog: async (
+    deletePhotolog: protectedResolver(async (
       _,
       { photologId }
     ) => {
@@ -23,6 +24,6 @@ export default {
           error: "cant delete photolog",
         };
       }
-    },
+    }),
   },
 };

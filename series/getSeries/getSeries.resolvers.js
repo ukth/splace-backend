@@ -19,7 +19,6 @@ export default {
         })
         return {
           ok: true,
-          logs: logs,
           series: series,
         };
       } catch (e) {
