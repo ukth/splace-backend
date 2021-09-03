@@ -47,6 +47,14 @@ model User {
   messages  Message[]
 
   chatrooms Chatroom[]
+
+  hiddenPhotologs Photolog[] @relation("hiddenLogsRelation")
+
+  hiddenSeries    Series[]   @relation("hiddenSeriesRelation")
+
+  blockedUser    User[]     @relation("blockRelation")
+
+  blockingUser   User[]     @relation("blockRelation")
 }
 
 model Photolog {
@@ -73,6 +81,8 @@ model Photolog {
   scrap Scrap[]
 
   comments Comment[]
+
+  hiddenUsers User[]  @relation("hiddenLogsRelation")
 }
 
 model Series {
@@ -85,6 +95,8 @@ model Series {
   authorId    Int
   
   photologs Photolog[]   @relation("seriesRelation")
+
+  hiddenUsers  User[]   @relation("hiddenSeriesRelation")
 }
 
 model Splace {

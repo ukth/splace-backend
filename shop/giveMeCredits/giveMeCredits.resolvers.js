@@ -31,7 +31,7 @@ export default {
               credit
             }
           });
-          console.log(a);
+          //console.log(a);
 
           const b = await client.user.update({
             where: { userId: loggedInUser.userId },
@@ -39,7 +39,7 @@ export default {
               credit: loggedInUser.credit+custom_data.credit
             }
           })
-          console.log(b);
+          //console.log(b);
 
           return {
             ok: true,
@@ -52,7 +52,7 @@ export default {
         }
 
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant give you credits",

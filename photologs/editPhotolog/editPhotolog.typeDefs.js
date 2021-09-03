@@ -1,10 +1,6 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type editPhotologResult {
-    ok: Boolean!
-    error: String
-  }
   type Mutation {
     editPhotolog(
       photologId: Int!
@@ -15,6 +11,6 @@ export default gql`
       splaceId: Int
       seriesId: Int
       hashtags: [String]
-    ): editPhotologResult!
+    ): defaultResult!
   }
 `;

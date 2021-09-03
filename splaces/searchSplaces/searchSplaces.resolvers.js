@@ -25,7 +25,7 @@ export default {
           searchedSplaces: result
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant search splace"

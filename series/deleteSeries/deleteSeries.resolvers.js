@@ -1,8 +1,9 @@
 import client from "../../client";
+import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    deleteSeries: async (
+    deleteSeries: protectedResolver(async (
       _,
       { seriesId }
     ) => {
@@ -12,17 +13,17 @@ export default {
             seriesId
           }
         });
-        console.log(a);
+        //console.log(a);
         return {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant delete series",
         };
       }
-    },
+    }),
   },
 };

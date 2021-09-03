@@ -22,6 +22,24 @@ export default {
                 authorId: loggedInUser.userId,
               },
             ],
+            NOT: [
+              {
+                author: {
+                  blockingUser: {
+                    some: {
+                      userId: loggedInUser.userId
+                    }
+                  }
+                },
+              },
+              {
+                hiddenUsers: {
+                  some: {
+                    userId: loggedInUser.userId
+                  }
+                }
+              },
+            ]
           },
           include: {
             hashtags: true,
@@ -30,14 +48,14 @@ export default {
             series: true,
             likedUser: true,
           },
-          take: 1,
+          take: 5,
           ...(lastId && { cursor: { photologId: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",
           },
         })
-        const lastCreated = logs[logs.length -1].createdAt;
+        const lastCreated = logs[logs.length - 1].createdAt;
         const series = await client.series.findMany({
           where: {
             OR: [
@@ -60,12 +78,30 @@ export default {
                 }
               },
             ],
+            NOT: [
+              {
+                author: {
+                  blockingUser: {
+                    some: {
+                      userId: loggedInUser.userId
+                    }
+                  }
+                },
+              },
+              {
+                hiddenUsers: {
+                  some: {
+                    userId: loggedInUser.userId
+                  }
+                }
+              },
+            ]
           },
           include: {
             author: true,
             photologs: true,
           },
-          take: 2,
+          take: 5,
           ...(lastId && { cursor: { seriesId: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
@@ -80,7 +116,7 @@ export default {
       } catch (e) {
         return {
           ok: false,
-          error: "cant get feed"
+          error: e
         };
       }
     })

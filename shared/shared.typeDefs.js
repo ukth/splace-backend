@@ -7,4 +7,8 @@ export default gql`
     photologs: [Photolog]
     splaces: [Splace]
   }
+  type defaultResult {
+    ok: Boolean!
+    error: String
+  }
 `;

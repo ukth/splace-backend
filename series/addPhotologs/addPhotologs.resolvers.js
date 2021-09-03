@@ -6,7 +6,7 @@ export default {
     addPhotologs: protectedResolver(async (_, { photologIds, seriesId }, { loggedInUser }) => {
       try {
         const ok = await client.series.findUnique({ where: { seriesId } })
-        console.log(ok);
+        //console.log(ok);
         if (ok.authorId != loggedInUser.userId) {
           return {
             ok: false,
@@ -30,7 +30,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant add photolog",

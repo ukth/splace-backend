@@ -1,10 +1,6 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type uploadLogResult {
-    ok: Boolean!
-    error: String
-  }
   type Mutation {
     uploadLog(
       title: String!
@@ -14,6 +10,6 @@ export default gql`
       splaceId: Int
       seriesId: Int
       hashtags: [String]
-    ): uploadLogResult!
+    ): defaultResult!
   }
 `;

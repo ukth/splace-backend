@@ -1,8 +1,9 @@
 import client from "../../client";
+import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    deleteComment: async (
+    deleteComment: protectedResolver(async (
       _,
       { commentId }
     ) => {
@@ -12,17 +13,17 @@ export default {
             commentId
           }
         });
-        console.log(a);
+        //console.log(a);
         return {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant delete comment",
         };
       }
-    },
+    }),
   },
 };

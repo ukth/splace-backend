@@ -17,7 +17,7 @@ export default {
             } 
           } 
         })
-        console.log(ok)
+        //console.log(ok)
         if (!ok) {
           return {
             ok: false,
@@ -52,7 +52,7 @@ export default {
           message: sendedMessage
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant send message",

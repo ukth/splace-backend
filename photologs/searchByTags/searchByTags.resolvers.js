@@ -10,7 +10,25 @@ export default {
           where: {
             hashtags: {
               some: { hashtagId }
-            }
+            },
+            NOT: [
+              {
+                author: {
+                  blockingUser: {
+                    some: {
+                      userId: loggedInUser.userId
+                    }
+                  }
+                },
+              },
+              {
+                hiddenUsers: {
+                  some: {
+                    userId: loggedInUser.userId
+                  }
+                }
+              },
+            ]
           },
           include: {
             hashtags: true,

@@ -1,8 +1,9 @@
 import client from "../../client";
+import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    deleteAccount: async (
+    deleteAccount: protectedResolver(async (
       _,
       { userId }
     ) => {
@@ -12,17 +13,17 @@ export default {
             userId
           }
         });
-        console.log(a);
+        //console.log(a);
         return {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant delete account",
         };
       }
-    },
+    }),
   },
 };

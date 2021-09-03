@@ -20,12 +20,12 @@ export default {
             close:dayjs.utc(close,'HH:mm').toISOString(),
           },
         });
-        console.log(a);
+        //console.log(a);
         return {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant create Timeset",
