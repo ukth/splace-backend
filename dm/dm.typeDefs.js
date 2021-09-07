@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Chatroom {
-    chatroomId: Int!
+    id: Int!
     title: String
     members: [User]
     messages: [Message]

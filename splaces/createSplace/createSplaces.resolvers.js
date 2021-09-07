@@ -8,7 +8,7 @@ export default {
       { name },
       { loggedInUser }
     ) => {
-      if(loggedInUser.authority != "root"){
+      if(loggedInUser.authority !== "root"){
         return {
           ok: false,
           error: "only root user can create splace"

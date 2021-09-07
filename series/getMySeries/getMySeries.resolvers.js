@@ -4,18 +4,23 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getSeries: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
+    getMySeries: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
       try {
         const series = await client.series.findMany({
           where: {
-            authorId: loggedInUser.userId,
+            author: {
+              id: loggedInUser.id,
+            }
           },
           take: 2,
-          ...(lastId && { cursor: { seriesId: lastId } }),
+          ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",
           },
+          include: {
+            photologs: true,
+          }
         })
         return {
           ok: true,

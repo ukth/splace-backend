@@ -16,8 +16,8 @@ export default {
         }
       }*/
       try {
-        const target = await client.user.findUnique({ where: { userId: targetId } });
-        if (targetId === loggedInUser.userId) {
+        const target = await client.user.findUnique({ where: { id: targetId } });
+        if (targetId === loggedInUser.id) {
           return {
             ok: false,
             error: "You can't unblock yourself"
@@ -31,12 +31,12 @@ export default {
         }
         await client.user.update({
           where: {
-            userId: loggedInUser.userId
+            id: loggedInUser.id
           },
           data: {
             blockedUser: {
               disconnect: {
-                userId: targetId
+                id: targetId
               }
             }
           }

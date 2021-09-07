@@ -9,10 +9,10 @@ export default {
       try {
         const ok = await client.chatroom.findFirst({ 
           where: { 
-            chatroomId,
+            id: chatroomId,
             members: {
               some: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             } 
           } 
@@ -24,19 +24,19 @@ export default {
             error: "you dont have authentication to send message."
           };
         }
-        const unreadMembers = await client.user.findMany({ where: { chatrooms: {some: { chatroomId } } } });
+        const unreadMembers = await client.user.findMany({ where: { chatrooms: {some: { id: chatroomId } } } });
         const unreadCount = unreadMembers.length
         const sendedMessage = await client.message.create({
           data: {
             text,
             author: {
               connect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
             chatroom: {
               connect: {
-                chatroomId
+                id: chatroomId
               }
             },
             unreadCount

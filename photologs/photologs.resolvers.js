@@ -2,12 +2,12 @@ import client from "../client";
 
 export default {
   Photolog: {
-    totalLiked: ({ photologId }) =>
+    totalLiked: ({ id }) =>
       client.user.count({
         where: {
           likedPhotologs: {
             some: {
-              photologId,
+              id
             },
           },
         },
@@ -17,7 +17,7 @@ export default {
         return false;
       }
       var yes = likedUser.filter(function(user){
-        return user.userId == loggedInUser.userId;
+        return user.id == loggedInUser.id;
       });
       return yes.length == 1;
     },

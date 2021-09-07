@@ -8,11 +8,11 @@ export default {
         const messages = await client.message.findMany({
           where: {
             chatroom: {
-              chatroomId
+              id: chatroomId
             },
           },
           take: 50,
-          ...(lastId && { cursor: { messageId: lastId } }),
+          ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",

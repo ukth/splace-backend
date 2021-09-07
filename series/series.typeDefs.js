@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Series {
-    seriesId: Int!
+    id: Int!
     title: String!
     createdAt: String!
     updatedAt: String!

@@ -2,14 +2,14 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Save {
-    saveId: Int!
+    id: Int!
     createdAt: String!
     splace: Splace!
     folder: Folder!
   }
 
   type Folder {
-    folderId: Int!
+    id: Int!
     title: String!
     createdAt: String!
     updatedAt: String!

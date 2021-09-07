@@ -5,9 +5,9 @@ export default {
   Mutation: {
     removePhotologs: protectedResolver(async (_, { photologIds, seriesId }, { loggedInUser }) => {
       try {
-        const ok = await client.series.findUnique({ where: { seriesId } })
+        const ok = await client.series.findUnique({ where: { id: seriesId } })
         //console.log(ok);
-        if (ok.authorId != loggedInUser.userId) {
+        if (ok.authorId != loggedInUser.id) {
           return {
             ok: false,
             error: "you are not author."
@@ -15,12 +15,12 @@ export default {
         }
         await client.series.update({
           where: {
-            seriesId
+            id: seriesId
           },
           data: {
             photologs: {
               disconnect: photologIds.map(photologId => ({
-                photologId
+                id: photologId
               }))
             }
           }

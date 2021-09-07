@@ -8,10 +8,10 @@ export default {
       try {
         const logs = await client.paymentLog.findMany({
           where: {
-            customerId: loggedInUser.userId
+            customerId: loggedInUser.id
           },
           take: 5,
-          ...(lastId && { cursor: { paymentLogId: lastId } }),
+          ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",

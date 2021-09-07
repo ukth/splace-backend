@@ -10,7 +10,7 @@ export default {
     ) => {
       try {
         //memberIds.push(loggedInUser.userId);
-        if(!memberIds.includes(loggedInUser.userId)){
+        if(!memberIds.includes(loggedInUser.id)){
           return{
             ok: false,
             error: "to create chatroom, you have to include yourself"
@@ -21,7 +21,7 @@ export default {
             title,
             members: {
               connect: memberIds.map(memberId => ({
-                userId: memberId
+                id: memberId
               }))
             }
           },

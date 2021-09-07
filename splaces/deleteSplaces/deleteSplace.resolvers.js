@@ -4,12 +4,20 @@ export default {
   Mutation: {
     deleteSplace: async (
       _,
-      { splaceId }
+      { splaceId },
+      { loggedInUser }
     ) => {
       try {
+        const previous = await client.splace.findUnique({ where: { id: splaceId } });
+        if (previous.ownerId != loggedInUser.id) {
+          return {
+            ok: false,
+            error: "you are not the owner of this splace!"
+          };
+        }
         const a = await client.splace.delete({
           where: {
-            splaceId
+            id: splaceId
           }
         });
         //console.log(a);

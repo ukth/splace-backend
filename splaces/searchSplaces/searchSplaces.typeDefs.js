@@ -3,7 +3,7 @@ import { gql } from "apollo-server";
 export default gql`
   type searchedSplace{
     endPage: Boolean!,
-    splaceId: Int!,
+    id: Int!,
     name: String!,
     geolog: Float,
     geolat: Float,

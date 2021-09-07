@@ -8,6 +8,6 @@ export default gql`
     series: [Series]
   }
   type Query {
-    getFeed(lastId: Int): getFeedResult!
+    getFeed(lastLogId: Int, lastSeriesId: Int): getFeedResult!
   }
 `;

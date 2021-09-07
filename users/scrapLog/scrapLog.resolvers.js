@@ -9,16 +9,30 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        const ok = await client.scrap.findFirst({
+          where:{
+            photologId,
+            savedUser: {
+              id: loggedInUser.id
+            }
+          }
+        })
+        if(ok){
+          return{
+            ok: false,
+            error: "you already scrap this log"
+          }
+        }
         const a = await client.scrap.create({
           data: {
             photolog: {
               connect: {
-                photologId
+                id: photologId
               }
             },
             savedUser: {
               connect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
           },

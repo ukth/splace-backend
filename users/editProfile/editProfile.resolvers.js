@@ -3,63 +3,74 @@ import bcrypt from "bcrypt";
 import client from "../../client";
 import { protectedResolver } from "../users.utils";
 
-const resolverFn = async (
-  _,
-  { name, username, email, password: newPassword, profileMessage, profileImageUrl, currentLog, currentLat },
-  { loggedInUser }
-) => {
-  try {
-    /*  let profilePhotoUrl = null;
-      if (profilePhoto) {
-        const { filename, createReadStream } = await profilePhoto;
-        const newFilename = `${loggedInUser.userId}-${Date.now()}-${filename}`;
-        const readStream = createReadStream();
-        const writeStream = createWriteStream(
-          process.cwd() + "/uploads/" + newFilename
-        );
-        readStream.pipe(writeStream);
-        profilePhotoUrl = `http://localhost:4000/static/${newFilename}`;
-      } */
-    let hashedPassword = null;
-    if (newPassword) {
-      hashedPassword = await bcrypt.hash(newPassword, 10);
-    }
-    const updatedUser = await client.user.update({
-      where: {
-        userId: loggedInUser.userId,
-      },
-      data: {
-        name,
-        username,
-        email,
-        profileMessage,
-        currentLat,
-        currentLog,
-        ...(hashedPassword && { password: hashedPassword }),
-        ...(profileImageUrl && { profileImageUrl: profileImageUrl }),
-      },
-    });
-
-    if (updatedUser.userId) {
-      return {
-        ok: true,
-      };
-    } else {
-      return {
-        ok: false,
-        error: "Could not update profile.",
-      };
-    }
-  } catch (e) {
-    return {
-      ok: false,
-      error: "cant update profile"
-    }
-  }
-};
-
 export default {
   Mutation: {
-    editProfile: protectedResolver(resolverFn),
-  },
+    editProfile: protectedResolver(async (
+      _,
+      { name, username, email, password: newPassword, profileMessage, profileImageUrl, currentLog, currentLat },
+      { loggedInUser }
+    ) => {
+      try {
+        if (username !== null) {
+          const existId = await client.user.findFirst({
+            where: {
+              username
+            },
+          });
+          if (existId !== null) {
+            if (existId.id !== loggedInUser.id) {
+              return {
+                ok: false,
+                error: "username/email already taken.",
+              };
+            }
+          }
+        }
+
+        if (email !== null) {
+          const existEmail = await client.user.findFirst({
+            where: {
+              email
+            },
+          });
+          if (existEmail !== null) {
+            if (existEmail.id !== loggedInUser.id) {
+              return {
+                ok: false,
+                error: "username/email already taken.",
+              };
+            }
+          }
+        }
+
+        let hashedPassword = null;
+        if (newPassword) {
+          hashedPassword = await bcrypt.hash(newPassword, 10);
+        }
+        const updatedUser = await client.user.update({
+          where: {
+            id: loggedInUser.id,
+          },
+          data: {
+            name,
+            username,
+            email,
+            profileMessage,
+            currentLat,
+            currentLog,
+            ...(hashedPassword && { password: hashedPassword }),
+            ...(profileImageUrl && { profileImageUrl: profileImageUrl }),
+          },
+        });
+        return {
+          ok: true,
+        };
+      } catch (e) {
+        return {
+          ok: false,
+          error: e
+        }
+      }
+    })
+  }
 };

@@ -17,12 +17,12 @@ export default {
       try {
         await client.folder.update({
           where: {
-            folderId
+            id: folderId
           },
           data: {
             members: {
               disconnect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
           }

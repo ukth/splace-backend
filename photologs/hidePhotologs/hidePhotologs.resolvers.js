@@ -15,14 +15,14 @@ export default {
             error: "you already follow this user"
           }
         }*/
-        const target = await client.photolog.findUnique({ where: { photologId: targetId } });
+        const target = await client.photolog.findUnique({ where: { id: targetId } });
         if (!target) {
           return {
             ok: false,
             error: "That photolog does not exist."
           };
         }
-        if(target.authorId == loggedInUser.userId){
+        if(target.authorId == loggedInUser.id){
           return {
             ok: false,
             error: "you cant hide your photologs"
@@ -30,12 +30,12 @@ export default {
         }
         await client.user.update({
           where: {
-            userId: loggedInUser.userId
+            id: loggedInUser.id
           },
           data: {
             hiddenPhotologs: {
               connect: {
-                photologId: targetId
+                id: targetId
               }
             }
           }

@@ -7,6 +7,7 @@ export default gql`
       close: String!
       day: Int!
       splaceId: Int!
+      isBreakTime: Boolean!
     ): defaultResult!
   }
 `;

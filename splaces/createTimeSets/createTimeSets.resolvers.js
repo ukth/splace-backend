@@ -13,18 +13,41 @@ export default {
   Mutation: {
     createTimeSets: protectedResolver(async (
       _,
-      { open, close, day, splaceId },
+      { open, close, day, splaceId, isBreakTime },
       { loggedInUser }
     ) => {
       try {
-        const a = await client.timeSet.create({
+        const ok = await client.timeSet.findFirst({
+          where: {
+            day,
+            splace: {
+              id: splaceId
+            },
+            isBreakTime
+          },
+        })
+        if(ok){
+          return {
+            ok: false,
+            error: "timeset exist, please use editTimeSet"
+          }
+        }
+        const otime = open.split(':');
+        const ctime = close.split(':');
+        if(day<0 || day > 6 || Number(otime[0])>=Number(ctime[0]) && Number(otime[1])>=Number(ctime[1])){
+          return{
+            ok: false,
+            error: "format error"
+          }
+        }
+        const b = await client.timeSet.create({
           data: {      
             open:dayjs.utc(open,'HH:mm').toISOString(),
             close:dayjs.utc(close,'HH:mm').toISOString(),
             day,
             splace: {
               connect: {
-                splaceId
+                id: splaceId
               }
             }
           },
@@ -34,7 +57,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant create Timeset",

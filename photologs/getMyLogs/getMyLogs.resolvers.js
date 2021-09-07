@@ -8,7 +8,7 @@ export default {
       try {
         const mine = await client.photolog.findMany({
           where: {
-            authorId: loggedInUser.userId
+            authorId: loggedInUser.id
           },
           include: {
             hashtags: true,
@@ -18,7 +18,7 @@ export default {
             likedUser: true,
           },
           take: 5,
-          ...(lastId && { cursor: { photologId: lastId } }),
+          ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",

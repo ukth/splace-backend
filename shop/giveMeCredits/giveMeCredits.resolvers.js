@@ -18,28 +18,30 @@ export default {
 
         const paymentlog = await client.paymentLog.findUnique({ where: { merchantUId } });
         const custom_data = JSON.parse(paymentData.custom_data)
-        console.log(custom_data)
+
 
         if (paymentData != null && amount === paymentData.amount && paymentlog === null && merchantUId === paymentData.merchant_uid
-          && custom_data.userId === loggedInUser.userId && paymentData.status === 'paid'
+          && custom_data.userId === loggedInUser.id && paymentData.status === 'paid'
           && credit === custom_data.credit && amount === credit*39) {
 
-          const a = await client.paymentLog.create({
-            data: {
-              customerId: loggedInUser.userId,
-              merchantUId,
-              credit
-            }
-          });
+          
           //console.log(a);
 
           const b = await client.user.update({
-            where: { userId: loggedInUser.userId },
+            where: { id: loggedInUser.id },
             data: {
               credit: loggedInUser.credit+custom_data.credit
             }
           })
           //console.log(b);
+
+          const a = await client.paymentLog.create({
+            data: {
+              customerId: loggedInUser.id,
+              merchantUId,
+              credit
+            }
+          });
 
           return {
             ok: true,
@@ -52,7 +54,7 @@ export default {
         }
 
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant give you credits",

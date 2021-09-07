@@ -1,12 +1,12 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type getSeriesResult {
+  type getMySeriesResult {
     ok: Boolean!
     error: String
     series: [Series]
   }
   type Query {
-    getSeries(lastId: Int): getSeriesResult!
+    getMySeries(lastId: Int): getMySeriesResult!
   }
 `;

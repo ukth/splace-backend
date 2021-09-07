@@ -5,8 +5,8 @@ export default {
     seeFollowers: async (_, { userId, lastId }) => {
       try {
         const ok = await client.user.findUnique({
-          where: { userId },
-          select: { userId: true },
+          where: { id: userId },
+          select: { id: true },
         });
 
         if (!ok) {
@@ -16,10 +16,10 @@ export default {
           };
         }
         const followers = await client.user
-          .findUnique({ where: { userId } })
+          .findUnique({ where: { id: userId } })
           .followers({
             take: 5,
-            ...(lastId && { cursor: { userId: lastId } }),
+            ...(lastId && { cursor: { id: lastId } }),
             skip: lastId ? 1 : 0,
           });
         return {

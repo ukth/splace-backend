@@ -9,20 +9,17 @@ export default {
       subscribe: async (_, { chatroomId }, { loggedInUser }, info) => {
         const ok = await client.chatroom.findFirst({ 
           where: { 
-            chatroomId,
+            id: chatroomId,
             members: {
               some: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             } 
           } 
         })
         //console.log(ok)
         if (!ok) {
-          return {
-            ok: false,
-            error: "you are not a member."
-          };
+          throw new Error("membership error");
         }
         return withFilter(
           () => pubsub.asyncIterator(NEW_MESSAGE),

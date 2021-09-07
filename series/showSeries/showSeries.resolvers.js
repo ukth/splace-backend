@@ -37,12 +37,12 @@ export default {
         }*/
         await client.series.update({
           where: {
-            seriesId: targetId
+            id: targetId
           },
           data: {
             hiddenUsers: {
               disconnect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             }
           }
@@ -54,7 +54,7 @@ export default {
         //console.log(e);
         return {
           ok: false,
-          error: "cant show this photologs",
+          error: "cant show this series",
         };
       }
     }),

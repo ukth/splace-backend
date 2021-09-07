@@ -15,27 +15,27 @@ export default {
             error: "you already follow this user"
           }
         }*/
-        const target = await client.series.findUnique({ where: { seriesId: targetId } });
+        const target = await client.series.findUnique({ where: { id: targetId } });
         if (!target) {
           return {
             ok: false,
             error: "That series does not exist."
           };
         }
-        if(target.authorId == loggedInUser.userId){
+        if(target.authorId == loggedInUser.id){
           return {
             ok: false,
-            error: "you cant hide your photologs"
+            error: "you cant hide your series"
           }
         }
         await client.user.update({
           where: {
-            userId: loggedInUser.userId
+            id: loggedInUser.id
           },
           data: {
             hiddenSeries: {
               connect: {
-                seriesId: targetId
+                id: targetId
               }
             }
           }
@@ -48,7 +48,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant hide photologs",
+          error: "cant hide series",
         };
       }
     }),

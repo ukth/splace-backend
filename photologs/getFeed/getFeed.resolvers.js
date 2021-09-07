@@ -4,7 +4,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getFeed: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
+    getFeed: protectedResolver(async (_, { lastLogId, lastSeriesId }, { loggedInUser }) => {
       try {
         const logs = await client.photolog.findMany({
           where: {
@@ -13,13 +13,13 @@ export default {
                 author: {
                   followers: {
                     some: {
-                      userId: loggedInUser.userId,
+                      id: loggedInUser.id,
                     },
                   },
                 },
               },
               {
-                authorId: loggedInUser.userId,
+                authorId: loggedInUser.id,
               },
             ],
             NOT: [
@@ -27,7 +27,7 @@ export default {
                 author: {
                   blockingUser: {
                     some: {
-                      userId: loggedInUser.userId
+                      id: loggedInUser.id
                     }
                   }
                 },
@@ -35,7 +35,7 @@ export default {
               {
                 hiddenUsers: {
                   some: {
-                    userId: loggedInUser.userId
+                    id: loggedInUser.id
                   }
                 }
               },
@@ -48,9 +48,9 @@ export default {
             series: true,
             likedUser: true,
           },
-          take: 5,
-          ...(lastId && { cursor: { photologId: lastId } }),
-          skip: lastId ? 1 : 0,
+          take: 2,
+          ...(lastLogId && { cursor: { id: lastLogId } }),
+          skip: lastLogId ? 1 : 0,
           orderBy: {
             createdAt: "desc",
           },
@@ -63,7 +63,7 @@ export default {
                 author: {
                   followers: {
                     some: {
-                      userId: loggedInUser.userId,
+                      id: loggedInUser.id,
                     },
                   },
                 },
@@ -72,7 +72,7 @@ export default {
                 }
               },
               {
-                authorId: loggedInUser.userId,
+                authorId: loggedInUser.id,
                 createdAt: {
                   gt: lastCreated
                 }
@@ -83,7 +83,7 @@ export default {
                 author: {
                   blockingUser: {
                     some: {
-                      userId: loggedInUser.userId
+                      id: loggedInUser.id
                     }
                   }
                 },
@@ -91,7 +91,7 @@ export default {
               {
                 hiddenUsers: {
                   some: {
-                    userId: loggedInUser.userId
+                    id: loggedInUser.id
                   }
                 }
               },
@@ -101,9 +101,8 @@ export default {
             author: true,
             photologs: true,
           },
-          take: 5,
-          ...(lastId && { cursor: { seriesId: lastId } }),
-          skip: lastId ? 1 : 0,
+          ...(lastSeriesId && { cursor: { id: lastSeriesId } }),
+          skip: lastSeriesId ? 1 : 0,
           orderBy: {
             createdAt: "desc",
           },

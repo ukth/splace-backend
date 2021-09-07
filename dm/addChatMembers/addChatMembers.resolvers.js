@@ -7,10 +7,10 @@ export default {
       try {
         const ok = await client.chatroom.findFirst({ 
           where: { 
-            chatroomId,
+            id: chatroomId,
             members: {
               some: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             } 
           } 
@@ -24,12 +24,12 @@ export default {
         }
         await client.chatroom.update({
           where: {
-            chatroomId
+            id: chatroomId
           },
           data: {
             members: {
               connect: memberIds.map(memberId => ({
-                userId: memberId
+                id: memberId
               }))
             }
           }

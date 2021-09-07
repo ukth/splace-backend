@@ -13,7 +13,7 @@ export default {
           data: {
             author: {
               connect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
             title,
@@ -23,14 +23,7 @@ export default {
             ...(splaceId != null && {
               splace: {
                 connect: {
-                  splaceId
-                }
-              },
-            }),
-            ...(seriesId != null && {
-              series: {
-                connect: {
-                  seriesId
+                  id: splaceId
                 }
               },
             }),

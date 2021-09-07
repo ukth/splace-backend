@@ -11,7 +11,7 @@ generator client {
 }
 
 model User {
-  userId         Int        @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   username       String     @unique
   name           String?     @db.VarChar(255)
   email          String     @db.VarChar(255)
@@ -48,9 +48,13 @@ model User {
 
   chatrooms Chatroom[]
 
+  moments   Moment[]
+
   hiddenPhotologs Photolog[] @relation("hiddenLogsRelation")
 
   hiddenSeries    Series[]   @relation("hiddenSeriesRelation")
+
+  hiddenMoment    Moment[]   @relation("hiddenMomentRelation")
 
   blockedUser    User[]     @relation("blockRelation")
 
@@ -58,7 +62,7 @@ model User {
 }
 
 model Photolog {
-  photologId Int       @id @default(autoincrement())
+  id Int       @id @default(autoincrement())
   title String @db.VarChar(255)
   imageUrls  String[]  @db.VarChar(255)
   photoSize  Int
@@ -66,10 +70,10 @@ model Photolog {
   createdAt  DateTime  @default(now())
   updatedAt      DateTime   @updatedAt
   
-  author       User      @relation(fields: [authorId], references: [userId])
+  author       User      @relation(fields: [authorId], references: [id])
   authorId     Int
   
-  splace     Splace?    @relation(fields: [splaceId], references: [splaceId])
+  splace     Splace?    @relation(fields: [splaceId], references: [id])
   splaceId   Int?
   
   series     Series[]    @relation("seriesRelation")
@@ -86,12 +90,12 @@ model Photolog {
 }
 
 model Series {
-  seriesId  Int        @id @default(autoincrement())
+  id  Int        @id @default(autoincrement())
   title     String     @db.VarChar(255)
   createdAt DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   
-  author      User       @relation(fields: [authorId], references: [userId])
+  author      User       @relation(fields: [authorId], references: [id])
   authorId    Int
   
   photologs Photolog[]   @relation("seriesRelation")
@@ -100,7 +104,7 @@ model Series {
 }
 
 model Splace {
-  splaceId Int     @id @default(autoincrement())
+  id Int     @id @default(autoincrement())
   name     String  @db.VarChar(255)
   geolog   Decimal? @db.Decimal(11, 8)
   geolat   Decimal? @db.Decimal(11, 8)
@@ -108,6 +112,9 @@ model Splace {
   createdAt   DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   ownerId Int?
+  parking  Boolean?
+  pets     Boolean?      
+  kids     Boolean?
   
   timeSets   TimeSet[]
 
@@ -127,64 +134,65 @@ model Splace {
 }
 
 model TimeSet {
-  timeSetId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   open DateTime  @db.Time()
   close DateTime @db.Time()
   day Int
-  splace Splace? @relation(fields: [splaceId], references: [splaceId])
+  splace Splace? @relation(fields: [splaceId], references: [id])
   splaceId  Int?
+  isBreakTime Boolean @default(false)
 }
 
 model FixedContent {
-  fixedContentId Int      @id @default(autoincrement())
+  id Int      @id @default(autoincrement())
   title          String   @db.VarChar(255)
   imageUrl       String?   @db.VarChar(255)
   createdAt      DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   text           String?  @db.Text
   
-  splace         Splace?   @relation(fields: [splaceId], references: [splaceId])
+  splace         Splace?   @relation(fields: [splaceId], references: [id])
   splaceId       Int?
 }
 
 model Ratingtag {
-  ratingtagId Int      @id @default(autoincrement())
+  id Int      @id @default(autoincrement())
   name        String   @db.VarChar(255) @unique
   
   splaces      Splace[]
 }
 
 model Badge {
-  badgeId Int      @id @default(autoincrement())
+  id Int      @id @default(autoincrement())
   name    String   @db.VarChar(255) @unique
   
   splaces  Splace[]
 }
 
 model Save {
-  saveId    Int      @id @default(autoincrement())
+  id    Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   
-  splace    Splace?   @relation(fields: [splaceId], references: [splaceId])
+  splace    Splace?   @relation(fields: [splaceId], references: [id])
   splaceId  Int?
   
-  folder    Folder?   @relation(fields: [folderId], references: [folderId])
+  folder    Folder?   @relation(fields: [folderId], references: [id])
   folderId  Int?
 }
 
 model Scrap {
-  scrapId    Int      @id @default(autoincrement())
+  id    Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   
-  photolog    Photolog?   @relation(fields: [photologId], references: [photologId])
+  photolog    Photolog?   @relation(fields: [photologId], references: [id])
   photologId  Int?
   
-  savedUser User? @relation(fields: [savedUserId], references: [userId])
+  savedUser User? @relation(fields: [savedUserId], references: [id])
   savedUserId Int?
 }
 
 model Folder {
-  folderId  Int      @id @default(autoincrement())
+  id  Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
@@ -195,7 +203,7 @@ model Folder {
 }
 
 model Hashtag {
-  hashtagId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name     String   @db.VarChar(255) @unique
   
   photologs Photolog[]
@@ -204,31 +212,31 @@ model Hashtag {
 }
 
 model Item {
-  itemId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   
-  splace Splace @relation(fields: [splaceId], references: [splaceId])
+  splace Splace @relation(fields: [splaceId], references: [id])
   splaceId Int
 }
 
 
 model Comment {
-  commentId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   
   text String @db.Text
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
 
-  author User? @relation(fields: [authorId], references: [userId])
+  author User? @relation(fields: [authorId], references: [id])
   authorId Int?
 
   likedUsers User[] @relation("likedCommentRelation")
 
-  photolog Photolog? @relation(fields: [photologId], references: [photologId])
+  photolog Photolog? @relation(fields: [photologId], references: [id])
   photologId Int?
 }
 
 model PaymentLog {
-  paymentLogId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   customerId Int
   merchantUId String @db.VarChar(255) @unique
@@ -241,7 +249,7 @@ model PaymentLog {
 }
 
 model BuyLog {
-  buyLogId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   itemId Int
   shopId Int
@@ -252,7 +260,7 @@ model BuyLog {
 }
 
 model Chatroom {
-  chatroomId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   title String   @db.VarChar(255)
   members User[]
   messages Message[]
@@ -263,13 +271,28 @@ model Chatroom {
 model Message {
   id Int @id @default(autoincrement())
   text String   @db.Text
-  author User @relation(fields: [authorId], references: [userId])
+  author User @relation(fields: [authorId], references: [id])
   authorId Int
 
-  chatroom Chatroom @relation(fields: [chatroomId], references: [chatroomId])
+  chatroom Chatroom @relation(fields: [chatroomId], references: [id])
   chatroomId Int
 
   unreadCount Int
 
   createdAt DateTime  @default(now())
+}
+
+model Moment {
+  id Int @id @default(autoincrement())
+  text String? @db.Text
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  videoUrl String? @db.VarChar(255)
+  
+  createdAt DateTime @default(now())
+
+  address String @db.VarChar(255)
+
+  hiddenUsers  User[]  @relation("hiddenMomentRelation")
 }

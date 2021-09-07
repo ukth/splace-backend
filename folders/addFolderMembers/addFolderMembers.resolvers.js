@@ -5,12 +5,12 @@ export default {
   Mutation: {
     addFolderMembers: protectedResolver(async (_, { memberIds, folderId }, { loggedInUser }) => {
       try {
-        const ok = await client.folder.findUnique({ 
+        const ok = await client.folder.findFirst({ 
           where: { 
-            folderId,
+            id: folderId,
             members: {
               some: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             } 
           } 
@@ -24,12 +24,12 @@ export default {
         }
         await client.folder.update({
           where: {
-            folderId
+            id: folderId
           },
           data: {
             members: {
               connect: memberIds.map(memberId => ({
-                userId: memberId
+                id: memberId
               }))
             }
           }

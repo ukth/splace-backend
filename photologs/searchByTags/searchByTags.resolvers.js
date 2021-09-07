@@ -9,14 +9,14 @@ export default {
         const feed = await client.photolog.findMany({
           where: {
             hashtags: {
-              some: { hashtagId }
+              some: { id: hashtagId }
             },
             NOT: [
               {
                 author: {
                   blockingUser: {
                     some: {
-                      userId: loggedInUser.userId
+                      id: loggedInUser.id
                     }
                   }
                 },
@@ -24,7 +24,7 @@ export default {
               {
                 hiddenUsers: {
                   some: {
-                    userId: loggedInUser.userId
+                    id: loggedInUser.id
                   }
                 }
               },
@@ -38,7 +38,7 @@ export default {
             likedUser: true,
           },
           take: 5,
-          ...(lastId && { cursor: { photologId: lastId } }),
+          ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",

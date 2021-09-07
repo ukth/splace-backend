@@ -9,12 +9,12 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const ok = await client.folder.findUnique({ 
+        const ok = await client.folder.findFirst({ 
           where: { 
-            folderId,
+            id: folderId,
             members: {
               some: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             } 
           } 
@@ -30,12 +30,12 @@ export default {
           data: {
             splace: {
               connect: {
-                splaceId
+                id: splaceId
               }
             },
             folder: {
               connect: {
-                folderId
+                id: folderId
               }
             },
           },
@@ -45,7 +45,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant add save",

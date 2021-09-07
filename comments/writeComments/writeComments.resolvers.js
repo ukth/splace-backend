@@ -13,13 +13,13 @@ export default {
           data: {
             author: {
               connect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
             text,
             photolog: {
               connect: {
-                photologId
+                id: photologId
               }
             }
           },

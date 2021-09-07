@@ -6,15 +6,15 @@ export default {
   Query: {
     getLogsBySeries: protectedResolver(async (_, { seriesId, lastId }, { loggedInUser }) => {
       try {
-        const logs = await client.series.findUnique({ 
+        const logs = await client.series.findFirst({ 
           where: { 
-            seriesId,
+            id: seriesId,
             NOT: [
               {
                 author: {
                   blockingUser: {
                     some: {
-                      userId: loggedInUser.userId
+                      id: loggedInUser.id
                     }
                   }
                 },
@@ -22,7 +22,7 @@ export default {
               {
                 hiddenUsers: {
                   some: {
-                    userId: loggedInUser.userId
+                    id: loggedInUser.id
                   }
                 }
               },
@@ -35,7 +35,7 @@ export default {
                 author: {
                   blockingUser: {
                     some: {
-                      userId: loggedInUser.userId
+                      id: loggedInUser.id
                     }
                   }
                 },
@@ -43,7 +43,7 @@ export default {
               {
                 hiddenUsers: {
                   some: {
-                    userId: loggedInUser.userId
+                    id: loggedInUser.id
                   }
                 }
               },
@@ -53,7 +53,7 @@ export default {
             splace: true,
           },
           take: 5,
-          ...(lastId && { cursor: { photologId: lastId } }),
+          ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "asc",
@@ -64,6 +64,7 @@ export default {
           logs: logs
         };
       } catch (e) {
+        console.log(e)
         return {
           ok: false,
           error: "cant get series"

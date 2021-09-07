@@ -17,12 +17,12 @@ export default {
       try {
         await client.chatroom.update({
           where: {
-            chatroomId
+            id: chatroomId
           },
           data: {
             members: {
               disconnect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
           }

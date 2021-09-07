@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Photolog {
-    photologId: Int!   
+    id: Int!   
     title: String!
     imageUrls: [String]  
     photoSize: Int!
@@ -13,7 +13,7 @@ export default gql`
     isILiked: Boolean
     author: User!
     splace: Splace  
-    series: Series
+    series: [Series]
     hashtags: [Hashtag]
     likedUser: [User]
     scrap: [Scrap]

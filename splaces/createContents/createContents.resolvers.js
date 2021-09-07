@@ -9,8 +9,8 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const previous = await client.splace.findUnique({ where: { splaceId } });
-        if (previous.ownerId != loggedInUser.userId) {
+        const previous = await client.splace.findUnique({ where: { id: splaceId } });
+        if (previous.ownerId != loggedInUser.id) {
           return {
             ok: false,
             error: "you are not the owner of this splace!"
@@ -21,7 +21,7 @@ export default {
             title,
             splace: {
               connect: {
-                splaceId
+                id: splaceId
               }
             }
           },
