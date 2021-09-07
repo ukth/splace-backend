@@ -14,7 +14,7 @@ export default {
             title,
             author: {
               connect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
           },

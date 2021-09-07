@@ -5,12 +5,18 @@ export default {
       try {
         const profile = await client.user.findFirst({
           where: {
-            userId,
+            id: userId,
           },
           include: {
             photologs: true,
           },
         })
+        if(!profile){
+          return{
+            ok: false,
+            error: "cant find profile"
+          }
+        }
         return {
           ok: true,
           profile: profile

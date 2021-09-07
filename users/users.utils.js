@@ -6,8 +6,8 @@ export const getUser = async (token) => {
     if (!token) {
       return null;
     }
-    const { userId } = await jwt.verify(token, process.env.SECRET_KEY);
-    const user = await client.user.findUnique({ where: { userId } });
+    const { id } = await jwt.verify(token, process.env.SECRET_KEY);
+    const user = await client.user.findUnique({ where: { id } });
     if (user) {
       return user;
     } else {

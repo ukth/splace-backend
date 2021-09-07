@@ -15,13 +15,13 @@ export default {
             error: "you already follow this user"
           }
         }*/
-        if (targetId === loggedInUser.userId) {
+        if (targetId === loggedInUser.id) {
           return {
             ok: false,
             error: "You can't block yourself"
           }
         }
-        const target = await client.user.findUnique({ where: { userId: targetId } });
+        const target = await client.user.findUnique({ where: { id: targetId } });
         if (!target) {
           return {
             ok: false,
@@ -30,12 +30,12 @@ export default {
         }
         await client.user.update({
           where: {
-            userId: loggedInUser.userId
+            id: loggedInUser.id
           },
           data: {
             blockedUser: {
               connect: {
-                userId: targetId
+                id: targetId
               }
             }
           }

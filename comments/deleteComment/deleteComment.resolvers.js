@@ -5,12 +5,20 @@ export default {
   Mutation: {
     deleteComment: protectedResolver(async (
       _,
-      { commentId }
+      { commentId },
+      { loggedInUser }
     ) => {
       try {
+        const previous = await client.comment.findUnique({ where: { id: commentId } });
+        if (previous.authorId != loggedInUser.id) {
+          return {
+            ok: false,
+            error: "you can delete only yours!"
+          };
+        }
         const a = await client.comment.delete({
           where: {
-            commentId
+            id: commentId
           }
         });
         //console.log(a);
@@ -18,7 +26,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant delete comment",

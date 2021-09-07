@@ -10,7 +10,7 @@ export default {
             id: chatroomId,
             members: {
               some: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             } 
           } 
@@ -29,7 +29,7 @@ export default {
           data: {
             members: {
               connect: memberIds.map(memberId => ({
-                userId: memberId
+                id: memberId
               }))
             }
           }

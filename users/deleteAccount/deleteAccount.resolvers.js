@@ -5,12 +5,13 @@ export default {
   Mutation: {
     deleteAccount: protectedResolver(async (
       _,
-      { userId }
+      __,
+      { loggedInUser }
     ) => {
       try {
         const a = await client.user.delete({
           where: {
-            userId
+            id: loggedInUser.id
           }
         });
         //console.log(a);

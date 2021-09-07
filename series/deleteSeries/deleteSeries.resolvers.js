@@ -5,14 +5,30 @@ export default {
   Mutation: {
     deleteSeries: protectedResolver(async (
       _,
-      { seriesId }
+      { seriesId },
+      { loggedInUser }
     ) => {
       try {
-        const a = await client.series.delete({
+        const a = await client.series.findFirst({
           where: {
-            seriesId
+            id: seriesId,
+            author: {
+              id: loggedInUser.id
+            }
           }
         });
+        if(!a){
+          return{
+            ok: false,
+            error: "you can only delete yours"
+          }
+        }
+        const b = await client.series.delete({
+          where:{
+            id: seriesId
+          }
+        })
+        //console.log(b)
         //console.log(a);
         return {
           ok: true,

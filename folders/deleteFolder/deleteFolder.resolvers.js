@@ -8,9 +8,26 @@ export default {
       { folderId }
     ) => {
       try {
+        const ok = await client.folder.findFirst({ 
+          where: { 
+            id: folderId,
+            members: {
+              some: {
+                id: loggedInUser.id
+              }
+            } 
+          } 
+        })
+        //console.log(ok);
+        if(!ok) {
+          return {
+            ok: false,
+            error: "you dont have authentication to delete folder."
+          };
+        }
         const a = await client.folder.delete({
           where: {
-            folderId
+            id: folderId
           }
         });
         //console.log(a);

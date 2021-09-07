@@ -21,12 +21,12 @@ export default {
       try {
         const a = await client.user.update({
           where: {
-            userId: loggedInUser.userId
+            id: loggedInUser.id
           },
           data: {
             likedComments: {
               connect: {
-                commentId
+                id: commentId
               }
             }
           },

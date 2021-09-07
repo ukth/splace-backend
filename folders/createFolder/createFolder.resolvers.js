@@ -14,7 +14,7 @@ export default {
             title,
             members: {
               connect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
           },

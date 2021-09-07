@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Splace {
-    splaceId:      Int!      
+    id:      Int!      
     name:          String!      
     geolog:        Float      
     geolat:        Float
@@ -53,5 +53,6 @@ export default gql`
     day: Int!
     splace: Splace!
     splaceId: Int!
+    isBreakTime: Boolean!
   }
 `;

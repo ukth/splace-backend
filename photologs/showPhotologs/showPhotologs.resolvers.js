@@ -37,12 +37,12 @@ export default {
         }*/
         await client.photolog.update({
           where: {
-            photologId: targetId
+            id: targetId
           },
           data: {
             hiddenUsers: {
               disconnect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             }
           }

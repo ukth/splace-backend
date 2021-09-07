@@ -2,43 +2,43 @@ import client from "../client";
 
 export default {
   User: {
-    totalFollowing: ({ userId }) =>
+    totalFollowing: ({ id }) =>
       client.user.count({
         where: {
           followers: {
             some: {
-              userId,
+              id
             },
           },
         },
       }),
-    totalFollowers: ({ userId }) =>
+    totalFollowers: ({ id }) =>
       client.user.count({
         where: {
-          following: {
+          followings: {
             some: {
-              userId,
+              id
             },
           },
         },
       }),
-    isMe: ({ userId }, _, { loggedInUser }) => {
+    isMe: ({ id }, _, { loggedInUser }) => {
       if (!loggedInUser) {
         return false;
       }
-      return userId === loggedInUser.userId;
+      return id === loggedInUser.id;
     },
-    isFollowing: async ({ userId }, _, { loggedInUser }) => {
+    isFollowing: async ({ id }, _, { loggedInUser }) => {
       try {
         if (!loggedInUser) {
           return false;
         }
         const exists = await client.user.count({
           where: {
-            userId: loggedInUser.userId,
+            id: loggedInUser.id,
             followings: {
               some: {
-                userId,
+                id,
               },
             },
           },
@@ -48,11 +48,11 @@ export default {
         return false;
       }
     },
-    totalLogsNumber: ({ userId }) =>
+    totalLogsNumber: ({ id }) =>
       client.photolog.count({
         where: {
           author: {
-            userId
+            id
           },
         },
       }),

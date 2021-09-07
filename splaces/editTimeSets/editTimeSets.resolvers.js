@@ -13,7 +13,7 @@ export default {
       try {
         const a = await client.timeSet.update({
           where: {
-            timeSetId
+            id: timeSetId
           },
           data: {
             open:dayjs.utc(open,'HH:mm').toISOString(),
@@ -28,7 +28,7 @@ export default {
         //console.log(e);
         return {
           ok: false,
-          error: "cant create Timeset",
+          error: "cant edit Timeset",
         };
       }
     }),

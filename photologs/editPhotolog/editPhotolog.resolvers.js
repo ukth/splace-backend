@@ -5,12 +5,19 @@ export default {
   Mutation: {
     editPhotolog: protectedResolver(async (
       _,
-      { photologId, title, imageUrls, photoSize, text, splaceId, seriesId, hashtags },
+      { photologId, title, imageUrls, photoSize, text, splaceId, hashtags },
       { loggedInUser }
     ) => {
       try {
-        const previous = await client.photolog.findUnique({ where: { photologId } });
-        if (previous.authorId != loggedInUser.userId) {
+        const ok = await client.photolog.findFirst({
+          where: {
+            id: photologId,
+            author: {
+              id: loggedInUser.id
+            }
+          }
+        });
+        if (!ok) {
           return {
             ok: false,
             error: "you can edit only yours!"
@@ -18,7 +25,7 @@ export default {
         }
         const a = await client.photolog.update({
           where: {
-            photologId
+            id: photologId
           },
           data: {
             title,
@@ -29,15 +36,8 @@ export default {
               splace: {
                 disconnect: true,
                 connect: {
-                  splaceId
+                  id: splaceId
                 },
-              },
-            }),
-            ...(seriesId != null && {
-              series: {
-                connect: {
-                  seriesId
-                }
               },
             }),
             ...(hashtags != null && {

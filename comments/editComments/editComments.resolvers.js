@@ -9,8 +9,8 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const previous = await client.comment.findUnique({ where: { commentId } });
-        if (previous.authorId != loggedInUser.userId) {
+        const previous = await client.comment.findUnique({ where: { id: commentId } });
+        if (previous.authorId != loggedInUser.id) {
           return {
             ok: false,
             error: "you can edit only yours!"
@@ -18,7 +18,7 @@ export default {
         }
         const a = await client.comment.update({
           where: {
-            commentId
+            id: commentId
           },
           data: {
             text

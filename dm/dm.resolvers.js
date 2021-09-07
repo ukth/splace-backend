@@ -7,7 +7,7 @@ export default {
         return false;
       }
       
-      return authorId == loggedInUser.userId;
+      return authorId == loggedInUser.id;
     },
   },
 };

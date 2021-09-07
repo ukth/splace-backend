@@ -12,17 +12,14 @@ export default {
             id: chatroomId,
             members: {
               some: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             } 
           } 
         })
         //console.log(ok)
         if (!ok) {
-          return {
-            ok: false,
-            error: "you are not a member."
-          };
+          throw new Error("membership error");
         }
         return withFilter(
           () => pubsub.asyncIterator(NEW_MESSAGE),

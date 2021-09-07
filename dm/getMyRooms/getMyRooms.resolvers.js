@@ -9,15 +9,15 @@ export default {
           where: {
             members: {
               some: {
-                userId: loggedInUser.userId,
+                id: loggedInUser.id,
               },
             },
-            take: 5,
-            ...(lastId && { cursor: { chatroomId: lastId } }),
+          },
+          take: 5,
+            ...(lastId && { cursor: { id: lastId } }),
             skip: lastId ? 1 : 0,
             orderBy: {
               updatedAt: "asc",
-            },
           },
           include: {
             members: true,
@@ -28,6 +28,7 @@ export default {
           rooms: rooms
         }
       } catch (e) {
+        //console.log(e);
         return {
           ok: false,
           error: "cant get rooms"

@@ -5,9 +5,9 @@ export default {
   Mutation: {
     followUser: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
       try {
-        const isFollowing = await client.user.findUnique({ where: { userId: loggedInUser.userId } })
+        const isFollowing = await client.user.findUnique({ where: { id: loggedInUser.id } })
           .followings({
-            where: { userId: targetId }
+            where: { id: targetId }
           })
         if (isFollowing.length == 1) {
           return {
@@ -15,13 +15,13 @@ export default {
             error: "you already follow this user"
           }
         }
-        if (targetId === loggedInUser.userId) {
+        if (targetId === loggedInUser.id) {
           return {
             ok: false,
             error: "You can't follow yourself"
           }
         }
-        const target = await client.user.findUnique({ where: { userId: targetId } });
+        const target = await client.user.findUnique({ where: { id: targetId } });
         if (!target) {
           return {
             ok: false,
@@ -30,12 +30,12 @@ export default {
         }
         await client.user.update({
           where: {
-            userId: loggedInUser.userId
+            id: loggedInUser.id
           },
           data: {
             followings: {
               connect: {
-                userId: targetId
+                id: targetId
               }
             }
           }

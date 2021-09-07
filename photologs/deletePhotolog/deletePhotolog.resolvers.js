@@ -5,20 +5,35 @@ export default {
   Mutation: {
     deletePhotolog: protectedResolver(async (
       _,
-      { photologId }
+      { photologId },
+      { loggedInUser }
     ) => {
       try {
-        const a = await client.photolog.delete({
+        const a = await client.photolog.findFirst({
           where: {
-            photologId
+            id: photologId,
+            author: {
+              id: loggedInUser.id
+            }
           }
         });
-        console.log(a);
+        if(!a){
+          return{
+            ok: false,
+            error: "you can only delete yours"
+          }
+        }
+        const b = await client.photolog.delete({
+          where: {
+            id: photologId,
+          }
+        });
+        //console.log(a);
         return {
           ok: true,
         };
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return {
           ok: false,
           error: "cant delete photolog",

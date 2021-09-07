@@ -12,7 +12,7 @@ export default {
             },
           },
           take: 50,
-          ...(lastId && { cursor: { messageId: lastId } }),
+          ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",

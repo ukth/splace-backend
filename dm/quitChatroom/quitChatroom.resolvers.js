@@ -22,7 +22,7 @@ export default {
           data: {
             members: {
               disconnect: {
-                userId: loggedInUser.userId
+                id: loggedInUser.id
               }
             },
           }
