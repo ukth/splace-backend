@@ -45,6 +45,18 @@ export default {
             author: true,
           },
         });
+        const a = await client.chatroom.update({
+          where:{
+            id: chatroomId
+          },
+          data: {
+            lastMessage: {
+              connect: {
+                id: sendedMessage.id
+              }
+            }
+          }
+        })
         // console.log(client);
         pubsub.publish(NEW_MESSAGE, { newMessage: { ...sendedMessage } });
         return {

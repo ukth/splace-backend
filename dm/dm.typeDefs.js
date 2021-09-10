@@ -8,6 +8,7 @@ export default gql`
     messages: [Message]
     createdAt: String!
     updatedAt: String!
+    lastMessage: Message
   }
 
   type Message {

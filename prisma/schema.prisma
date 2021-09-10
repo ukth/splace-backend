@@ -279,6 +279,9 @@ model Chatroom {
   title String   @db.VarChar(255)
   members User[]
   messages Message[]
+
+  lastMessage Message? @relation("lastMessageRelation", fields: [lastMessageId], references: [id])
+  lastMessageId Int?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -291,6 +294,8 @@ model Message {
 
   chatroom Chatroom @relation(fields: [chatroomId], references: [id])
   chatroomId Int
+
+  lastChatroom Chatroom? @relation("lastMessageRelation")
 
   unreadCount Int
 
