@@ -3,21 +3,28 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    createSeries: protectedResolver(async (
+    uploadMoment: protectedResolver(async (
       _,
-      { title, isPrivate },
+      { text, splaceId, videoUrl },
       { loggedInUser }
     ) => {
       try {
-        const a = await client.series.create({
+        const a = await client.moment.create({
           data: {
-            title,
-            isPrivate,
             author: {
               connect: {
                 id: loggedInUser.id
               }
             },
+            videoUrl,
+            text,
+            ...(splaceId != null && {
+              splace: {
+                connect: {
+                  id: splaceId
+                }
+              },
+            }),
           },
         });
         //console.log(a);
@@ -28,7 +35,7 @@ export default {
         //console.log(e);
         return {
           ok: false,
-          error: "cant create series",
+          error: "cant create moment",
         };
       }
     }),

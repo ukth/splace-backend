@@ -2,9 +2,10 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Mutation {
-    createSeries(
-      title: String!
-      isPrivate: Boolean!
+    uploadMoment(
+      splaceId: Int
+      videoUrl: String!
+      text: String
     ): defaultResult!
   }
 `;

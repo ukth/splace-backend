@@ -6,7 +6,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, geolog, geolat, address, timeSetIds, itemIds, badgeIds, ratingtagIds, hashtags },
+      { splaceId, name, geolog, geolat, address, timeSetIds, itemIds, hashtags, kids, parking, pets},
       { loggedInUser }
     ) => {
       try {
@@ -26,6 +26,9 @@ export default {
             geolat,
             geolog,
             address,
+            kids,
+            parking,
+            pets,
             ...(timeSetIds != null && {
               timeSets: {
                 connect: timeSetIds.map(timeSetId => ({
@@ -37,20 +40,6 @@ export default {
               items: {
                 connect: itemIds.map(itemId => ({
                   itemId
-                })),
-              },
-            }),
-            ...(ratingtagIds != null && {
-              ratingtags: {
-                connect: ratingtagIds.map(ratingtagId => ({
-                  ratingtagId
-                })),
-              },
-            }),
-            ...(badgeIds != null && {
-              badges: {
-                connect: badgeIds.map(badgeId => ({
-                  badgeId
                 })),
               },
             }),

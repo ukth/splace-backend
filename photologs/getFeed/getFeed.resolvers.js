@@ -17,6 +17,7 @@ export default {
                     },
                   },
                 },
+                isPrivate: false
               },
               {
                 authorId: loggedInUser.id,
@@ -43,18 +44,25 @@ export default {
           },
           include: {
             hashtags: true,
+            specialtags: true,
             splace: true,
             author: true,
             series: true,
             likedUser: true,
           },
-          take: 2,
+          take: 3,
           ...(lastLogId && { cursor: { id: lastLogId } }),
           skip: lastLogId ? 1 : 0,
           orderBy: {
             createdAt: "desc",
           },
         })
+        if(logs.length === 0){
+          return {
+            ok: false,
+            error: "no logs"
+          }
+        }
         const lastCreated = logs[logs.length - 1].createdAt;
         const series = await client.series.findMany({
           where: {
@@ -69,13 +77,14 @@ export default {
                 },
                 createdAt: {
                   gt: lastCreated
-                }
+                },
+                isPrivate: false
               },
               {
                 authorId: loggedInUser.id,
                 createdAt: {
                   gt: lastCreated
-                }
+                },
               },
             ],
             NOT: [

@@ -19,6 +19,17 @@ export default {
         }
       }*/
       try {
+        const b = await client.photolog.findUnique({
+          where: {
+            id: photologId
+          }
+        })
+        if(b.isPrivate){
+          return {
+            ok: false,
+            error: "you can't like private photolog"
+          }
+        }
         const a = await client.user.update({
           where: {
             id: loggedInUser.id

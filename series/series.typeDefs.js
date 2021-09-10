@@ -6,6 +6,7 @@ export default gql`
     title: String!
     createdAt: String!
     updatedAt: String!
+    isPrivate: Boolean!
     author: User!
     photologs: [Photolog]
   }

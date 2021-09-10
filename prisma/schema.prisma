@@ -21,10 +21,10 @@ model User {
   joinedAt       DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   authority      String     @db.VarChar(255) @default("user")
-  currentLog   Decimal? @db.Decimal(11, 8)
-  currentLat   Decimal? @db.Decimal(11, 8)
   credit       Int    @default(0)
-  lockedCredit  Int   @default(0)  
+  lockedCredit  Int   @default(0)
+  url          String?   @db.VarChar(255)
+  phone        String?   @db.VarChar(255)  
   
   followers      User[]     @relation("followRelation")
   
@@ -54,8 +54,6 @@ model User {
 
   hiddenSeries    Series[]   @relation("hiddenSeriesRelation")
 
-  hiddenMoment    Moment[]   @relation("hiddenMomentRelation")
-
   blockedUser    User[]     @relation("blockRelation")
 
   blockingUser   User[]     @relation("blockRelation")
@@ -69,6 +67,7 @@ model Photolog {
   text       String?    @db.Text
   createdAt  DateTime  @default(now())
   updatedAt      DateTime   @updatedAt
+  isPrivate Boolean @default(false)
   
   author       User      @relation(fields: [authorId], references: [id])
   authorId     Int
@@ -79,6 +78,8 @@ model Photolog {
   series     Series[]    @relation("seriesRelation")
   
   hashtags   Hashtag[]
+
+  specialtags Specialtag[]
   
   likedUser  User[]    @relation("likedRelation")
 
@@ -94,6 +95,7 @@ model Series {
   title     String     @db.VarChar(255)
   createdAt DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
+  isPrivate Boolean @default(false)
   
   author      User       @relation(fields: [authorId], references: [id])
   authorId    Int
@@ -115,22 +117,27 @@ model Splace {
   parking  Boolean?
   pets     Boolean?      
   kids     Boolean?
+  intro    String? @db.Text
+  url      String? @db.VarChar(255)
+  phone    String? @db.VarChar(255)
   
   timeSets   TimeSet[]
 
-  items           Item[]
-  
-  badges         Badge[]
+  items          Item?
   
   ratingtags    Ratingtag[]   
   
   hashtags      Hashtag[]
+
+  specialtags   Specialtag[]
   
   fixedContents FixedContent[]
   
   photologs Photolog[]
   
   saves       Save[]
+
+  moments     Moment[]
 }
 
 model TimeSet {
@@ -160,13 +167,6 @@ model Ratingtag {
   name        String   @db.VarChar(255) @unique
   
   splaces      Splace[]
-}
-
-model Badge {
-  id Int      @id @default(autoincrement())
-  name    String   @db.VarChar(255) @unique
-  
-  splaces  Splace[]
 }
 
 model Save {
@@ -211,8 +211,23 @@ model Hashtag {
   splaces   Splace[]
 }
 
+model Specialtag {
+  id Int @id @default(autoincrement())
+  name     String   @db.VarChar(255) @unique
+  color    String   @db.VarChar(255)
+  
+  photologs Photolog[]
+  
+  splaces   Splace[]
+}
+
 model Item {
   id Int @id @default(autoincrement())
+
+  name String @db.Text
+  price Int?
+
+  imageUrls String[] @db.VarChar(255)
   
   splace Splace @relation(fields: [splaceId], references: [id])
   splaceId Int
@@ -288,11 +303,10 @@ model Moment {
   author User @relation(fields: [authorId], references: [id])
   authorId Int
 
+  splace Splace? @relation(fields: [splaceId], references: [id])
+  splaceId Int?
+
   videoUrl String? @db.VarChar(255)
   
   createdAt DateTime @default(now())
-
-  address String @db.VarChar(255)
-
-  hiddenUsers  User[]  @relation("hiddenMomentRelation")
 }

@@ -7,6 +7,6 @@ export default gql`
     logs: [Photolog]
   }
   type Query {
-    searchByTags(hashtagId: Int!, lastId: Int): searchByTagsResult!
+    searchByTags(tagId: Int!, lastId: Int): searchByTagsResult!
   }
 `;

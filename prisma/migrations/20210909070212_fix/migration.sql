@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE "Item" ALTER COLUMN "price" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Splace" ALTER COLUMN "intro" DROP NOT NULL,
+ALTER COLUMN "phone" DROP NOT NULL,
+ALTER COLUMN "url" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "phone" DROP NOT NULL;

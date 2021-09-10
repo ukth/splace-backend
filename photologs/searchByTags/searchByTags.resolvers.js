@@ -4,13 +4,23 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    searchByTags: protectedResolver(async (_, { hashtagId, lastId }, { loggedInUser }) => {
+    searchByTags: protectedResolver(async (_, { tagId, lastId }, { loggedInUser }) => {
       try {
         const feed = await client.photolog.findMany({
           where: {
-            hashtags: {
-              some: { id: hashtagId }
-            },
+            OR: [
+              {
+                hashtags: {
+                  some: { id: tagId }
+                },
+              },
+              {
+                specialtags: {
+                  some: { id: tagId }
+                }
+              }
+            ],
+            isPrivate: false,
             NOT: [
               {
                 author: {
@@ -32,6 +42,7 @@ export default {
           },
           include: {
             hashtags: true,
+            specialtags: true,
             splace: true,
             author: true,
             series: true,

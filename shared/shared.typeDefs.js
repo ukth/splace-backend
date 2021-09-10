@@ -6,6 +6,17 @@ export default gql`
     name:     String!
     photologs: [Photolog]
     splaces: [Splace]
+    totalSplace: Int
+    totalPhotologs: Int
+  }
+  type Specialtag {
+    id: Int!
+    name:     String!
+    color: String!
+    photologs: [Photolog]
+    splaces: [Splace]
+    totalSplace: Int
+    totalPhotologs: Int
   }
   type defaultResult {
     ok: Boolean!

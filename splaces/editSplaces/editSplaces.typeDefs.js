@@ -10,9 +10,13 @@ export default gql`
       address: String
       timeSetIds: [Int]
       itemIds: [Int]
-      badgeIds: [Int]
-      ratingtagIds: [Int]
       hashtags: [String]
+      parking: Boolean
+      pets: Boolean
+      kids: Boolean
+      intro: String
+      url: String
+      phone: String
     ): defaultResult!
   }
 `;
