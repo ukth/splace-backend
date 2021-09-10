@@ -23,6 +23,7 @@ export default {
         })
         return {
           ok: true,
+          id: chatroomId,
           messages: messages
         }
       } catch (e) {

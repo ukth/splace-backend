@@ -4,6 +4,7 @@ export default gql`
   type getRoomMessagesResult {
     ok: Boolean!
     error: String
+    id: Int
     messages: [Message]
   }
   type Query {
