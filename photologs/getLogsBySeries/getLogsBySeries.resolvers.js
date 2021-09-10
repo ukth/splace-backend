@@ -9,6 +9,7 @@ export default {
         const logs = await client.series.findFirst({ 
           where: { 
             id: seriesId,
+            isPrivate: false,
             NOT: [
               {
                 author: {
@@ -51,6 +52,9 @@ export default {
           },
           include: {
             splace: true,
+            hashtags: true,
+            specialtags: true,
+            author: true,
           },
           take: 5,
           ...(lastId && { cursor: { id: lastId } }),

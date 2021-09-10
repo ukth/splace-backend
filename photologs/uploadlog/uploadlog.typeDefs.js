@@ -10,6 +10,7 @@ export default gql`
       splaceId: Int
       seriesId: Int
       hashtags: [String]
+      isPrivate: Boolean!
     ): defaultResult!
   }
 `;

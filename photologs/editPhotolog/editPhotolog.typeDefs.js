@@ -10,6 +10,7 @@ export default gql`
       text: String
       splaceId: Int
       hashtags: [String]
+      isPrivate: Boolean
     ): defaultResult!
   }
 `;

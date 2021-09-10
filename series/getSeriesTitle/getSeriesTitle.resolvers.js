@@ -34,8 +34,7 @@ export default {
         console.log(e)
         return {
           ok: false,
-          error: e
-          //error: "cant get series"
+          error: "cant get series"
         };
       }
     })

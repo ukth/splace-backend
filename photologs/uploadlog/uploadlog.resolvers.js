@@ -5,7 +5,7 @@ export default {
   Mutation: {
     uploadLog: protectedResolver(async (
       _,
-      { title, imageUrls, photoSize, text, splaceId, seriesId, hashtags },
+      { title, imageUrls, photoSize, text, splaceId, isPrivate, hashtags },
       { loggedInUser }
     ) => {
       try {
@@ -19,6 +19,7 @@ export default {
             title,
             imageUrls,
             text,
+            isPrivate,
             photoSize,
             ...(splaceId != null && {
               splace: {

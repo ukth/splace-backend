@@ -1,12 +1,12 @@
 import client from "../client";
 
 export default {
-  Photolog: {
-    totalLiked: async ({ id }) => {
+  Hashtag: {
+    totalSplace: async ({ id }) => {
       try {
-        const num = await client.user.count({
+        const num = await client.splace.count({
           where: {
-            likedPhotologs: {
+            hashtags: {
               some: {
                 id
               },
@@ -18,14 +18,21 @@ export default {
         return null;
       }
     },
-    isILiked: ({ likedUser }, _, { loggedInUser }) => {
-      if (!loggedInUser) {
-        return false;
+    totalPhotologs: async ({ id }) => {
+      try {
+        const num = await client.photolog.count({
+          where: {
+            hashtags: {
+              some: {
+                id
+              },
+            },
+          },
+        })
+        return num;
+      } catch (e) {
+        return null;
       }
-      var yes = likedUser.filter(function (user) {
-        return user.id == loggedInUser.id;
-      });
-      return yes.length == 1;
     },
     /*isMine: ({ authorId }, _, { loggedInUser }) => {
       if (!loggedInUser) {

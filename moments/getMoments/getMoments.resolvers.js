@@ -4,19 +4,15 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getMyLogs: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
+    getMoments: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
       try {
-        const mine = await client.photolog.findMany({
+        const moments = await client.moment.findMany({
           where: {
             authorId: loggedInUser.id
           },
           include: {
-            hashtags: true,
             splace: true,
             author: true,
-            series: true,
-            likedUser: true,
-            specialtags: true,
           },
           take: 5,
           ...(lastId && { cursor: { id: lastId } }),
@@ -27,12 +23,12 @@ export default {
         })
         return {
           ok: true,
-          mine: mine
+          moments
         };
       } catch (e) {
         return {
           ok: false,
-          error: "cant get my logs"
+          error: "cant get moments"
         };
       }
     })

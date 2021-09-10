@@ -15,8 +15,10 @@ export default gql`
     splace: Splace  
     series: [Series]
     hashtags: [Hashtag]
+    specialtags: [Specialtag]
     likedUser: [User]
     scrap: [Scrap]
+    isPrivate: Boolean!
   }
   
 `;

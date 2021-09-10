@@ -22,6 +22,11 @@ export default gql`
     parking: Boolean
     pets: Boolean
     kids: Boolean
+    intro: String
+    url: String
+    phone: String
+    specialtags: [Specialtag]
+    moments: [Moment]
   }
   type FixedContent {
     fixedContentid: Int!
@@ -34,6 +39,9 @@ export default gql`
   }
   type Item {
     itemId: Int!
+    name: String!
+    price: Int
+    imageUrls: [String]
     splace: Splace!
   }
   type Badge {

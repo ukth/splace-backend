@@ -20,6 +20,21 @@ export default {
             error: "you are not author."
           };
         }
+        if (!ok.isPrivate){
+          for(var i=0; i<photologIds.length; i++){
+            const a = await client.photolog.findUnique({
+              where: {
+                id: photologIds[i]
+              }
+            })
+            if(a.isPrivate){
+              return {
+                ok: false,
+                error: "you cant add private logs for public series"
+              }
+            }
+          }
+        }
         await client.series.update({
           where: {
             id: seriesId
@@ -37,7 +52,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant add photolog",

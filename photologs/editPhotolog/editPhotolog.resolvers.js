@@ -5,7 +5,7 @@ export default {
   Mutation: {
     editPhotolog: protectedResolver(async (
       _,
-      { photologId, title, imageUrls, photoSize, text, splaceId, hashtags },
+      { photologId, title, imageUrls, photoSize, text, splaceId, hashtags, isPrivate },
       { loggedInUser }
     ) => {
       try {
@@ -32,6 +32,7 @@ export default {
             imageUrls,
             text,
             photoSize,
+            isPrivate,
             ...(splaceId != null && {
               splace: {
                 disconnect: true,
