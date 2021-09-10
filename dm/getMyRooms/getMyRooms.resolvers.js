@@ -21,11 +21,12 @@ export default {
           },
           include: {
             members: true,
+            lastMessage: true,
           }
         })
         return {
           ok: true,
-          rooms: rooms
+          myRooms: rooms
         }
       } catch (e) {
         //console.log(e);
