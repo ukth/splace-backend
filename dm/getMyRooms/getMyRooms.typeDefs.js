@@ -5,6 +5,7 @@ export default gql`
     ok: Boolean!
     error: String
     myRooms: [Chatroom]
+    id: Int
   }
   type Query {
     getMyRooms(lastId: Int): getMyRoomsResult!
