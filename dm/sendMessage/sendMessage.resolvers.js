@@ -1,6 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import { NEW_MESSAGE } from "../../constants";
+import { CHATROOM_UPDATE } from "../../constants"
 import pubsub from "../../pubsub";
 
 export default {
@@ -45,7 +46,7 @@ export default {
             author: true,
           },
         });
-        const a = await client.chatroom.update({
+        const updatedChatroom = await client.chatroom.update({
           where:{
             id: chatroomId
           },
@@ -55,10 +56,15 @@ export default {
                 id: sendedMessage.id
               }
             }
+          },
+          include: {
+            members: true,
+            lastMessage: true,
           }
         })
         // console.log(client);
         pubsub.publish(NEW_MESSAGE, { newMessage: { ...sendedMessage } });
+        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...updatedChatroom }})
         return {
           ok: true,
           message: sendedMessage
