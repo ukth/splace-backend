@@ -26,7 +26,8 @@ export default {
         })
         return {
           ok: true,
-          myRooms: rooms
+          myRooms: rooms,
+          id: loggedInUser.id
         }
       } catch (e) {
         //console.log(e);
