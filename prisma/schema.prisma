@@ -57,6 +57,8 @@ model User {
   blockedUser    User[]     @relation("blockRelation")
 
   blockingUser   User[]     @relation("blockRelation")
+
+  chatroomReaded ChatroomReaded[]
 }
 
 model Photolog {
@@ -280,10 +282,23 @@ model Chatroom {
   members User[]
   messages Message[]
 
+  chatroomReaded ChatroomReaded[]
+
   lastMessage Message? @relation("lastMessageRelation", fields: [lastMessageId], references: [id])
   lastMessageId Int?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+}
+
+model ChatroomReaded {
+  id Int @id @default(autoincrement())
+  user User? @relation(fields: [userId], references: [id])
+  userId Int?
+
+  chatroom Chatroom? @relation(fields: [chatroomId], references: [id])
+  chatroomId Int?
+
+  readedAt DateTime @updatedAt
 }
 
 model Message {
