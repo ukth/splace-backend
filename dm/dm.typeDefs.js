@@ -9,6 +9,7 @@ export default gql`
     createdAt: String!
     updatedAt: String!
     lastMessage: Message
+    chatroomReaded: [ChatroomReaded]
   }
 
   type Message {
@@ -19,5 +20,12 @@ export default gql`
     unreadCount: Int!
     createdAt: String!
     isMine: Boolean!
+  }
+
+  type ChatroomReaded {
+    id: Int!
+    user: User
+    chatroom: Chatroom
+    readedAt: String!
   }
 `;
