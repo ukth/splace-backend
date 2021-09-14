@@ -22,7 +22,12 @@ export default {
           include: {
             members: true,
             lastMessage: true,
-            chatroomReaded: true,
+            chatroomReaded: {
+              include:{
+                user: true,
+                chatroom: true,
+              }
+            }
           }
         })
         return {
