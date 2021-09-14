@@ -15,6 +15,27 @@ export default {
         };
       }*/
       try {
+        const ok = await client.chatroomReaded.findFirst({
+          where: {
+            user: {
+              id: loggedInUser.id
+            },
+            chatroom: {
+              id: chatroomId
+            }
+          }
+        })
+        if(!ok){
+          return {
+            ok: false,
+            error: "not member"
+          }
+        }
+        await client.chatroomReaded.delete({
+          where: {
+            id: ok.id
+          }
+        })
         await client.chatroom.update({
           where: {
             id: chatroomId
