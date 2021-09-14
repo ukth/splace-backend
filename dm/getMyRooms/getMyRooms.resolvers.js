@@ -22,6 +22,7 @@ export default {
           include: {
             members: true,
             lastMessage: true,
+            chatroomReaded: true,
           }
         })
         return {
