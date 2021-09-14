@@ -44,6 +44,15 @@ export default {
           })
         }
 
+        const c = await client.chatroom.update({
+          where: {
+            id: a.id
+          },
+          data: {
+            title,
+          },
+        });
+
         //console.log(a);
         return {
           ok: true,
