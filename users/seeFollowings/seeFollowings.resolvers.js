@@ -22,7 +22,7 @@ export default {
                 startsWith: keyword
               }
             },
-            take: 5,
+            take: 15,
             ...(lastId && { cursor: { id: lastId } }),
             skip: lastId ? 1 : 0,
           });
