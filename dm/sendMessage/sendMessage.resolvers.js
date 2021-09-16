@@ -46,6 +46,43 @@ export default {
             author: true,
           },
         });
+
+
+        const readedRecord = await client.chatroomReaded.findFirst({
+          where: {
+            user: {
+              id: loggedInUser.id
+            },
+            chatroom: {
+              id: chatroomId
+            }
+          }
+        })
+        if(!ok){
+          return{
+            ok: false,
+            error: "can't update readed record"
+          }
+        }
+        const updatedRecord = await client.chatroomReaded.update({
+          where: {
+            id: readedRecord.id
+          },
+          data: {
+            user: {
+              connect: {
+                id: loggedInUser.id
+              }
+            }
+          },
+          include: {
+            user: true
+          }
+        });
+        console.log(updatedRecord);
+
+
+
         const updatedChatroom = await client.chatroom.update({
           where:{
             id: chatroomId
@@ -67,10 +104,11 @@ export default {
         pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...updatedChatroom }})
         return {
           ok: true,
-          message: sendedMessage
+          message: sendedMessage,
+          readedRecord: updatedRecord
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant send message",
