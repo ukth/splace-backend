@@ -5,7 +5,8 @@ export default gql`
     ok: Boolean!
     error: String
     specialtags: [Specialtag]
-    hashtags: [Hashtag]
+    categories: [Category]
+    bigcategories: [BigCategory]
   }
   type Query {
     getTags(keyword: String, lastSpecialId: Int, lastHashId: Int): getTagsResult!

@@ -11,7 +11,8 @@ export default {
             authorId: loggedInUser.id
           },
           include: {
-            hashtags: true,
+            categories: true,
+            bigCategories: true,
             splace: true,
             author: true,
             series: true,

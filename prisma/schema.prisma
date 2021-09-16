@@ -79,7 +79,9 @@ model Photolog {
   
   series     Series[]    @relation("seriesRelation")
   
-  hashtags   Hashtag[]
+  categories   Category[]
+
+  bigCategories BigCategory[]
 
   specialtags Specialtag[]
   
@@ -129,7 +131,9 @@ model Splace {
   
   ratingtags    Ratingtag[]   
   
-  hashtags      Hashtag[]
+  categories      Category[]
+
+  bigCategories   BigCategory[]
 
   specialtags   Specialtag[]
   
@@ -204,7 +208,16 @@ model Folder {
   saves     Save[]
 }
 
-model Hashtag {
+model Category {
+  id Int @id @default(autoincrement())
+  name     String   @db.VarChar(255) @unique
+  
+  photologs Photolog[]
+  
+  splaces   Splace[]
+}
+
+model BigCategory {
   id Int @id @default(autoincrement())
   name     String   @db.VarChar(255) @unique
   

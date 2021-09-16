@@ -43,7 +43,8 @@ export default {
             ]
           },
           include: {
-            hashtags: true,
+            categories: true,
+            bigCategories: true,
             specialtags: true,
             splace: true,
             author: true,
