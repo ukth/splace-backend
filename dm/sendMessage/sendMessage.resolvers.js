@@ -75,9 +75,6 @@ export default {
               }
             }
           },
-          include: {
-            user: true
-          }
         });
         console.log(updatedRecord);
 
