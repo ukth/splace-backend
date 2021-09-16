@@ -1,5 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import pubsub from "../../pubsub";
+import { NEW_LIKED } from "../../constants";
 
 export default {
   Mutation: {
@@ -22,7 +24,7 @@ export default {
         const b = await client.photolog.findUnique({
           where: {
             id: photologId
-          }
+          },
         })
         if(b.isPrivate){
           return {
@@ -42,6 +44,7 @@ export default {
             }
           },
         });
+        pubsub.publish(NEW_LIKED, { newLiked: { photolog: b, user: loggedInUser }})
         //console.log(a);
         return {
           ok: true,

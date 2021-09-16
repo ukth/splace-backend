@@ -1,2 +1,5 @@
 export const NEW_MESSAGE = "NEW_MESSAGE";
-export const CHATROOM_UPDATE = "CHATROOM_UPDATE"
+export const CHATROOM_UPDATE = "CHATROOM_UPDATE";
+export const NEW_FOLLOWER = "NEW_FOLLOWER";
+export const FOLDER_UPDATE = "FOLDER_UPDATE"
+export const NEW_LIKED = "NEW_LIKED";

@@ -1,5 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import pubsub from "../../pubsub";
+import { FOLDER_UPDATE } from "../../constants";
 
 export default {
   Mutation: {
@@ -17,6 +19,9 @@ export default {
                 id: loggedInUser.id
               }
             } 
+          },
+          include: {
+            members: true,
           } 
         })
         //console.log(ok);
@@ -32,6 +37,7 @@ export default {
           }
         });
         //console.log(a);
+        pubsub.publish(FOLDER_UPDATE, { folderUpdated: { folder: ok, user: loggedInUser, state: "removed" } });
         return {
           ok: true,
         };
