@@ -2,7 +2,7 @@ import client from "../../client";
 
 export default {
   Query: {
-    seeFollowers: async (_, { userId, lastId }) => {
+    seeFollowers: async (_, { userId, keyword, lastId }) => {
       try {
         const ok = await client.user.findUnique({
           where: { id: userId },
@@ -18,6 +18,11 @@ export default {
         const followers = await client.user
           .findUnique({ where: { id: userId } })
           .followers({
+            where: {
+              username: {
+                startsWith: keyword
+              }
+            },
             take: 5,
             ...(lastId && { cursor: { id: lastId } }),
             skip: lastId ? 1 : 0,

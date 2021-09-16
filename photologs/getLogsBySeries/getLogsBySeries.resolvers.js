@@ -52,7 +52,8 @@ export default {
           },
           include: {
             splace: true,
-            hashtags: true,
+            categories: true,
+            bigCategories: true,
             specialtags: true,
             author: true,
           },

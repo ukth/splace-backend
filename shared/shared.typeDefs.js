@@ -1,7 +1,15 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type Hashtag {
+  type Category {
+    id: Int!
+    name:     String!
+    photologs: [Photolog]
+    splaces: [Splace]
+    totalSplace: Int
+    totalPhotologs: Int
+  }
+  type BigCategory {
     id: Int!
     name:     String!
     photologs: [Photolog]

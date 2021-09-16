@@ -1,12 +1,12 @@
 import client from "../client";
 
 export default {
-  Category: {
+  BigCategory: {
     totalSplace: async ({ id }) => {
       try {
         const num = await client.splace.count({
           where: {
-            hashtags: {
+            bigCategories: {
               some: {
                 id
               },

@@ -25,7 +25,24 @@ export default {
             title: "asc",
           },
         })
-        const hashtags = await client.hashtag.findMany({
+        const categories = await client.category.findMany({
+          where: {
+            name: {
+              startsWith: keyword
+            }
+          },
+          select: {
+            id: true,
+            name: true
+          },
+          take: 2,
+          ...(lastId && { cursor: { id: lastHashId } }),
+          skip: lastId ? 1 : 0,
+          orderBy: {
+            title: "asc",
+          },
+        })
+        const bigCategories = await client.bigCategory.findMany({
           where: {
             name: {
               startsWith: keyword
@@ -45,7 +62,8 @@ export default {
         return {
           ok: true,
           specialtags,
-          hashtags
+          bigCategories,
+          categories,
         };
       } catch (e) {
         console.log(e)

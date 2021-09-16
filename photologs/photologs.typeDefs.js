@@ -14,7 +14,8 @@ export default gql`
     author: User!
     splace: Splace  
     series: [Series]
-    hashtags: [Hashtag]
+    categories: [Category]
+    bigCategories: [BigCategory]
     specialtags: [Specialtag]
     likedUser: [User]
     scrap: [Scrap]
