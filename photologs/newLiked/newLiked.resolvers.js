@@ -1,5 +1,5 @@
-import { NEW_FOLLOWER, NEW_LIKED } from "../../constants";
-import pubsub from "../../pubsub";
+import { NEW_LIKED } from "../../constants";
+const pubsub = require("../../pubsub");
 import { withFilter } from "apollo-server";
 import client from "../../client";
 

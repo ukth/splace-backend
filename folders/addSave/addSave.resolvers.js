@@ -1,6 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
-import pubsub from "../../pubsub";
+const pubsub = require("../../pubsub");
 import { FOLDER_UPDATE } from "../../constants";
 
 export default {

@@ -1,5 +1,5 @@
 import { NEW_FOLLOWER } from "../../constants";
-import pubsub from "../../pubsub";
+const pubsub = require("../../pubsub");
 import { withFilter } from "apollo-server";
 import client from "../../client";
 
