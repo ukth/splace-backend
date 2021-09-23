@@ -22,7 +22,7 @@ export default {
           throw new Error("membership error");
         }
         return withFilter(
-          () => pubsub.asyncIterator(NEW_MESSAGE),
+          () => pubsub.subscribe(NEW_MESSAGE),
           ({ newMessage }, { chatroomId }) => {
             return newMessage.chatroomId === chatroomId;
           }
