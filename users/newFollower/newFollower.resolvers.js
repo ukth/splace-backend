@@ -22,7 +22,7 @@ export default {
           throw new Error("membership error");
         }*/
         return withFilter(
-          () => pubsub.subscribe(NEW_FOLLOWER),
+          () => pubsub.asyncIterator(NEW_FOLLOWER),
           ({ newFollower }, __) => {
             return newFollower.followed.id == loggedInUser.id
           }

@@ -22,7 +22,7 @@ export default {
           throw new Error("membership error");
         }*/
         return withFilter(
-          () => pubsub.subscribe(NEW_LIKED),
+          () => pubsub.asyncIterator(NEW_LIKED),
           ({ newLiked }, __) => {
             return newLiked.photolog.authorId == loggedInUser.id
           }

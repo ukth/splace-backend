@@ -22,7 +22,7 @@ export default {
           throw new Error("membership error");
         }*/
         return withFilter(
-          () => pubsub.subscribe(FOLDER_UPDATE),
+          () => pubsub.asyncIterator(FOLDER_UPDATE),
           ({ folderUpdated }, __) => {
             console.log(folderUpdated)
             for(var i = 0; i < folderUpdated.folder.members.length; i++){
