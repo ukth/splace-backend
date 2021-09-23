@@ -2,7 +2,7 @@ import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import { NEW_MESSAGE } from "../../constants";
 import { CHATROOM_UPDATE } from "../../constants"
-import pubsub from '../pubsub';
+import pubsub from "../../pubsub";
 
 export default {
   Mutation: {

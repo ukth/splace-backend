@@ -1,6 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
-import pubsub from '../pubsub';
+import pubsub from "../../pubsub";
 import { FOLDER_UPDATE } from "../../constants";
 
 export default {

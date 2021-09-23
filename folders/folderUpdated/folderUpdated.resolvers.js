@@ -1,5 +1,5 @@
 import { FOLDER_UPDATE } from "../../constants";
-import pubsub from '../pubsub';
+import pubsub from "../../pubsub";
 import { withFilter } from "apollo-server";
 import client from "../../client";
 

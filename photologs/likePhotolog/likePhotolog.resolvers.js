@@ -1,6 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
-const pubsub = require("../../pubsub");
+import pubsub from "../../pubsub";
 import { NEW_LIKED } from "../../constants";
 
 export default {
