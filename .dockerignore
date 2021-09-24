@@ -21,3 +21,5 @@ LICENSE
 .vscode
 
 .DS_Store
+
+.snyk

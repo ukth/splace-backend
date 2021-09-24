@@ -28,6 +28,7 @@ export default gql`
     phone: String
     specialtags: [Specialtag]
     moments: [Moment]
+    thumbnail: String
   }
   type FixedContent {
     fixedContentid: Int!

@@ -1,17 +1,21 @@
-FROM node:14-alpine
+FROM ubuntu:latest
+USER root
 
-LABEL MAINTAINER ukth <ukth@lunen.co.kr>
+LABEL MAINTAINER maknae <maknae@lunen.co.kr>
 
-ENV NODE_ENV=production
-WORKDIR /usr/src/app
-# COPY ["package.json", "package-lock.json*"] , "./"
+#ENV NODE_ENV=production
+WORKDIR /app
 
-COPY package.json .
+COPY package*.json ./
 
-RUN npm install --production --silent
+RUN apt-get update
+RUN apt-get -y install curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
+RUN apt-get -y install nodejs
+RUN npm install --silent
 
 COPY . .
 
-# RUN npx prisma generate
-# EXPOSE 3000
-CMD ["npm", "start"]
+#RUN npx prisma generate
+#EXPOSE 4000
+#CMD ["npm", "run", "dev"]

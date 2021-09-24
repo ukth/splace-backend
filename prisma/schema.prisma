@@ -124,10 +124,11 @@ model Splace {
   intro    String? @db.Text
   url      String? @db.VarChar(255)
   phone    String? @db.VarChar(255)
+  thumbnail String? @db.Text
   
   timeSets   TimeSet[]
 
-  items          Item?
+  item          Item?
   
   ratingtags    Ratingtag[]   
   
