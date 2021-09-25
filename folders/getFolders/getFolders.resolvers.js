@@ -16,7 +16,11 @@ export default {
           },
           include:{
             members: true,
-            saves: true,
+            saves: {
+              include: {
+                splace: true,
+              }
+            },
           },
           take: 5,
           ...(lastId && { cursor: { id: lastId } }),
