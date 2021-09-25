@@ -31,6 +31,18 @@ export default {
             error: "you dont have authentication to add save."
           };
         }
+        const exist = await client.save.findFirst({
+          where: {
+            splaceId,
+            folderId
+          }
+        })
+        if(exist){
+          return {
+            ok: false,
+            error: "already exist"
+          }
+        }
         const a = await client.save.create({
           data: {
             splace: {
