@@ -4,30 +4,29 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    seeFolder: protectedResolver(async (_, { folderId, lastId }, { loggedInUser }) => {
+    seeFolder: protectedResolver(async (_, { folderId }, { loggedInUser }) => {
       try {
-        const saves = await client.save.findMany({
+        const folder = await client.folder.findFirst({
           where: {
-            folderId
+            id: folderId
           },
           include:{
-            splace:true,
-          },
-          take: 5,
-          ...(lastId && { cursor: { id: lastId } }),
-          skip: lastId ? 1 : 0,
-          orderBy: {
-            createdAt: "asc",
+            saves: {
+              include: {
+                splace: true,
+              }
+            }
           },
         })
         return {
           ok: true,
-          saves
+          folder
         };
       } catch (e) {
+        console.log(e)
         return {
           ok: false,
-          error: "cant get folders"
+          error: "cant see folder"
         };
       }
     })

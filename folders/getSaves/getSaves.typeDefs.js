@@ -1,12 +1,12 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type seeFolderResult {
+  type getSavesResult {
     ok: Boolean!
     error: String
-    folder: Folder
+    saves: [Save]
   }
   type Query {
-    seeFolder(folderId: Int!): seeFolderResult!
+    getSaves(folderId: Int!, lastId: Int): getSavesResult!
   }
 `;
