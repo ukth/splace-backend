@@ -11,10 +11,10 @@ export default {
             id: folderId
           },
           include:{
+            members: true,
             saves: {
               include: {
                 splace: true,
-                members: true,
               }
             }
           },
