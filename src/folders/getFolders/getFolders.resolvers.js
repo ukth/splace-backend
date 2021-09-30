@@ -22,7 +22,7 @@ export default {
               }
             },
           },
-          take: 5,
+          take: 10,
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
