@@ -5,7 +5,8 @@ export default {
   Mutation: {
     deleteFolder: protectedResolver(async (
       _,
-      { folderId }
+      { folderId },
+      { loggedInUser }
     ) => {
       try {
         const ok = await client.folder.findFirst({ 
