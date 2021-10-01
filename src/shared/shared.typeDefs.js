@@ -8,6 +8,8 @@ export default gql`
     splaces: [Splace]
     totalSplace: Int
     totalPhotologs: Int
+    createdAt: String!
+    updatedAt: String!
   }
   type BigCategory {
     id: Int!
@@ -16,6 +18,8 @@ export default gql`
     splaces: [Splace]
     totalSplace: Int
     totalPhotologs: Int
+    createdAt: String!
+    updatedAt: String!
   }
   type Specialtag {
     id: Int!
@@ -25,6 +29,8 @@ export default gql`
     splaces: [Splace]
     totalSplace: Int
     totalPhotologs: Int
+    createdAt: String!
+    updatedAt: String!
   }
   type defaultResult {
     ok: Boolean!

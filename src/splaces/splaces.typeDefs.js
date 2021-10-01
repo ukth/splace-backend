@@ -45,16 +45,22 @@ export default gql`
     price: Int
     imageUrls: [String]
     splace: Splace!
+    createdAt: String!
+    updatedAt: String!
   }
   type Badge {
     badgeId: Int!
     name: String!
     splaces: [Splace]
+    createdAt: String!
+    updatedAt: String!
   }
   type Ratingtag {
     ratingtagId: Int!
     name: String!
     splaces: [Splace]
+    createdAt: String!
+    updatedAt: String!
   }
   type TimeSet {
     timeSetId: Int!
@@ -64,5 +70,7 @@ export default gql`
     splace: Splace!
     splaceId: Int!
     isBreakTime: Boolean!
+    createdAt: String!
+    updatedAt: String!
   }
 `;
