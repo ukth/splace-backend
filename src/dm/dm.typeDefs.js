@@ -17,7 +17,6 @@ export default gql`
     text: String!   
     author: User! 
     chatroom: Chatroom!
-    unreadCount: Int!
     createdAt: String!
     updatedAt: String!
     isMine: Boolean!

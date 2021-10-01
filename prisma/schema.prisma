@@ -346,8 +346,6 @@ model Message {
 
   lastChatroom Chatroom? @relation("lastMessageRelation")
 
-  unreadCount Int
-
   createdAt DateTime  @default(now())
   updatedAt DateTime @updatedAt
 }
