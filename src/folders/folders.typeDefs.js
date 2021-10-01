@@ -4,6 +4,7 @@ export default gql`
   type Save {
     id: Int!
     createdAt: String!
+    updatedAt: String!
     splace: Splace!
     folder: Folder!
   }

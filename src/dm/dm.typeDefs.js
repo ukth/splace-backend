@@ -19,6 +19,7 @@ export default gql`
     chatroom: Chatroom!
     unreadCount: Int!
     createdAt: String!
+    updatedAt: String!
     isMine: Boolean!
   }
 
@@ -26,6 +27,7 @@ export default gql`
     id: Int!
     user: User
     chatroom: Chatroom
-    readedAt: String!
+    createdAt: String!
+    updatedAt: String!
   }
 `;

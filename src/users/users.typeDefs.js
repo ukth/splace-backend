@@ -28,6 +28,7 @@ export default gql`
   type Scrap {
     scrapId: Int!
     createdAt: String!
+    updatedAt: String!
     photolog: Photolog!
     savedUser: User!
   }

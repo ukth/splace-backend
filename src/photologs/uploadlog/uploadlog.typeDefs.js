@@ -8,7 +8,7 @@ export default gql`
       photoSize: Int!
       text: String
       splaceId: Int
-      seriesId: Int
+      seriesIds: [Int]
       hashtags: [String]
       isPrivate: Boolean!
     ): defaultResult!
