@@ -40,7 +40,6 @@ export default {
                 id: chatroomId
               }
             },
-            unreadCount
           },
           include: {
             author: true,
