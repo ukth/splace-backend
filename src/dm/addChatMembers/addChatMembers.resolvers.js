@@ -1,5 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import { CHATROOM_UPDATE } from "../../constants"
+import pubsub from "../../pubsub";
 
 export default {
   Mutation: {
@@ -53,7 +55,7 @@ export default {
           })
         }
         
-        await client.chatroom.update({
+        const a = await client.chatroom.update({
           where: {
             id: chatroomId
           },
@@ -63,8 +65,14 @@ export default {
                 id: memberId
               }))
             }
+          },
+          include: {
+            members: true,
+            lastMessage: true,
           }
         });
+
+        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...a } })
 
         // console.log(client);
         return {

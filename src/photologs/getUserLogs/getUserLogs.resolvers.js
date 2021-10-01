@@ -8,7 +8,8 @@ export default {
       try {
         const logs = await client.photolog.findMany({
           where: {
-            authorId: userId
+            ...(userId === loggedInUser.id && { authorId: userId }),
+            ...(userId !== loggedInUser.id && { authorId: userId, isPrivate: false })
           },
           include: {
             categories: true,
