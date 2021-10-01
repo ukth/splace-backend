@@ -7,9 +7,6 @@ export default {
           where: {
             id: userId,
           },
-          include: {
-            photologs: true,
-          },
         })
         if(!profile){
           return{

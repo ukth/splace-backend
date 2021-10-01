@@ -25,8 +25,8 @@ export default {
             error: "you dont have authentication to send message."
           };
         }
-        const unreadMembers = await client.user.findMany({ where: { chatrooms: {some: { id: chatroomId } } } });
-        const unreadCount = unreadMembers.length
+        /*const unreadMembers = await client.user.findMany({ where: { chatrooms: {some: { id: chatroomId } } } });
+        const unreadCount = unreadMembers.length */
         const sendedMessage = await client.message.create({
           data: {
             text,
@@ -76,7 +76,7 @@ export default {
             }
           },
         });
-        console.log(updatedRecord);
+        //console.log(updatedRecord);
 
 
 

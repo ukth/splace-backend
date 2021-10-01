@@ -1,5 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import { CHATROOM_UPDATE } from "../../constants"
+import pubsub from "../../pubsub";
 
 export default {
   Mutation: {
@@ -51,11 +53,18 @@ export default {
           data: {
             title,
           },
+          include: {
+            members: true,
+            lastMessage: true,
+          }
         });
+
+        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...c } })
 
         //console.log(a);
         return {
           ok: true,
+          chatroom: c
         };
       } catch (e) {
         console.log(e);

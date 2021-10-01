@@ -331,8 +331,6 @@ model ChatroomReaded {
   chatroom Chatroom? @relation(fields: [chatroomId], references: [id])
   chatroomId Int?
 
-  readedAt DateTime @updatedAt
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
