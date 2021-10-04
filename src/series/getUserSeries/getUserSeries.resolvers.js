@@ -4,13 +4,14 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getMySeries: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
+    getUserSeries: protectedResolver(async (_, { userId, lastId }, { loggedInUser }) => {
       try {
         const series = await client.series.findMany({
           where: {
             author: {
-              id: loggedInUser.id,
-            }
+              id: userId,
+            },
+            isPrivate: false,
           },
           take: 10,
           ...(lastId && { cursor: { id: lastId } }),
