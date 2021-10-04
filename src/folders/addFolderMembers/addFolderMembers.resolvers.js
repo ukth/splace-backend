@@ -15,6 +15,18 @@ export default {
             } 
           } 
         })
+
+        const myfollowers = loggedInUser.followers.map(follower => follower.id)
+        //console.log(myfollowings);
+        for(var i = 0; i<memberIds.length; i++){
+          if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
+            return {
+              ok: false,
+              error: "invalid member included"
+            }
+          }
+        }
+
         //console.log(ok);
         if(!ok) {
           return {
@@ -39,7 +51,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant add member",

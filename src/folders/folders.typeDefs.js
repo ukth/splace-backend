@@ -5,8 +5,9 @@ export default gql`
     id: Int!
     createdAt: String!
     updatedAt: String!
-    splace: Splace!
-    folder: Folder!
+    splace: Splace
+    folder: Folder
+    savedUser: User
   }
 
   type Folder {

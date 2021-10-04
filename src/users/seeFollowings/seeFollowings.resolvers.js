@@ -31,6 +31,7 @@ export default {
           followings,
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
           error: "cant find followings"

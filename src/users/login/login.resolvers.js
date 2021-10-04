@@ -38,6 +38,7 @@ export default {
           user: user,
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
           error: "login failed"

@@ -15,6 +15,7 @@ export default {
         })
         return num;
       } catch (e) {
+        console.log(e);
         return null;
       }
     },
@@ -27,6 +28,16 @@ export default {
       });
       return yes.length == 1;
     },
+
+    isScraped: async ({ id }, _, { loggedInUser }) => {
+      const yes = await client.scrapedLog.findFirst({
+        where: {
+          photologId: id,
+          savedUserId: loggedInUser.id
+        }
+      })
+      return Boolean(yes);
+    }
     /*isMine: ({ authorId }, _, { loggedInUser }) => {
       if (!loggedInUser) {
         return false;

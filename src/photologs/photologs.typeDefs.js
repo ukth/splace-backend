@@ -18,8 +18,9 @@ export default gql`
     bigCategories: [BigCategory]
     specialtags: [Specialtag]
     likedUser: [User]
-    scrap: [Scrap]
+    scrap: [ScrapedLog]
     isPrivate: Boolean!
+    isScraped: Boolean!
   }
   
 `;

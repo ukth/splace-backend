@@ -4,31 +4,34 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getMoments: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
+    getUserSeries: protectedResolver(async (_, { userId, lastId }, { loggedInUser }) => {
       try {
-        const moments = await client.moment.findMany({
+        const series = await client.series.findMany({
           where: {
-            authorId: loggedInUser.id
+            author: {
+              id: userId,
+            },
+            isPrivate: false,
           },
-          include: {
-            splace: true,
-            author: true,
-          },
-          take: 5,
+          take: 10,
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
             createdAt: "desc",
           },
+          include: {
+            photologs: true,
+          }
         })
         return {
           ok: true,
-          moments
+          series: series,
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
-          error: "cant get moments"
+          error: "cant get series"
         };
       }
     })

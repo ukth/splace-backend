@@ -27,6 +27,25 @@ export default {
             error: "you dont have authentication to add member."
           };
         }
+
+        if(ok.isPersonal){
+          return {
+            ok: false,
+            error: "can't add members to personal chatroom"
+          }
+        }
+
+        const myfollowers = loggedInUser.followers.map(follower => follower.id)
+        //console.log(myfollowings);
+        for(var i = 0; i<memberIds.length; i++){
+          if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
+            return {
+              ok: false,
+              error: "invalid member included"
+            }
+          }
+        }
+
         for(var i = 0; i < memberIds.length; i++){
           for(var j = 0; j<ok.members.length; j++){
             if(memberIds[i] == ok.members[j].id){
@@ -79,7 +98,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant add member",

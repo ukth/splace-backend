@@ -15,6 +15,7 @@ export default {
         })
         return num;
       } catch (e) {
+        console.log(e);
         return null;
       }
     },
@@ -31,6 +32,7 @@ export default {
         })
         return num;
       } catch (e) {
+        console.log(e);
         return null;
       }
     },

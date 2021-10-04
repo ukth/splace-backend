@@ -5,13 +5,13 @@ export default {
   Mutation: {
     unscrapLog: protectedResolver(async (
       _,
-      { scrapId },
+      { scrapedLogId },
       { loggedInUser }
     ) => {
       try {
-        const ok = await client.scrap.findFirst({
+        const ok = await client.scrapedLog.findFirst({
           where:{
-            id: scrapId,
+            id: scrapedLogId,
             savedUser: {
               id: loggedInUser.id
             }
@@ -24,9 +24,9 @@ export default {
             error: "you can only unscrap yours"
           }
         }
-        const a = await client.scrap.delete({
+        const a = await client.scrapedLog.delete({
           where:{
-           id: scrapId 
+           id: scrapedLogId 
           },
         });
         //console.log(a);
@@ -34,7 +34,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant unscrap photolog",

@@ -12,7 +12,7 @@ export default {
               id: loggedInUser.id,
             }
           },
-          take: 2,
+          take: 10,
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
@@ -27,6 +27,7 @@ export default {
           series: series,
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
           error: "cant get series"

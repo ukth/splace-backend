@@ -19,6 +19,7 @@ export default {
           profile: profile
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
           error: "cant get profile"

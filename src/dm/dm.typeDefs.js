@@ -10,6 +10,7 @@ export default gql`
     updatedAt: String!
     lastMessage: Message
     chatroomReaded: [ChatroomReaded]
+    isPersonal: Boolean!
   }
 
   type Message {

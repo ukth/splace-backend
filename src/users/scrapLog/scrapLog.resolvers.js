@@ -9,12 +9,10 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const ok = await client.scrap.findFirst({
+        const ok = await client.scrapedLog.findFirst({
           where:{
             photologId,
-            savedUser: {
-              id: loggedInUser.id
-            }
+            savedUserId: loggedInUser.id
           }
         })
         if(ok){
@@ -23,7 +21,7 @@ export default {
             error: "you already scrap this log"
           }
         }
-        const a = await client.scrap.create({
+        const a = await client.scrapedLog.create({
           data: {
             photolog: {
               connect: {
@@ -42,7 +40,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant scrap photolog",

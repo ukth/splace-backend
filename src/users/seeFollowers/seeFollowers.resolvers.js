@@ -32,6 +32,7 @@ export default {
           followers,
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
           error: "cant find followers"

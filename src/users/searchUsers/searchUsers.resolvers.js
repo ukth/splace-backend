@@ -21,6 +21,7 @@ export default {
           users: users
         };
       } catch(e) {
+        console.log(e);
         return {
           ok: false,
           error: "cant search users"

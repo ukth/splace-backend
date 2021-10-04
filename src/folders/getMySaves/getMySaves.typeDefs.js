@@ -1,12 +1,12 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type getMomentsResult {
+  type getSavesResult {
     ok: Boolean!
     error: String
-    moments: [Moment]
-  }  
+    saves: [Save]
+  }
   type Query {
-    getMoments(lastId: Int): getMomentsResult!
+    getMySaves: getSavesResult!
   }
 `;

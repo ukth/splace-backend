@@ -7,7 +7,7 @@ export default {
   Mutation: {
     editProfile: protectedResolver(async (
       _,
-      { name, username, email, password: newPassword, profileMessage, profileImageUrl },
+      { name, username, email, password: newPassword, profileMessage, profileImageUrl, url, phone },
       { loggedInUser }
     ) => {
       try {
@@ -56,6 +56,8 @@ export default {
             username,
             email,
             profileMessage,
+            url,
+            phone,
             ...(hashedPassword && { password: hashedPassword }),
             ...(profileImageUrl && { profileImageUrl: profileImageUrl }),
           },
@@ -64,9 +66,10 @@ export default {
           ok: true,
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
-          error: e
+          error: "cant update profile"
         }
       }
     })

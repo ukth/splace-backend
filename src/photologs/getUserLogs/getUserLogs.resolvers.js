@@ -32,6 +32,7 @@ export default {
           logs
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
           error: "cant get logs"

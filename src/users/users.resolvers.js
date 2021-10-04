@@ -15,6 +15,7 @@ export default {
         })
         return num;
       } catch (e) {
+        console.log(e);
         return null;
       }
     },
@@ -31,6 +32,7 @@ export default {
         })
         return num;
       } catch (e) {
+        console.log(e);
         return null;
       }
     },
@@ -57,6 +59,7 @@ export default {
         });
         return Boolean(exists);
       } catch (e) {
+        console.log(e);
         return false;
       }
     },
@@ -71,6 +74,7 @@ export default {
         })
         return num;
       } catch (e) {
+        console.log(e);
         return null;
       }
     }

@@ -55,6 +55,11 @@ export default {
                 id: folderId
               }
             },
+            savedUser: {
+              connect: {
+                id: loggedInUser.id
+              }
+            }
           },
         });
         pubsub.publish(FOLDER_UPDATE, { folderUpdated: { folder: ok, user: loggedInUser, state: "added" } });

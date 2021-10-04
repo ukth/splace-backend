@@ -30,9 +30,8 @@ export default {
             }),
             ...(seriesIds != null && {
               series: {
-                connectOrCreate: seriesIds.map(hashtag => ({
-                  create: { name: hashtag },
-                  where: { name: hashtag  }
+                connect: seriesIds.map(seriesId => ({
+                  id: seriesId
                 }))
               }
             }),
@@ -43,7 +42,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant create log",
