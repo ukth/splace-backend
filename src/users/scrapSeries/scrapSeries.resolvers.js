@@ -1,17 +1,17 @@
 import client from "../../client";
-import { protectedResolver } from "../../users/users.utils";
+import { protectedResolver } from "../users.utils";
 
 export default {
   Mutation: {
-    scrapLog: protectedResolver(async (
+    scrapSeries: protectedResolver(async (
       _,
-      { photologId },
+      { seriesId },
       { loggedInUser }
     ) => {
       try {
-        const ok = await client.scrapedLog.findFirst({
+        const ok = await client.scrapedSeries.findFirst({
           where:{
-            photologId,
+            seriesId,
             savedUserId: loggedInUser.id
           }
         })
@@ -21,11 +21,11 @@ export default {
             error: "you already scrap this log"
           }
         }
-        const a = await client.scrapedLog.create({
+        const a = await client.scrapedSeries.create({
           data: {
-            photolog: {
+            series: {
               connect: {
-                id: photologId
+                id: seriesId
               }
             },
             savedUser: {

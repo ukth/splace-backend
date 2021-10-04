@@ -23,13 +23,23 @@ export default gql`
     totalLogsNumber: Int!
     phone: String
     url: String
+    scrapedLog: [ScrapedLog]
+    scrapedSeries: [ScrapedSeries]
   }
   
-  type Scrap {
-    scrapId: Int!
+  type ScrapedLog {
+    id: Int!
     createdAt: String!
     updatedAt: String!
-    photolog: Photolog!
-    savedUser: User!
+    photolog: Photolog
+    savedUser: User
+  }
+
+  type ScrapedSeries {
+    id: Int!
+    createdAt: String!
+    updatedAt: String!
+    series: Series
+    savedUser: User
   }
 `;

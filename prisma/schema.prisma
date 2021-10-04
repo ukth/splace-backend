@@ -38,7 +38,9 @@ model User {
   
   Series         Series[]
 
-  scraps       Scrap[]
+  scrapedLog       ScrapedLog[]
+
+  scrapedSeries    ScrapedSeries[]
 
   comments     Comment[]
 
@@ -87,7 +89,7 @@ model Photolog {
   
   likedUser  User[]    @relation("likedRelation")
 
-  scrap Scrap[]
+  scrap ScrapedLog[]
 
   comments Comment[]
 
@@ -104,6 +106,8 @@ model Series {
   author      User       @relation(fields: [authorId], references: [id])
   authorId    Int
   
+  scrap ScrapedSeries[]
+
   photologs Photolog[]   @relation("seriesRelation")
 
   hiddenUsers  User[]   @relation("hiddenSeriesRelation")
@@ -193,13 +197,25 @@ model Save {
   folderId  Int?
 }
 
-model Scrap {
+model ScrapedLog {
   id    Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
   photolog    Photolog?   @relation(fields: [photologId], references: [id])
   photologId  Int?
+  
+  savedUser User? @relation(fields: [savedUserId], references: [id])
+  savedUserId Int?
+}
+
+model ScrapedSeries {
+  id    Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  series    Series?   @relation(fields: [seriesId], references: [id])
+  seriesId  Int?
   
   savedUser User? @relation(fields: [savedUserId], references: [id])
   savedUserId Int?

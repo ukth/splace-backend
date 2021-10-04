@@ -27,6 +27,18 @@ export default {
             error: "you dont have authentication to add member."
           };
         }
+
+        const myfollowings = loggedInUser.followings.map(following => following.id)
+        //console.log(myfollowings);
+        for(var i = 0; i<memberIds.length; i++){
+          if(!myfollowings.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
+            return {
+              ok: false,
+              error: "invalid member included"
+            }
+          }
+        }
+
         for(var i = 0; i < memberIds.length; i++){
           for(var j = 0; j<ok.members.length; j++){
             if(memberIds[i] == ok.members[j].id){
@@ -79,7 +91,7 @@ export default {
           ok: true,
         };
       } catch (e) {
-        //console.log(e);
+        console.log(e);
         return {
           ok: false,
           error: "cant add member",

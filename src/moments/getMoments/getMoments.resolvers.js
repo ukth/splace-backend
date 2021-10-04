@@ -26,6 +26,7 @@ export default {
           moments
         };
       } catch (e) {
+        console.log(e);
         return {
           ok: false,
           error: "cant get moments"

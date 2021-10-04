@@ -9,5 +9,7 @@ export default gql`
     isPrivate: Boolean!
     author: User!
     photologs: [Photolog]
+    isScraped: Boolean!
+    scrap: [ScrapedSeries]
   }
 `;
