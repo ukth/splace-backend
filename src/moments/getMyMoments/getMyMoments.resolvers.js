@@ -4,7 +4,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getMoments: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
+    getMyMoments: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
       try {
         const moments = await client.moment.findMany({
           where: {

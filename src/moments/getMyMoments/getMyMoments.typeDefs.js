@@ -7,6 +7,6 @@ export default gql`
     moments: [Moment]
   }  
   type Query {
-    getMoments(lastId: Int): getMomentsResult!
+    getMyMoments(lastId: Int): getMomentsResult!
   }
 `;
