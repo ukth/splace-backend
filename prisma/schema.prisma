@@ -335,6 +335,7 @@ model Chatroom {
   title String   @db.VarChar(255)
   members User[]
   messages Message[]
+  isPersonal Boolean
 
   chatroomReaded ChatroomReaded[]
 

@@ -16,10 +16,10 @@ export default {
           } 
         })
 
-        const myfollowings = loggedInUser.followings.map(following => following.id)
+        const myfollowers = loggedInUser.followers.map(follower => follower.id)
         //console.log(myfollowings);
         for(var i = 0; i<memberIds.length; i++){
-          if(!myfollowings.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
+          if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
             return {
               ok: false,
               error: "invalid member included"

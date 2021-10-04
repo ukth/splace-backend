@@ -28,10 +28,17 @@ export default {
           };
         }
 
-        const myfollowings = loggedInUser.followings.map(following => following.id)
+        if(ok.isPersonal){
+          return {
+            ok: false,
+            error: "can't add members to personal chatroom"
+          }
+        }
+
+        const myfollowers = loggedInUser.followers.map(follower => follower.id)
         //console.log(myfollowings);
         for(var i = 0; i<memberIds.length; i++){
-          if(!myfollowings.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
+          if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
             return {
               ok: false,
               error: "invalid member included"

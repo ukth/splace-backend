@@ -10,6 +10,7 @@ export default gql`
     createChatroom(
       title: String!
       memberIds: [Int]!
+      isPersonal: Boolean!
     ): createChatroomResult!
   }
 `;

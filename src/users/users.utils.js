@@ -10,7 +10,7 @@ export const getUser = async (token) => {
     const user = await client.user.findUnique({
       where: { id },
       include: {
-        followings: true
+        followers: true
       }
     });
     if (user) {
