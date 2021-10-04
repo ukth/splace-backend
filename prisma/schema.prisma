@@ -52,6 +52,8 @@ model User {
 
   moments   Moment[]
 
+  saves    Save[]
+
   hiddenPhotologs Photolog[] @relation("hiddenLogsRelation")
 
   hiddenSeries    Series[]   @relation("hiddenSeriesRelation")
@@ -195,6 +197,9 @@ model Save {
   
   folder    Folder?   @relation(fields: [folderId], references: [id])
   folderId  Int?
+
+  savedUser User?     @relation(fields: [userId], references: [id])
+  userId    Int?
 }
 
 model ScrapedLog {
