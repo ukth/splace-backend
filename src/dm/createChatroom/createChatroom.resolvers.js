@@ -68,6 +68,7 @@ export default {
           const a = await client.chatroom.create({
             data: {
               title,
+              isPersonal,
               members: {
                 connect: memberIds.map(memberId => ({
                   id: memberId

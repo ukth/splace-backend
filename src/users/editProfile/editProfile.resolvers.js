@@ -7,7 +7,7 @@ export default {
   Mutation: {
     editProfile: protectedResolver(async (
       _,
-      { name, username, email, password: newPassword, profileMessage, profileImageUrl, url, phone },
+      { name, username, email, password: newPassword, profileMessage, profileImageUrl, url },
       { loggedInUser }
     ) => {
       try {
@@ -57,7 +57,6 @@ export default {
             email,
             profileMessage,
             url,
-            phone,
             ...(hashedPassword && { password: hashedPassword }),
             ...(profileImageUrl && { profileImageUrl: profileImageUrl }),
           },

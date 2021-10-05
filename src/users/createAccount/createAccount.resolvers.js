@@ -5,7 +5,7 @@ export default {
   Mutation: {
     createAccount: async (
       _,
-      { username, email, password }
+      { username, email, password, phone }
     ) => {
       try {
         const existingUser = await client.user.findFirst({
@@ -32,8 +32,19 @@ export default {
             username,
             email,
             password: hashedPassword,
+            phone
           },
         });
+        const f = await client.folder.create({
+          data: {
+            members: {
+              connect: {
+                id: a.id
+              }
+            },
+            title: "저장된 항목"
+          }
+        })
         //console.log(a);
         return {
           ok: true,

@@ -9,7 +9,6 @@ export default gql`
       password: String
       profileMessage: String
       profileImageUrl: String
-      phone: String
       url: String
     ): defaultResult!
   }
