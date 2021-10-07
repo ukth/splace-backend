@@ -5,13 +5,8 @@ import { protectedResolver } from "../users.utils";
 
 export default {
   Query: {
-    getMyScrap: protectedResolver(async (_, {}, { loggedInUser }) => {
+    getMyScrapedSeries: protectedResolver(async (_, {}, { loggedInUser }) => {
       try{
-      const logs = await client.scrapedLog.findMany({
-        where: {
-          savedUserId: loggedInUser.id
-        }
-      })
       const series = await client.scrapedSeries.findMany({
         where: {
           savedUserId: loggedInUser.id
@@ -19,7 +14,6 @@ export default {
       })
       return {
         ok: true,
-        logs,
         series
       }
     } catch (e){
