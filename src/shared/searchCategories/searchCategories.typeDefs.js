@@ -1,7 +1,7 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type getTagsResult {
+  type searchCategoriesResult {
     ok: Boolean!
     error: String
     specialtags: [Specialtag]
@@ -9,6 +9,6 @@ export default gql`
     bigcategories: [BigCategory]
   }
   type Query {
-    getTags(keyword: String, lastSpecialId: Int, lastHashId: Int): getTagsResult!
+    searchCategories(keyword: String, lastSpecialId: Int, lastHashId: Int): searchCategoriesResult!
   }
 `;

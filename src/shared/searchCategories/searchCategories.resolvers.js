@@ -5,7 +5,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getTags: protectedResolver(async (_, { keyword, lastSpecialId, lastHashId }, { loggedInUser }) => {
+    searchCategories: protectedResolver(async (_, { keyword, lastSpecialId, lastHashId }, { loggedInUser }) => {
       try {
         const specialtags = await client.specialtag.findMany({
           where: {
