@@ -44,7 +44,7 @@ export default {
           }
         }
 
-        var response = await client.search({
+        var response = await searchEngine.search({
           index: index_name,
           body: query
         })
