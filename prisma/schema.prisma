@@ -54,6 +54,8 @@ model User {
 
   saves    Save[]
 
+  mySplaces Splace[]  
+
   hiddenPhotologs Photolog[] @relation("hiddenLogsRelation")
 
   hiddenSeries    Series[]   @relation("hiddenSeriesRelation")
@@ -135,6 +137,8 @@ model Splace {
   timeSets   TimeSet[]
 
   item          Item?
+
+  owner User? @relation(fields: [ownerId], references: [id])
   
   ratingtags    Ratingtag[]   
   

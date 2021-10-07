@@ -17,15 +17,11 @@ const upload = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: async (req, file, cb) => {
-      try {
-        const loggedInUser = await getUser(req.headers.token);
-      } catch (e) {
-        loggedInUser = null;
-      }
+      const loggedInUser = await getUser(req.headers.token);
       if (!loggedInUser) {
         cb(null, "failed_" + Date.now());
       } else {
-        cb(null, loggedInUser.userId + "_" + Date.now() + '.' + file.originalname); // 이름 설정
+        cb(null, loggedInUser.id + "_" + Date.now() + '.' + file.originalname); // 이름 설정
       }
     }
   })

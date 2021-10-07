@@ -11,33 +11,35 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        if (username !== null) {
+        if (username) {
           const existId = await client.user.findFirst({
             where: {
               username
             },
           });
+          //console.log(existId)
           if (existId !== null) {
             if (existId.id !== loggedInUser.id) {
               return {
                 ok: false,
-                error: "username/email already taken.",
+                error: "username already taken.",
               };
             }
           }
         }
-
-        if (email !== null) {
+        //console.log(email)
+        if (email) {
           const existEmail = await client.user.findFirst({
             where: {
               email
             },
           });
+          //console.log(existEmail);
           if (existEmail !== null) {
             if (existEmail.id !== loggedInUser.id) {
               return {
                 ok: false,
-                error: "username/email already taken.",
+                error: "email already taken.",
               };
             }
           }
