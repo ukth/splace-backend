@@ -1,9 +1,12 @@
-const { Client } = require('@elastic/elasticsearch')
 require("dotenv").config();
 
+var { Client } = require('@opensearch-project/opensearch');
 
-const endpoint = "https://" + process.env.ES_DOMAIN
-const searchEngine = new Client({ node: endpoint })
+var host = process.env.ES_DOMAIN;
+var protocol = 'https';
 
+var searchEngine = new Client({
+    node: protocol + '://' + host,
+})
 
 export default searchEngine;

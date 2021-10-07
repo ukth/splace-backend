@@ -34,15 +34,23 @@ export default {
         }
         const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);
 
-        const result = await searchEngine.search({
-          index: 'user',
-          body: {
-            query: {
-              match: { id: 1 }
+        const index_name = 'user'
+        
+        var query = {
+          'query': {
+            'term' : {
+              "username" : "1"
             }
           }
+        }
+
+        var response = await client.search({
+          index: index_name,
+          body: query
         })
-        console.log(result);
+
+        console.log('Search results:')
+        console.log(response.body.hits)
 
         return {
           ok: true,
