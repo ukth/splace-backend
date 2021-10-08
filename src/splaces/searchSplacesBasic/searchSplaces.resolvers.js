@@ -49,15 +49,10 @@ export default {
             "bool": {
               "filter": [
                 {
-                  "term": {
-                    "stringC": "#1#"
+                  "terms": {
+                    "stringC": []
                   }
                 },
-                {
-                  "term": {
-                    "stringC": "#2#"
-                  }
-                }
               ],
               "must": [
                 {
