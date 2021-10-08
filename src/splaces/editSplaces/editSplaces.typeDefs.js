@@ -5,8 +5,8 @@ export default gql`
     editSplaces(
       splaceId: Int!
       name: String
-      geolog: Float
-      geolat: Float
+      lon: Float
+      lat: Float
       address: String
       itemId: Int
       categoryIds: [Int]

@@ -1,4 +1,5 @@
 import client from "../../client";
+import searchEngine from "../../opensearch"
 import { protectedResolver } from "../../users/users.utils";
 
 function AtoS(arr) {
@@ -13,7 +14,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, geolog, geolat, address, itemId, categoryIds, bigCategoryIds, specialTagIds, kids, parking, pets },
+      { splaceId, name, lat,lon, address, itemId, categoryIds, bigCategoryIds, specialTagIds, kids, parking, pets },
       { loggedInUser }
     ) => {
       try {
@@ -51,8 +52,8 @@ export default {
           },
           data: {
             name,
-            geolat,
-            geolog,
+            lon,
+            lat,
             address,
             kids,
             parking,
@@ -101,6 +102,8 @@ export default {
 
           }
         });
+
+        
         //console.log(a);
         return {
           ok: true,

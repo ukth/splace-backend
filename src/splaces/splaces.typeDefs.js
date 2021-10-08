@@ -3,8 +3,10 @@ import { gql } from "apollo-server";
 export default gql`
   type Splace {
     id:      Int!      
-    name:          String!      
-    location: [Float]
+    name:          String! 
+    lat: Float!
+    lon: Float!     
+    location: String!
     address: String
     opearatingTimes: [String]
     createdAt:  String!
