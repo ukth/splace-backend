@@ -64,7 +64,7 @@ export default {
         var query = {
           "filter" : {
             "terms" : {
-              "strincC" : toSearch(categoryIds),
+              "stringC" : toSearch(categoryIds),
               "execution": "or"
             }
           }
