@@ -71,7 +71,7 @@ export default {
         console.log(response)
         console.log(response.body.hits.hits);
 
-        /*var query = {
+        var query = {
           "query": {
             "match_all" : {}
           }
@@ -81,7 +81,7 @@ export default {
           body: query
         })
         console.log(response)
-        console.log(response.body.hits.hits);*/
+        console.log(response.body.hits.hits);
 
         return {
           ok: true,
