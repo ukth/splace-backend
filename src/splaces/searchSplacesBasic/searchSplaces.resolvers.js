@@ -65,7 +65,6 @@ export default {
           "filter" : {
             "terms" : {
               "stringC" : toSearch(categoryIds),
-              "execution": "or"
             }
           }
         }
