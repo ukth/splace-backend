@@ -3,9 +3,9 @@ import { protectedResolver } from "../../users/users.utils";
 
 
 function AtoS(arr) {
-  var str = ""
+  var str = "#"
   for(var i = 0; i < arr.length; i++){
-    str = str + '#' + arr[i] + '# '
+    str = str + arr[i] + '#'
   }
   return str
 }

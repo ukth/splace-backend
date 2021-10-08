@@ -50,7 +50,7 @@ export default {
               "filter": [
                 {
                   "terms": {
-                    "stringc": ["#1# #2# "],
+                    "stringC": ["#1#2#"],
                   }
                 },
               ],
