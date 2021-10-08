@@ -51,7 +51,6 @@ export default {
                 {
                   "terms": {
                     "name": ["11"],
-                    "execution": "or"
                   }
                 },
               ],
