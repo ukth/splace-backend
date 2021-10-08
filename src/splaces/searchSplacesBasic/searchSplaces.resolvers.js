@@ -44,18 +44,21 @@ export default {
           })
         }
 
+        if (lat&&long&&distance){
+          filter.push({
+            "geo_distance": {
+              "distance": distance,
+              "location": {
+                "lat": lat,
+                "lon": long
+              }
+            }
+          })
+        }
+
         var query = {
           "query": {
             "bool": {
-              ...(lat != null && long != null && distance != null && {
-                "geo_distance": {
-                  "distance": distance,
-                  "location": {
-                    "lat": lat,
-                    "lon": long
-                  }
-                }
-              }),
               "filter": filter,
               "must": [
                 {
