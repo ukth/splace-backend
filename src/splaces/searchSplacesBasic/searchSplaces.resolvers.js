@@ -47,6 +47,15 @@ export default {
         var query = {
           "query": {
             "bool": {
+              ...(lat != null && long != null && distance != null && {
+                "geo_distance": {
+                  "distance": distance,
+                  "location": {
+                    "lat": lat,
+                    "lon": long
+                  }
+                }
+              }),
               "filter": filter,
               "must": [
                 {
