@@ -69,7 +69,7 @@ export default {
         })
 
         console.log(response)
-        console.log(response._source);
+        console.log(response.meta.request.params);
 
         return {
           ok: true,
