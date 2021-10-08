@@ -47,6 +47,18 @@ export default {
         var query = {
           "query": {
             "bool": {
+              "filter": {
+                "terms" : {
+                  "stringC" : ["#1#", "#2#"]
+                }
+              }
+            }
+          }
+        }
+
+        /*var query = {
+          "query": {
+            "bool": {
               ...(lat != null && long != null && distance != null && {
                 "geo_distance": {
                   "distance": distance,
@@ -59,7 +71,7 @@ export default {
               "filter": filter
             }
           }
-        }
+        }*/
 
         console.log(query);
 
