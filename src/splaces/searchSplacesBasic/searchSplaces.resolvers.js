@@ -43,18 +43,31 @@ export default {
             }
           })
         }
-        
+
         var query = {
           "query": {
             "bool": {
-              "filter": {
-                "terms" : {
-                  "stringC" : ["#1#", "#2#"]
+              "filter": [
+                {
+                  "term": {
+                    "stringC": "#1#"
+                  }
+                },
+                {
+                  "term": {
+                    "stringC": "#2#"
+                  }
                 }
-              }
+              ],
+              "must": [
+                {
+                  "match_all": {}
+                }
+              ]
             }
           }
         }
+
 
         /*var query = {
           "query": {
@@ -85,7 +98,7 @@ export default {
 
         var query = {
           "query": {
-            "match_all" : {}
+            "match_all": {}
           }
         }
         var response = await searchEngine.search({
