@@ -4,7 +4,7 @@ import searchEngine from "../../opensearch";
 function toSearch(arr) {
   var narr = new Array();
   for (var i = 0; i < arr.length; i++) {
-    narr.push("#" + arr[i] + "#")
+    narr.push("" + arr[i])
   }
   return narr
 }
@@ -47,13 +47,7 @@ export default {
         var query = {
           "query": {
             "bool": {
-              "filter": [
-                {
-                  "terms": {
-                    "stringC": ["1","2"],
-                  }
-                },
-              ],
+              "filter": filter,
               "must": [
                 {
                   "match_all": {}
