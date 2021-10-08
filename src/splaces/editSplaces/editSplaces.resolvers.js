@@ -1,16 +1,44 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 
+function AtoS(arr) {
+  var str = "#"
+  for(var i = 0; i < arr.length; i++){
+    str = str + arr[i] + '#'
+  }
+  return str
+}
 
 export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, geolog, geolat, address, timeSetIds, itemIds, hashtags, kids, parking, pets},
+      { splaceId, name, geolog, geolat, address, itemId, categoryIds, bigCategoryIds, specialTagIds, kids, parking, pets },
       { loggedInUser }
     ) => {
       try {
-        const previous = await client.splace.findUnique({ where: { id: splaceId } });
+        const previous = await client.splace.findUnique({
+          where: {
+            id: splaceId
+          },
+          include: {
+            categories: {
+              select: {
+                id: true
+              }
+            },
+            bigCategories: {
+              select: {
+                id: true
+              }
+            },
+            specialtags: {
+              select: {
+                id: true
+              }
+            }
+          }
+        });
         if (previous.ownerId != loggedInUser.id) {
           return {
             ok: false,
@@ -29,28 +57,48 @@ export default {
             kids,
             parking,
             pets,
-            ...(timeSetIds != null && {
-              timeSets: {
-                connect: timeSetIds.map(timeSetId => ({
-                  timeSetId
-                })),
+            ...(itemId != null && {
+              item: {
+                disconnect: true,
+                connect: {
+                  id: itemId
+                }
               },
             }),
-            ...(itemIds != null && {
-              items: {
-                connect: itemIds.map(itemId => ({
-                  itemId
+            ...(categoryIds != null && {
+              categories: {
+                disconnect: previous.categories.map(category => ({
+                  id: category.id
+                })),
+                connect: categoryIds.map(categoryId => ({
+                  id: categoryId
                 })),
               },
+              stringC: AtoS(categoryIds)
             }),
-            ...(hashtags != null && {
-              hashtags: {
-                connectOrCreate: hashtags.map(hashtag => ({
-                  create: { name: hashtag },
-                  where: { name: hashtag }
-                }))
-              }
+            ...(bigCategoryIds != null && {
+              bigCategories: {
+                disconnect: previous.bigCategories.map(bigCategory => ({
+                  id: bigCategory.id
+                })),
+                connect: bigCategoryIds.map(bigCategoryId => ({
+                  id: bigCategoryId
+                })),
+              },
+              stringBC: AtoS(bigCategoryIds)
             }),
+            ...(specialTagIds != null && {
+              specialtags: {
+                disconnect: previous.specialtags.map(specialTag => ({
+                  id: specialTag.id
+                })),
+                connect: specialTagIds.map(specialTagId => ({
+                  id: specialTagId
+                })),
+              },
+              stringST: AtoS(specialTagIds)
+            }),
+
           }
         });
         //console.log(a);

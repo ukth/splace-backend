@@ -8,9 +8,10 @@ export default gql`
       geolog: Float
       geolat: Float
       address: String
-      timeSetIds: [Int]
-      itemIds: [Int]
-      hashtags: [String]
+      itemId: Int
+      categoryIds: [Int]
+      bigCategoryIds: [Int]
+      specialTagIds: [Int]
       parking: Boolean
       pets: Boolean
       kids: Boolean

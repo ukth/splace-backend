@@ -82,6 +82,12 @@ model Photolog {
   
   splace     Splace?    @relation(fields: [splaceId], references: [id])
   splaceId   Int?
+
+  stringC String? @db.VarChar(255)
+
+  stringBC  String? @db.VarChar(255)
+
+  stringST  String? @db.VarChar(255)
   
   series     Series[]    @relation("seriesRelation")
   
@@ -133,6 +139,14 @@ model Splace {
   url      String? @db.VarChar(255)
   phone    String? @db.VarChar(255)
   thumbnail String? @db.Text
+
+  stringC String? @db.VarChar(255)
+
+  stringBC  String? @db.VarChar(255)
+
+  stringST  String? @db.VarChar(255)
+
+  stringRT  String? @db.VarChar(255)
   
   timeSets   TimeSet[]
 
@@ -155,6 +169,8 @@ model Splace {
   saves       Save[]
 
   moments     Moment[]
+
+  breakDays   BreakDay[]
 }
 
 model TimeSet {
@@ -170,6 +186,17 @@ model TimeSet {
 
 }
 
+model BreakDay {
+  id Int @id @default(autoincrement())
+  week Int
+  day Int
+  splace Splace? @relation(fields: [splaceId], references: [id])
+  splaceId  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
 model FixedContent {
   id Int      @id @default(autoincrement())
   title          String   @db.VarChar(255)
@@ -180,15 +207,6 @@ model FixedContent {
   
   splace         Splace?   @relation(fields: [splaceId], references: [id])
   splaceId       Int?
-}
-
-model Ratingtag {
-  id Int      @id @default(autoincrement())
-  name        String   @db.VarChar(255) @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  splaces      Splace[]
 }
 
 model Save {
@@ -271,6 +289,17 @@ model Specialtag {
   color    String   @db.VarChar(255)
   
   photologs Photolog[]
+  
+  splaces   Splace[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Ratingtag {
+  id Int @id @default(autoincrement())
+  name     String   @db.VarChar(255) @unique
+  color    String   @db.VarChar(255)
   
   splaces   Splace[]
 

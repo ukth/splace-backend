@@ -1,11 +1,20 @@
+import { OpsWorks } from "aws-sdk";
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+
+function AtoS(arr) {
+  var str = "#"
+  for(var i = 0; i < arr.length; i++){
+    str = str + arr[i] + '#'
+  }
+  return str
+}
 
 export default {
   Mutation: {
     editPhotolog: protectedResolver(async (
       _,
-      { photologId, title, imageUrls, photoSize, text, splaceId, hashtags, isPrivate },
+      { photologId, title, imageUrls, photoSize, text, splaceId, categoryIds, bigCategoryIds, specialTagIds, isPrivate },
       { loggedInUser }
     ) => {
       try {
@@ -14,6 +23,23 @@ export default {
             id: photologId,
             author: {
               id: loggedInUser.id
+            }
+          },
+          include: {
+            categories: {
+              select: {
+                id: true
+              }
+            },
+            bigCategories: {
+              select: {
+                id: true
+              }
+            },
+            specialtags: {
+              select: {
+                id: true
+              }
             }
           }
         });
@@ -41,13 +67,38 @@ export default {
                 },
               },
             }),
-            ...(hashtags != null && {
-              hashtags: {
-                connectOrCreate: hashtags.map(hashtag => ({
-                  create: { name: hashtag },
-                  where: { name: hashtag }
-                }))
-              }
+            ...(categoryIds != null && {
+              categories: {
+                disconnect: ok.categories.map(category => ({
+                  id: category.id
+                })),
+                connect: categoryIds.map(categoryId => ({
+                  id: categoryId
+                })),
+              },
+              stringC: AtoS(categoryIds)
+            }),
+            ...(bigCategoryIds != null && {
+              bigCategories: {
+                disconnect: ok.bigCategories.map(bigCategory => ({
+                  id: bigCategory.id
+                })),
+                connect: bigCategoryIds.map(bigCategoryId => ({
+                  id: bigCategoryId
+                })),
+              },
+              stringBC: AtoS(bigCategoryIds)
+            }),
+            ...(specialTagIds != null && {
+              specialtags: {
+                disconnect: ok.specialtags.map(specialTag => ({
+                  id: specialTag.id
+                })),
+                connect: specialTagIds.map(specialTagId => ({
+                  id: specialTagId
+                })),
+              },
+              stringST: AtoS(specialTagIds)
             }),
           }
         });

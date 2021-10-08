@@ -9,7 +9,9 @@ export default gql`
       text: String
       splaceId: Int
       seriesIds: [Int]
-      hashtags: [String]
+      categoryIds: [Int]
+      bigCategoryIds: [Int]
+      specialTagIds: [Int]
       isPrivate: Boolean!
     ): defaultResult!
   }

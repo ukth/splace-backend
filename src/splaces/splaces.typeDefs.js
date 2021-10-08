@@ -12,6 +12,7 @@ export default gql`
     updatedAt: String!
     ownerId: Int
     timeSets: [TimeSet]
+    breakDays: [BreakDay]
     items: [Item]
     badges: [Badge]
     ratingtags: [Ratingtag]
@@ -70,6 +71,15 @@ export default gql`
     splace: Splace!
     splaceId: Int!
     isBreakTime: Boolean!
+    createdAt: String!
+    updatedAt: String!
+  }
+  type BreakDay {
+    timeSetId: Int!
+    week: Int!
+    day: Int!
+    splace: Splace!
+    splaceId: Int!
     createdAt: String!
     updatedAt: String!
   }
