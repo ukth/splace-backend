@@ -50,7 +50,8 @@ export default {
               "filter": [
                 {
                   "terms": {
-                    "stringC": []
+                    "name": ["11"],
+                    "execution": "or"
                   }
                 },
               ],
