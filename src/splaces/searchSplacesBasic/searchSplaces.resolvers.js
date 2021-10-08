@@ -69,7 +69,19 @@ export default {
         })
 
         console.log(response)
-        console.log(response.body.hits.total);
+        console.log(response.body.hits.hits);
+
+        var query = {
+          "query": {
+            "match_all" : {}
+          }
+        }
+        var response = await searchEngine.search({
+          index: index_name,
+          body: query
+        })
+        console.log(response)
+        console.log(response.body.hits.hits);
 
         return {
           ok: true,
