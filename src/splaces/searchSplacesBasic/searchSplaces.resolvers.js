@@ -44,7 +44,7 @@ export default {
           })
         }
         
-        /*var query = {
+        var query = {
           "query": {
             "bool": {
               ...(lat != null && long != null && distance != null && {
@@ -58,12 +58,6 @@ export default {
               }),
               "filter": filter
             }
-          }
-        }*/
-        
-        var query = {
-          "filter" : {
-            "and" : filter
           }
         }
 
