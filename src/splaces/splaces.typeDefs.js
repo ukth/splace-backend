@@ -4,8 +4,7 @@ export default gql`
   type Splace {
     id:      Int!      
     name:          String!      
-    geolog:        Float      
-    geolat:        Float
+    location: [Float]
     address: String
     opearatingTimes: [String]
     createdAt:  String!

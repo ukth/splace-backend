@@ -126,8 +126,7 @@ model Series {
 model Splace {
   id Int     @id @default(autoincrement())
   name     String  @db.VarChar(255)
-  geolog   Decimal? @db.Decimal(11, 8)
-  geolat   Decimal? @db.Decimal(11, 8)
+  location Decimal[] @db.Decimal(11,8)
   address        String?   @db.VarChar(255)
   createdAt   DateTime @default(now())
   updatedAt      DateTime   @updatedAt
