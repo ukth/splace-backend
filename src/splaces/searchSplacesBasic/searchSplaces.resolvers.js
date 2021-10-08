@@ -19,7 +19,6 @@ export default {
           filter.push({
             "terms": {
               "stringC": toSearch(categoryIds),
-              "executhon" : "or"
             }
           })
         }
