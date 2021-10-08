@@ -1,10 +1,10 @@
 import client from "../../client";
 import searchEngine from "../../opensearch";
 
-function toSearch(arr){
+function toSearch(arr) {
   var narr = new Array();
-  for(var i=0; i<arr.length; i++){
-    narr.push("#"+arr[i]+"#")
+  for (var i = 0; i < arr.length; i++) {
+    narr.push("#" + arr[i] + "#")
   }
   return narr
 }
@@ -14,47 +14,60 @@ export default {
     searchSplaces: async (_, { keyword, lat, long, distance, categoryIds, bigCategoryIds, specialTagIds, ratingTagIds }) => {
       try {
         var index_name = "splace"
+        var filter = new Array();
+        if (categoryIds) {
+          filter.push({
+            "terms": {
+              "stringC": toSearch(categoryIds)
+            }
+          })
+        }
+        if (bigCategoryIds) {
+          filter.push({
+            "terms": {
+              "stringBC": toSearch(bigCategoryIds)
+            }
+          })
+        }
+        if (specialTagIds) {
+          filter.push({
+            "terms": {
+              "stringST": toSearch(specialTagIds)
+            }
+          })
+        }
+        if (ratingTagIds) {
+          filter.push({
+            "terms": {
+              "stringRT": toSearch(ratingTagIds)
+            }
+          })
+        }
+        
         var query = {
           "query": {
-            "match" : {
-              "_all" : keyword
-            },
-            ...(lat != null && long != null && distance != null && {
-              "geo_distance": {
-                "distance": distance,
-                "location": {
-                  "lat": lat,
-                  "lon": long
+            "bool": {
+              ...(lat != null && long != null && distance != null && {
+                "geo_distance": {
+                  "distance": distance,
+                  "location": {
+                    "lat": lat,
+                    "lon": long
+                  }
                 }
-              }
-            }),
-            ...(categoryIds != null && {
-              "terms": {
-                "stringC": toSearch(categoryIds)
-              }
-            }),
-            ...(bigCategoryIds != null && {
-              "terms": {
-                "stringBC": toSearch(bigCategoryIds)
-              }
-            }),
-            ...(specialTagIds != null && {
-              "terms": {
-                "stringST": toSearch(specialTagIds)
-              }
-            }),
-            ...(ratingTagIds != null && {
-              "terms": {
-                "stringST": toSearch(ratingTagIds)
-              }
-            }),
+              }),
+              "filter": filter
+            }
           }
         }
+
+        console.log(query);
+
         var response = await searchEngine.search({
           index: index_name,
           body: query
         })
-        
+
         console.log(response)
         console.log(response._source);
 
