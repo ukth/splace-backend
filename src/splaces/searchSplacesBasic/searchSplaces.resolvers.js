@@ -69,7 +69,7 @@ export default {
         })
 
         console.log(response)
-        console.log(response.meta.request.params);
+        console.log(response.body.hits.total);
 
         return {
           ok: true,
