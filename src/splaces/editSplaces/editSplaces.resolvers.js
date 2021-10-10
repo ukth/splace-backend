@@ -93,7 +93,7 @@ export default {
           body: document
         })
 
-        console.log(response.body.hits.hits);
+        console.log(response);
 
         const a = await client.splace.update({
           where: {
