@@ -72,7 +72,7 @@ export default {
           body: query
         })
         
-        console.log(ok)
+        console.log(ok.body.hits.hits)
 
         /*var query = {
           "query": {
