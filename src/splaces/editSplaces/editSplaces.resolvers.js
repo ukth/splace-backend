@@ -4,7 +4,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 function AtoS(arr) {
   var str = ""
-  for(var i = 0; i < arr.length; i++){
+  for (var i = 0; i < arr.length; i++) {
     str = str + arr[i] + ' '
   }
   return str
@@ -14,7 +14,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, lat,lon, address, itemId, categoryIds, bigCategoryIds, specialTagIds, kids, parking, pets },
+      { splaceId, name, lat, lon, address, itemId, categoryIds, bigCategoryIds, specialTagIds, kids, parking, pets },
       { loggedInUser }
     ) => {
       try {
@@ -71,8 +71,8 @@ export default {
           index: index_name,
           body: query
         })
-        
-        if(ok.body.hits.hits.length !== 1){
+
+        if (ok.body.hits.hits.length !== 1) {
           return {
             ok: false,
             error: "opensearch error"
@@ -80,7 +80,9 @@ export default {
         }
 
         var document = {
-          "location" : location
+          "doc": {
+            "location": location
+          }
         }
 
         console.log(ok.body.hits.hits[0]._id)
@@ -91,7 +93,7 @@ export default {
           body: document
         })
 
-        console.log(response.body.hits.hits); 
+        console.log(response.body.hits.hits);
 
         const a = await client.splace.update({
           where: {
@@ -149,9 +151,9 @@ export default {
 
           }
         });
-        
 
-        
+
+
         //console.log(a);
         return {
           ok: true,
