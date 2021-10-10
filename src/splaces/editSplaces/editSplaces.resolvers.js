@@ -46,6 +46,51 @@ export default {
             error: "you are not the owner of this splace!"
           };
         }
+
+        const location = lat + ", " + lon
+        var index_name = "splace"
+
+        var query = {
+          "query": {
+            "bool": {
+              "filter": {
+                "term": {
+                  "id": previous.id,
+                }
+              },
+              "must": [
+                {
+                  "match_all": {}
+                }
+              ]
+            }
+          }
+        }
+
+        var ok = await searchEngine.search({
+          index: index_name,
+          body: query
+        })
+        
+        console.log(ok)
+
+        /*var query = {
+          "query": {
+            "term" : {
+              "location" : location
+            }
+          }
+        }
+
+        var response = await searchEngine.update({
+          id: "1",
+          index: index_name,
+          body: query
+        })
+
+        //console.log(response)
+        console.log(response.body.hits.hits); */
+
         const a = await client.splace.update({
           where: {
             id: splaceId
@@ -102,6 +147,7 @@ export default {
 
           }
         });
+        
 
         
         //console.log(a);

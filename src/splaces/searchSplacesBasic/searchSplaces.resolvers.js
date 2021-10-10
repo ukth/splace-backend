@@ -69,7 +69,6 @@ export default {
           }
         }
 
-
         /*var query = {
           "query": {
             "bool": {
