@@ -79,12 +79,8 @@ export default {
           }
         }
 
-        var query = {
-          "query": {
-            "term" : {
-              "location" : location
-            }
-          }
+        var document = {
+          "location" : location
         }
 
         console.log(ok.body.hits.hits[0]._id)
@@ -92,7 +88,7 @@ export default {
         var response = await searchEngine.update({
           id: ok.body.hits.hits[0]._id,
           index: index_name,
-          body: query
+          body: document
         })
 
         console.log(response.body.hits.hits); 
