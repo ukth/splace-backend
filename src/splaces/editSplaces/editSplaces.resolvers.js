@@ -72,9 +72,14 @@ export default {
           body: query
         })
         
-        console.log(ok.body.hits.hits)
+        if(ok.body.hits.hits.length !== 1){
+          return {
+            ok: false,
+            error: "opensearch error"
+          }
+        }
 
-        /*var query = {
+        var query = {
           "query": {
             "term" : {
               "location" : location
@@ -82,14 +87,15 @@ export default {
           }
         }
 
+        console.log(ok.body.hits.hits[0]._id)
+
         var response = await searchEngine.update({
-          id: "1",
+          id: ok.body.hits.hits[0]._id,
           index: index_name,
           body: query
         })
 
-        //console.log(response)
-        console.log(response.body.hits.hits); */
+        console.log(response.body.hits.hits); 
 
         const a = await client.splace.update({
           where: {
