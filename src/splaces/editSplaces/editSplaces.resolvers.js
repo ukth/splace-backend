@@ -79,22 +79,6 @@ export default {
           }
         }
 
-        var document = {
-          "doc": {
-            "location": location
-          }
-        }
-
-        console.log(ok.body.hits.hits[0]._id)
-
-        var response = await searchEngine.update({
-          id: ok.body.hits.hits[0]._id,
-          index: index_name,
-          body: document
-        })
-
-        console.log(response);
-
         const a = await client.splace.update({
           where: {
             id: splaceId
@@ -152,7 +136,21 @@ export default {
           }
         });
 
+        var document = {
+          "doc": {
+            "location": location
+          }
+        }
 
+        console.log(ok.body.hits.hits[0]._id)
+
+        var response = await searchEngine.update({
+          id: ok.body.hits.hits[0]._id,
+          index: index_name,
+          body: document
+        })
+
+        console.log(response);
 
         //console.log(a);
         return {
