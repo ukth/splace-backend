@@ -5,19 +5,12 @@ export default {
   Mutation: {
     createAccount: async (
       _,
-      { username, email, password, phone }
+      { username, password, phone }
     ) => {
       try {
         const existingUser = await client.user.findFirst({
           where: {
-            OR: [
-              {
-                username,
-              },
-              {
-                email,
-              },
-            ],
+            username
           },
         });
         if (existingUser) {
@@ -30,7 +23,6 @@ export default {
         const a = await client.user.create({
           data: {
             username,
-            email,
             password: hashedPassword,
             phone
           },

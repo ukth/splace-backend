@@ -10,12 +10,30 @@ export default gql`
     createdAt: String!
     updatedAt: String!
   }
-  type BuyLog {
+  type BuyRaffleLog {
     id: Int!
-    itemId: Int!
-    shopId: Int!
+    raffle: Raffle!
+    raffleId: Int!
+    customer: User!
+    customerId: Int!
     credit: Int!
     createdAt: String!
     updatedAt: String!  
+  }
+  type Raffle {
+    id: Int!
+  
+    name: String!
+    dDay: String!
+    imageUrls: [String]
+  
+    credit: Int!
+  
+    splace: Splace
+    splaceId: Int
+  
+    info: String
+  
+    buyLog: [BuyRaffleLog]
   }
 `;
