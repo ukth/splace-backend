@@ -9,14 +9,7 @@ export default {
       try {
         const user = await client.user.findFirst({
           where: {
-            OR: [
-              {
-                username
-              },
-              {
-                email: username
-              },
-            ],
+            username
           },
         });
         if (!user) {

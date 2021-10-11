@@ -5,7 +5,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    searchCategories: protectedResolver(async (_, { keyword, lastSpecialId, lastHashId }, { loggedInUser }) => {
+    searchCategories: protectedResolver(async (_, { keyword, lastHashId }, { loggedInUser }) => {
       try {
         const specialtags = await client.specialtag.findMany({
           where: {
@@ -18,12 +18,6 @@ export default {
             name: true,
             color: true
           },
-          take: 2,
-          ...(lastId && { cursor: { id: lastSpecialId } }),
-          skip: lastId ? 1 : 0,
-          orderBy: {
-            title: "asc",
-          },
         })
         const categories = await client.category.findMany({
           where: {
@@ -35,12 +29,7 @@ export default {
             id: true,
             name: true
           },
-          take: 2,
-          ...(lastId && { cursor: { id: lastHashId } }),
-          skip: lastId ? 1 : 0,
-          orderBy: {
-            title: "asc",
-          },
+          take: 40,
         })
         const bigCategories = await client.bigCategory.findMany({
           where: {
@@ -51,12 +40,6 @@ export default {
           select: {
             id: true,
             name: true
-          },
-          take: 2,
-          ...(lastId && { cursor: { id: lastHashId } }),
-          skip: lastId ? 1 : 0,
-          orderBy: {
-            title: "asc",
           },
         })
         return {

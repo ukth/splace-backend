@@ -4,8 +4,8 @@ export default {
   Query: {
     searchUsers: async (_, { keyword }) => {
       try {
-        const users = client.user.findMany({
-          take: 61,
+        const userbyid = await client.user.findMany({
+          take: 20,
           where: {
             username: {
               startsWith: keyword.toLowerCase(),
@@ -15,6 +15,22 @@ export default {
             username: "asc",
           },
         })
+
+        const userbyname = await client.user.findMany({
+          take: 20,
+          where: {
+            name: {
+              startsWith: keyword.toLowerCase(),
+            },
+          },
+          orderBy: {
+            name: "asc",
+          },
+        })
+
+        const users = userbyid.concat(userbyname)
+
+        //const users = null
         
         return {
           ok: true,

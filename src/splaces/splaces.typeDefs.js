@@ -31,6 +31,7 @@ export default gql`
     specialtags: [Specialtag]
     moments: [Moment]
     thumbnail: String
+    raffles: [Raffle]
   }
   type FixedContent {
     fixedContentid: Int!

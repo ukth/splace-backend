@@ -25,6 +25,7 @@ export default gql`
     url: String
     scrapedLog: [ScrapedLog]
     scrapedSeries: [ScrapedSeries]
+    buyRaffleLogs: [BuyRaffleLog]
   }
   
   type ScrapedLog {
