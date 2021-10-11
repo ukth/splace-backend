@@ -19,14 +19,24 @@ export default {
         return null;
       }
     },
-    isILiked: ({ likedUser }, _, { loggedInUser }) => {
-      if (!loggedInUser) {
-        return false;
+    isILiked: async ({ id }, _, { loggedInUser }) => {
+      try {
+        const yes = await client.user.findFirst({
+          where: {
+            id: loggedInUser.id,
+            likedPhotologs: {
+              some: {
+                id
+              }
+            }
+          },
+        })
+        //console.log(yes);
+        return Boolean(yes);
+      } catch(e){
+        console.log(e)
+        return null;
       }
-      var yes = likedUser.filter(function (user) {
-        return user.id == loggedInUser.id;
-      });
-      return yes.length == 1;
     },
 
     isScraped: async ({ id }, _, { loggedInUser }) => {

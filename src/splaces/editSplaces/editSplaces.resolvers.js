@@ -50,7 +50,7 @@ export default {
         const location = lat + ", " + lon
         var index_name = "splace"
 
-        var query = {
+        /*var query = {
           "query": {
             "bool": {
               "filter": {
@@ -77,7 +77,7 @@ export default {
             ok: false,
             error: "opensearch error"
           }
-        }
+        }   */
 
         const a = await client.splace.update({
           where: {
@@ -108,7 +108,6 @@ export default {
                   id: categoryId
                 })),
               },
-              stringC: AtoS(categoryIds)
             }),
             ...(bigCategoryIds != null && {
               bigCategories: {
@@ -119,7 +118,6 @@ export default {
                   id: bigCategoryId
                 })),
               },
-              stringBC: AtoS(bigCategoryIds)
             }),
             ...(specialTagIds != null && {
               specialtags: {
@@ -130,7 +128,6 @@ export default {
                   id: specialTagId
                 })),
               },
-              stringST: AtoS(specialTagIds)
             }),
 
           }
@@ -142,10 +139,10 @@ export default {
           }
         }
 
-        console.log(ok.body.hits.hits[0]._id)
+        //console.log(ok.body.hits.hits[0]._id)
 
         var response = await searchEngine.update({
-          id: ok.body.hits.hits[0]._id,
+          id: splaceId,
           index: index_name,
           body: document
         })
