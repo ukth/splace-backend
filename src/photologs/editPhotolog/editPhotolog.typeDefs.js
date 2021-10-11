@@ -9,7 +9,9 @@ export default gql`
       photoSize: Int
       text: String
       splaceId: Int
-      hashtags: [String]
+      categoryIds: [Int]
+      bigCategoryIds: [Int]
+      specialTagIds: [Int]
       isPrivate: Boolean
     ): defaultResult!
   }

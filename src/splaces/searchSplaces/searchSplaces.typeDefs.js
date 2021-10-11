@@ -18,6 +18,14 @@ export default gql`
     searchedSplaces: [searchedSplace]
   }
   type Query {
-    searchSplaces(keyword: String!, lat: Float!, long: Float!, distance: Int!): searchSplacesResult!
+    searchSplaces(
+      keyword: String!, 
+      lat: Float, 
+      long: Float, 
+      distance: Int, 
+      categoryIds: [Int],
+      bigCategoryIds: [Int],
+      specialTagIds: [Int],
+      ratingTagIds: [Int]): searchSplacesResult!
   }
 `;
