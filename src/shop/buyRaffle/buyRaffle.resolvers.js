@@ -15,7 +15,7 @@ export default {
           }
         })
 
-        if(!ok){
+        if (!ok) {
           return {
             ok: false,
             error: "raffle not exist"
@@ -28,9 +28,9 @@ export default {
           }
         })
 
-        mycredit = mycredit.credit
+        const totalcredit = mycredit.credit + mycredit.lockedCredit
 
-        if(mycredit < ok.credit){
+        if (totalcredit < ok.credit) {
           return {
             ok: false,
             error: "credit xxx"
@@ -53,16 +53,33 @@ export default {
           }
         });
 
-        mycredit -= ok.credit
-        
-        const b = await client.user.update({
-          where: {
-            id: loggedInUser.id
-          },
-          data: {
-            credit: mycredit
-          }
-        })
+        if (mycredit.lockedCredit >= ok.credit) {
+          const newCredit = mycredit.lockedCredit - ok.credit
+          //console.log(newCredit)
+          const b = await client.user.update({
+            where: {
+              id: loggedInUser.id
+            },
+            data: {
+              lockedCredit: newCredit
+            }
+          })
+        }
+
+        else {
+          const payCredit = ok.credit - mycredit.lockedCredit
+          const newCredit = mycredit.credit - payCredit
+          //console.log(newCredit)
+          const b = await client.user.update({
+            where: {
+              id: loggedInUser.id
+            },
+            data: {
+              lockedCredit: 0,
+              credit: newCredit
+            }
+          })
+        }
 
         //console.log(a);
         return {

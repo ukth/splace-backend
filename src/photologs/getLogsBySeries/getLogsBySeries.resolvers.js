@@ -56,6 +56,7 @@ export default {
             bigCategories: true,
             specialtags: true,
             author: true,
+            series: true,
           },
           take: 5,
           ...(lastId && { cursor: { id: lastId } }),
