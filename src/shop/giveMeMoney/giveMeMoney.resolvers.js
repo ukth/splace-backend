@@ -24,6 +24,21 @@ export default {
         console.log(custom_data);
         console.log(paymentData);
 
+        const buyRaffleLog = await client.buyRaffleLog.findFirst({
+          where: {
+            createdAt: {
+              gte: paymentData.paid_at
+            }
+          }
+        })
+
+        if(buyRafflelLog){
+          return {
+            ok: false,
+            error: "you already use credit"
+          }
+        }
+
         if (paymentData != null && paymentlog.creditGiven && merchantUId === paymentData.merchant_uid
           && custom_data.userId === loggedInUser.id && paymentData.status === 'paid'
           && paymentData.cancel_history.length === 0 && loggedInUser.credit >= custom_data.credit) { //buylog check \

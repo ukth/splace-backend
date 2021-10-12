@@ -7,6 +7,7 @@ export default gql`
       username: String
       email: String
       password: String
+      birthDay: String
       profileMessage: String
       profileImageUrl: String
       url: String

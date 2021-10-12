@@ -4,12 +4,12 @@ version: v1.22.0
 ignore:
   SNYK-JS-ISSVG-1085627:
     - multer-s3 > is-svg:
-        reason: need more info for is-svg@2.1.0
-        expires: '2021-09-18T04:31:33.063Z'
+        reason: None given
+        expires: '2021-11-11T02:42:10.134Z'
   SNYK-JS-ISSVG-1243891:
     - multer-s3 > is-svg:
-        reason: need for info for is-svg
-        expires: '2021-09-18T04:31:33.063Z'
+        reason: None given
+        expires: '2021-11-11T02:42:10.134Z'
   SNYK-JS-LODASH-1018905:
     - merge-graphql-schemas > @graphql-toolkit/schema-merging > @graphql-toolkit/common > lodash:
         reason: None given

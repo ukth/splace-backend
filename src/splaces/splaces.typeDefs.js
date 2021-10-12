@@ -24,7 +24,7 @@ export default gql`
     saves: [Save]
     parking: Boolean
     pets: Boolean
-    kids: Boolean
+    noKids: Boolean
     intro: String
     url: String
     phone: String

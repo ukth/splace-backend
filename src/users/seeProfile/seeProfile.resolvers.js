@@ -7,6 +7,13 @@ export default {
           where: {
             id: userId,
           },
+          select: {
+            id: true,
+            username: true,
+            profileImageUrl: true,
+            profileMessage: true,
+            url: true,
+          }
         })
         if(!profile){
           return{

@@ -2,15 +2,20 @@ import { createWriteStream } from "fs";
 import bcrypt from "bcrypt";
 import client from "../../client";
 import { protectedResolver } from "../users.utils";
+import dayjs from 'dayjs';
 
 export default {
   Mutation: {
     editProfile: protectedResolver(async (
       _,
-      { name, username, email, password: newPassword, profileMessage, profileImageUrl, url },
+      { name, username, birthDay, email, password: newPassword, profileMessage, profileImageUrl, url },
       { loggedInUser }
     ) => {
       try {
+        if (birthDay) {
+          const BDay = dayjs(parseInt(birthDay))
+          birthDay = BDay.format()
+        }
         if (username) {
           const existId = await client.user.findFirst({
             where: {
@@ -59,6 +64,7 @@ export default {
             email,
             profileMessage,
             url,
+            ...(birthDay && { birthDay: birthDay }),
             ...(hashedPassword && { password: hashedPassword }),
             ...(profileImageUrl && { profileImageUrl: profileImageUrl }),
           },

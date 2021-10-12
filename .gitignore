@@ -27,3 +27,13 @@ package-lock.json
 
 #migration
 prisma/migrations
+
+#snyk
+.snyk
+
+#tar.gz
+ko.tar.gz
+
+ko.bin
+
+ko.vec
