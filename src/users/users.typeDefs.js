@@ -10,6 +10,7 @@ export default gql`
     profileMessage: String    
     profileImageUrl:   String
     folders: [Folder]
+    birthDay: String
     joinedAt:       String!
     updatedAt:      String!  
     followers:      [User]     

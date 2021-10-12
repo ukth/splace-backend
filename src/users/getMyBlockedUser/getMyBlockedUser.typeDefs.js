@@ -1,19 +1,18 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type Profile {
+  type BlockedUser {
     id: Int!
     username: String!
     profileImageUrl: String
-    profileMessage: String
-    url: String
+    name: String
   }
-  type seeProfileResult {
+  type getMyBlockedUserResult{
     ok: Boolean!
     error: String
-    profile: Profile
+    users: [BlockedUser]
   }
   type Query {
-    seeProfile(userId: Int!): seeProfileResult!
+    getMyBlockedUser: getMyBlockedUserResult
   }
 `;

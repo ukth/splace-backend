@@ -18,6 +18,7 @@ model User {
   password       String     @db.VarChar(255)
   profileMessage String?    @db.VarChar(255)
   profileImageUrl   String?    @db.VarChar(255)
+  birthDay      DateTime?   
   joinedAt       DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   authority      String     @db.VarChar(255) @default("user")
@@ -67,6 +68,8 @@ model User {
   blockingUser   User[]     @relation("blockRelation")
 
   chatroomReaded ChatroomReaded[]
+
+  myReports Report[]
 }
 
 model Photolog {
@@ -134,9 +137,9 @@ model Splace {
   createdAt   DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   ownerId Int?
-  parking  Boolean?
-  pets     Boolean?      
-  kids     Boolean?
+  parking  Boolean @default(false)
+  pets     Boolean @default(false)      
+  noKids     Boolean @default(false)
   intro    String? @db.Text
   url      String? @db.VarChar(255)
   phone    String? @db.VarChar(255)
@@ -439,6 +442,17 @@ model Moment {
 
   videoUrl String? @db.VarChar(255)
   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Report {
+  id Int @id @default(autoincrement())
+  sourceType String @db.VarChar(255)
+  sourceId Int?
+  reportedUser User @relation(fields: [userId], references: [id])
+  userId Int
+  reason String? @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -22,6 +22,19 @@ export default {
           }
         }
 
+        const exist = await client.buyRaffleLog.findFirst({
+          where: {
+            raffleId,
+            customerId: loggedInUser.id
+          }
+        })
+
+        if(exist){
+          return {
+            ok: false,
+            error: "you already bought"
+          }
+        }
         var mycredit = await client.user.findUnique({
           where: {
             id: loggedInUser.id
