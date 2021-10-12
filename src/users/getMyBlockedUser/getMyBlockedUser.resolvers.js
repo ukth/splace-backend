@@ -21,6 +21,8 @@ export default {
             username: true,
             profileImageUrl: true,
             name: true,
+            joinedAt: true,
+            updatedAt: true,
           }
         })
         return {

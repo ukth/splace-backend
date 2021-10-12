@@ -13,6 +13,8 @@ export default {
             profileImageUrl: true,
             profileMessage: true,
             url: true,
+            joinedAt: true,
+            updatedAt: true,
           }
         })
         if(!profile){
