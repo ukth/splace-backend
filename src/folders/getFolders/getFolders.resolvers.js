@@ -37,7 +37,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get folders"
+          error: "ERROR4B16"
         };
       }
     })

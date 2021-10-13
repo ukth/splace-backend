@@ -43,7 +43,7 @@ export default {
         if (previous.ownerId != loggedInUser.id) {
           return {
             ok: false,
-            error: "you are not the owner of this splace!"
+            error: "ERROR5471"
           };
         }
 
@@ -157,7 +157,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant edit splace",
+          error: "ERROR4412",
         };
       }
     }),

@@ -34,7 +34,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get my logs"
+          error: "ERROR4214"
         };
       }
     })

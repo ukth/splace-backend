@@ -21,7 +21,7 @@ export default {
         if(!ok){
           return {
             ok: false,
-            error: "you can only unscrap yours"
+            error: "ERROR1131"
           }
         }
         const a = await client.scrapedSeries.delete({
@@ -37,7 +37,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant unscrap series",
+          error: "ERROR4133",
         };
       }
     }),

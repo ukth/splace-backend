@@ -30,7 +30,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get series"
+          error: "ERROR4313"
         };
       }
     })

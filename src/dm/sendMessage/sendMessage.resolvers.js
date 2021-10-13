@@ -22,7 +22,7 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "you dont have authentication to send message."
+            error: "ERROR5M16"
           };
         }
         /*const unreadMembers = await client.user.findMany({ where: { chatrooms: {some: { id: chatroomId } } } });
@@ -60,7 +60,7 @@ export default {
         if(!ok){
           return{
             ok: false,
-            error: "can't update readed record"
+            error: "ERROR4M19"
           }
         }
         const updatedRecord = await client.chatroomReaded.update({

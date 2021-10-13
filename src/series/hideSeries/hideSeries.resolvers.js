@@ -19,13 +19,13 @@ export default {
         if (!target) {
           return {
             ok: false,
-            error: "That series does not exist."
+            error: "ERROR2311"
           };
         }
         if(target.authorId == loggedInUser.id){
           return {
             ok: false,
-            error: "you cant hide your series"
+            error: "ERROR1312"
           }
         }
         await client.user.update({
@@ -48,7 +48,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant hide series",
+          error: "ERROR4315",
         };
       }
     }),

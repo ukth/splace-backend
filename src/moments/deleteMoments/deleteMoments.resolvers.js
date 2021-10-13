@@ -20,7 +20,7 @@ export default {
         if(!a){
           return{
             ok: false,
-            error: "you can only delete yours"
+            error: "ERROR5O11"
           }
         }
         const b = await client.moment.delete({
@@ -36,7 +36,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant delete photolog",
+          error: "ERROR4O13",
         };
       }
     }),

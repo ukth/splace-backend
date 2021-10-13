@@ -46,7 +46,7 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "you can edit only yours!"
+            error: "ERROR5212"
           };
         }
         const a = await client.photolog.update({
@@ -110,7 +110,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant edit log",
+          error: "ERROR4212",
         };
       }
     }),

@@ -23,7 +23,7 @@ export default {
         if(!ok) {
           return {
             ok: false,
-            error: "you dont have authentication to delete folder."
+            error: "ERROR5B13"
           };
         }
         const a = await client.folder.delete({
@@ -39,7 +39,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant delete folder",
+          error: "ERROR4B14",
         };
       }
     }),

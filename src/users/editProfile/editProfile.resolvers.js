@@ -27,7 +27,7 @@ export default {
             if (existId.id !== loggedInUser.id) {
               return {
                 ok: false,
-                error: "username already taken.",
+                error: "ERROR3101",
               };
             }
           }
@@ -44,7 +44,7 @@ export default {
             if (existEmail.id !== loggedInUser.id) {
               return {
                 ok: false,
-                error: "email already taken.",
+                error: "ERROR3102",
               };
             }
           }
@@ -76,7 +76,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant update profile"
+          error: "ERROR4103"
         }
       }
     })

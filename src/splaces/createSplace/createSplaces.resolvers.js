@@ -11,7 +11,7 @@ export default {
       if(loggedInUser.authority !== "root"){
         return {
           ok: false,
-          error: "only root user can create splace"
+          error: "ERROR5411"
         }
       }
       try {
@@ -28,7 +28,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create splace",
+          error: "ERROR4411",
         };
       }
     }),

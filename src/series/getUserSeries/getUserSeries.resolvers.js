@@ -21,7 +21,7 @@ export default {
           },
           include: {
             photologs: true,
-		  author: true
+            author: true
           }
         })
         return {
@@ -32,7 +32,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get series"
+          error: "ERROR4314"
         };
       }
     })

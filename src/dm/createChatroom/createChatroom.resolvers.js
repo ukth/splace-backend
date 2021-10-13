@@ -15,7 +15,7 @@ export default {
         if (!memberIds.includes(loggedInUser.id)) {
           return {
             ok: false,
-            error: "to create chatroom, you have to include yourself"
+            error: "ERROR1M14"
           }
         }
 
@@ -23,7 +23,7 @@ export default {
           if (memberIds.length !== 2) {
             return {
               ok: false,
-              error: "to make personal chatroom, member should be 2"
+              error: "ERROR1M15"
             }
           }
           const ok = await client.chatroom.findFirst({
@@ -49,7 +49,7 @@ export default {
           if(ok){
             return {
               ok: false,
-              error: "personal chatroom already exist"
+              error: "ERROR3M11"
             }
           }
         }
@@ -60,7 +60,7 @@ export default {
             if (!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id) {
               return {
                 ok: false,
-                error: "invalid member included"
+                error: "ERROR1M12"
               }
             }
           }
@@ -118,7 +118,7 @@ export default {
           console.log(e);
           return {
             ok: false,
-            error: "cant create chatroom",
+            error: "ERROR4M12",
           };
         }
       }),

@@ -61,7 +61,7 @@ export default {
         if(logs.length === 0){
           return {
             ok: false,
-            error: "no logs"
+            error: "ERROR2211"
           }
         }
         const lastCreated = logs[logs.length - 1].createdAt;
@@ -126,7 +126,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: e
+          error: "ERROR4213"
         };
       }
     })

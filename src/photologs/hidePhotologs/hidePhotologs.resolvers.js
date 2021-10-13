@@ -19,13 +19,13 @@ export default {
         if (!target) {
           return {
             ok: false,
-            error: "That photolog does not exist."
+            error: "ERROR2212"
           };
         }
         if(target.authorId == loggedInUser.id){
           return {
             ok: false,
-            error: "you cant hide your photologs"
+            error: "ERROR1211"
           }
         }
         await client.user.update({
@@ -48,7 +48,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant hide photologs",
+          error: "ERROR4216",
         };
       }
     }),

@@ -39,7 +39,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get rooms"
+          error: "ERROR4M14"
         }
       }
     }),

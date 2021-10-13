@@ -22,7 +22,7 @@ export default {
         if(!ok){
           return{
             ok: false,
-            error: "not member/not you"
+            error: "ERROR5M15"
           }
         }
         const a = await client.chatroomReaded.update({
@@ -45,7 +45,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant read chatroom",
+          error: "ERROR4M18",
         };
       }
     }),

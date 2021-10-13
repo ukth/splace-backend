@@ -14,10 +14,10 @@ export default {
             userId: loggedInUser.id
           }
         })
-        if (ok) {
+        if (ok && sourceType != "problem") {
           return {
             ok: false,
-            error: "you already reported"
+            error: "ERROR3P11"
           };
         }
         const a = await client.report.create({

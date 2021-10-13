@@ -25,7 +25,8 @@ model User {
   credit       Int    @default(0)
   lockedCredit  Int   @default(0)
   url          String?   @db.VarChar(255)
-  phone        String?   @db.VarChar(255)  
+  phone        String?   @db.VarChar(255)
+  activate    Boolean   @default(true)  
   
   followers      User[]     @relation("followRelation")
   
@@ -144,6 +145,7 @@ model Splace {
   url      String? @db.VarChar(255)
   phone    String? @db.VarChar(255)
   thumbnail String? @db.Text
+  activate Boolean @default(false)
 
   stringC String? @db.VarChar(255)
 
@@ -434,6 +436,7 @@ model Message {
 model Moment {
   id Int @id @default(autoincrement())
   text String? @db.Text
+  title String @db.Text
   author User @relation(fields: [authorId], references: [id])
   authorId Int
 

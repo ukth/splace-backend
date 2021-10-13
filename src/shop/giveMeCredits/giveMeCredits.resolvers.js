@@ -49,7 +49,7 @@ export default {
         } else {
           return {
             ok: false,
-            error: "invalid request"
+            error: "ERROR1Q11"
           }
         }
 
@@ -57,7 +57,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant give you credits",
+          error: "ERROR4Q12",
         };
       }
     }),

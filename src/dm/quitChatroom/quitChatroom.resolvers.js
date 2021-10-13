@@ -28,7 +28,7 @@ export default {
         if(!ok){
           return {
             ok: false,
-            error: "not member"
+            error: "ERROR5M14"
           }
         }
         await client.chatroomReaded.delete({
@@ -56,7 +56,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant quit chatroom",
+          error: "ERROR4M17",
         };
       }
     }),

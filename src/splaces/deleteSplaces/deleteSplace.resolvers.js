@@ -1,19 +1,19 @@
 import client from "../../client";
+import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    deleteSplace: async (
+    deleteSplace: protectedResolver(async (
       _,
       { splaceId },
       { loggedInUser }
     ) => {
       try {
-        const previous = await client.splace.findUnique({ where: { id: splaceId } });
-        if (previous.ownerId != loggedInUser.id) {
+        if(loggedInUser.authority !== "root"){
           return {
             ok: false,
-            error: "you are not the owner of this splace!"
-          };
+            error: "ERROR5412"
+          }
         }
         const a = await client.splace.delete({
           where: {
@@ -28,9 +28,9 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant delete splace",
+          error: "ERROR4412",
         };
       }
-    },
+    }),
   },
 };

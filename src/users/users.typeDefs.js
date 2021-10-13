@@ -5,7 +5,7 @@ export default gql`
     id:         Int!      
     username:       String!   
     name:           String   
-    email:          String!   
+    email:          String   
     password:       String!   
     profileMessage: String    
     profileImageUrl:   String
@@ -27,6 +27,7 @@ export default gql`
     scrapedLog: [ScrapedLog]
     scrapedSeries: [ScrapedSeries]
     buyRaffleLogs: [BuyRaffleLog]
+    activate: Boolean!
   }
   
   type ScrapedLog {

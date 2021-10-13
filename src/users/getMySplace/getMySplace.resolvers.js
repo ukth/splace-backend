@@ -21,7 +21,7 @@ export default {
       console.log(e)
       return {
         ok: false,
-        error: "cant get my splace"
+        error: "ERROR4141"
       }
     }
     })

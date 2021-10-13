@@ -28,7 +28,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create series",
+          error: "ERROR4311",
         };
       }
     }),

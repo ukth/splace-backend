@@ -17,7 +17,7 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "you are not author."
+            error: "ERROR5311"
           };
         }
         if (!ok.isPrivate){
@@ -30,7 +30,7 @@ export default {
             if(a.isPrivate){
               return {
                 ok: false,
-                error: "you cant add private logs for public series"
+                error: "ERROR1321"
               }
             }
           }
@@ -55,7 +55,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant add photolog",
+          error: "ERROR4321",
         };
       }
     }),

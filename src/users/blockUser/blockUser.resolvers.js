@@ -18,14 +18,14 @@ export default {
         if (targetId === loggedInUser.id) {
           return {
             ok: false,
-            error: "You can't block yourself"
+            error: "ERROR1111"
           }
         }
         const target = await client.user.findUnique({ where: { id: targetId } });
         if (!target) {
           return {
             ok: false,
-            error: "That user does not exist."
+            error: "ERROR2111"
           };
         }
         await client.user.update({
@@ -48,7 +48,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant block user",
+          error: "ERROR4111",
         };
       }
     }),

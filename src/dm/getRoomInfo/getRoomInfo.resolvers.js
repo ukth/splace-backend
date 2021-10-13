@@ -26,14 +26,14 @@ export default {
         } else {
           return {
             ok: false,
-            error: "you're not in the room",
+            error: "ERROR5M13",
           }
         }
       } catch (e) {
         console.log(e);
         return {
           ok: false,
-          error: "cant get rooms"
+          error: "ERROR4M15"
         }
       }
     }),

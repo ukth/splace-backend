@@ -54,7 +54,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant show this photologs",
+          error: "ERROR4219",
         };
       }
     }),

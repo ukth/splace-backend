@@ -2,6 +2,7 @@ import client from "../../client";
 import iamport from "../../iamport";
 require("dotenv").config();
 import { protectedResolver } from "../../users/users.utils";
+import dayjs from 'dayjs';
 
 export default {
   Mutation: {
@@ -20,22 +21,33 @@ export default {
         const paymentlog = await client.paymentLog.findUnique({ where: { merchantUId } });
         const custom_data = JSON.parse(paymentData.custom_data)
 
-        console.log(paymentlog);
-        console.log(custom_data);
-        console.log(paymentData);
+        //console.log(paymentlog);
+        //console.log(custom_data);
+        //console.log(paymentData);
+
+        //console.log(paymentData.paid_at)
+
+        //const paid = dayjs(parseInt(paymentData.paid_at*1000))
+        //const paidAt = paid.format()
+
+        //console.log(paidAt)
 
         const buyRaffleLog = await client.buyRaffleLog.findFirst({
           where: {
             createdAt: {
-              gte: paymentData.paid_at
+              gte: paidAt
             }
           }
         })
 
-        if(buyRafflelLog){
+        console.log(1)
+        console.log(buyRaffleLog)
+        console.log(2)
+
+        if (buyRaffleLog) {
           return {
             ok: false,
-            error: "you already use credit"
+            error: "ERROR3QJ1"
           }
         }
 
@@ -52,13 +64,13 @@ export default {
           if (cancelResult == null) {
             return {
               ok: false,
-              error: "cancel failed"
+              error: "ERROR4Q11"
             }
           }
 
           //console.log(cancelResult);
 
-          
+
           //console.log(a);
 
           const b = await client.user.update({
@@ -85,7 +97,7 @@ export default {
         } else {
           return {
             ok: false,
-            error: "invalid request"
+            error: "ERROR1Q12"
           }
         }
 
@@ -93,7 +105,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant give you credits",
+          error: "ERROR4Q14",
         };
       }
     }),

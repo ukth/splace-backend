@@ -9,9 +9,12 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const a = await client.user.delete({
+        const a = await client.user.update({
           where: {
             id: loggedInUser.id
+          },
+          data: {
+            activate: false
           }
         });
         //console.log(a);
@@ -22,7 +25,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant delete account",
+          error: "ERROR4102",
         };
       }
     }),

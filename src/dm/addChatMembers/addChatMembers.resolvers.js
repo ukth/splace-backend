@@ -24,14 +24,14 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "you dont have authentication to add member."
+            error: "ERROR5M11"
           };
         }
 
         if(ok.isPersonal){
           return {
             ok: false,
-            error: "can't add members to personal chatroom"
+            error: "ERROR1M11"
           }
         }
 
@@ -41,7 +41,7 @@ export default {
           if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
             return {
               ok: false,
-              error: "invalid member included"
+              error: "ERROR1M12"
             }
           }
         }
@@ -51,7 +51,7 @@ export default {
             if(memberIds[i] == ok.members[j].id){
               return {
                 ok: false,
-                error: "he/she is already in chatroom"
+                error: "ERROR1M13"
               }
             }
           }
@@ -101,7 +101,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant add member",
+          error: "ERROR4M11",
         };
       }
     }),

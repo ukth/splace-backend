@@ -18,7 +18,7 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "raffle not exist"
+            error: "ERROR2K11"
           }
         }
 
@@ -32,7 +32,7 @@ export default {
         if(exist){
           return {
             ok: false,
-            error: "you already bought"
+            error: "ERROR3K11"
           }
         }
         var mycredit = await client.user.findUnique({
@@ -46,7 +46,7 @@ export default {
         if (totalcredit < ok.credit) {
           return {
             ok: false,
-            error: "credit xxx"
+            error: "ERROR1K11"
           }
         }
 
@@ -102,7 +102,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create paymentlog",
+          error: "ERROR4K11",
         };
       }
     }),

@@ -11,7 +11,7 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "User not found",
+            error: "ERROR2114",
           };
         }
         const followings = await client.user
@@ -34,7 +34,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant find followings"
+          error: "ERROR4115"
         }
       }
     },

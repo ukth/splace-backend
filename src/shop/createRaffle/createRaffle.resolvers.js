@@ -12,7 +12,7 @@ export default {
       if (loggedInUser.authority !== "root") {
         return {
           ok: false,
-          error: "only root user can create raffle"
+          error: "ERROR5K11"
         }
       }
       dDay = dayjs(parseInt(dDay))
@@ -43,7 +43,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create splace",
+          error: "ERROR4K12",
         };
       }
     }),

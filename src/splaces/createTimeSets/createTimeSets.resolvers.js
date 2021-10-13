@@ -29,7 +29,7 @@ export default {
         if(ok){
           return {
             ok: false,
-            error: "timeset exist, please use editTimeSet"
+            error: "ERROR3441"
           }
         }
         const otime = open.split(':');
@@ -37,7 +37,7 @@ export default {
         if(day<0 || day > 6 || Number(otime[0])>=Number(ctime[0]) && Number(otime[1])>=Number(ctime[1])){
           return{
             ok: false,
-            error: "format error"
+            error: "ERROR1441"
           }
         }
         const b = await client.timeSet.create({
@@ -60,7 +60,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create Timeset",
+          error: "ERROR4451",
         };
       }
     }),

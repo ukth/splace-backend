@@ -20,7 +20,7 @@ export default {
       console.log(e)
       return {
         ok: false,
-        error: "cant get my scrap"
+        error: "ERROR4131"
       }
     }
     })

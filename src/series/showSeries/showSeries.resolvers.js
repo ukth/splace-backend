@@ -54,7 +54,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant show this series",
+          error: "ERROR4317",
         };
       }
     }),

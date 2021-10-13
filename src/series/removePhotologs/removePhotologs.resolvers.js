@@ -10,7 +10,7 @@ export default {
         if (ok.authorId != loggedInUser.id) {
           return {
             ok: false,
-            error: "you are not author."
+            error: "ERROR5313"
           };
         }
         await client.series.update({
@@ -33,7 +33,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant remove photolog",
+          error: "ERROR4316",
         };
       }
     }),

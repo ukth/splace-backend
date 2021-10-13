@@ -22,7 +22,7 @@ export default {
         console.log(e)
         return {
           ok: false,
-          error: "cant see series"
+          error: "ERROR4301"
         };
       }
     })

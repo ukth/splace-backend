@@ -5,7 +5,7 @@ import { protectedResolver } from "../users.utils";
 
 export default {
   Query: {
-    getMe: protectedResolver(async (_, {}, { loggedInUser }) => {
+    getMe: protectedResolver((_, {}, { loggedInUser }) => {
       if(loggedInUser){
         return {
           ok: true,
@@ -14,7 +14,7 @@ export default {
       } else {
         return {
           ok: false,
-          error: "cant get me"
+          error: "ERROR4103"
         }
       }
     })
