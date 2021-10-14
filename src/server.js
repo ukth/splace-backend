@@ -57,7 +57,7 @@ app.post('/upload', upload.array('photos'), (req, res, next) => {
   res.send(req.files);
 })
 
-app.get('/geocode',(req,res) => {
+app.get('/geocode',async (req,res) => {
   const ID = process.env.NCP_API_ID
   const KEY = process.env.NCP_API_KEY
   const headers = {
@@ -67,11 +67,12 @@ app.get('/geocode',(req,res) => {
     }
   }
   const keyword = req.params.keyword
-  const geocode = axios.get("https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="+keyword, headers) 
+  const geocode = await axios.get("https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="+keyword, headers) 
+  console.log(geocode)
   res.send(geocode)
 })
 
-app.get('/reverseGeocode',(req,res) => {
+app.get('/reversegeocode',async (req,res) => {
   const ID = process.env.NCP_API_ID
   const KEY = process.env.NCP_API_KEY
   const headers = {
@@ -82,7 +83,8 @@ app.get('/reverseGeocode',(req,res) => {
   }
   const lat = req.params.lat
   const lon = req.params.lon
-  const reverseGeocode = axios.get("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr&output=json&coords="+lon+","+lat,headers);
+  const reverseGeocode = await axios.get("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr&output=json&coords="+lon+","+lat,headers);
+  console.log(reverseGeocode)
   res.send(reverseGeocode)
 })
 
