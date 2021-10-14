@@ -57,7 +57,7 @@ app.post('/upload', upload.array('photos'), (req, res, next) => {
   res.send(req.files);
 })
 
-app.get('/geocode',(req,res) => {
+app.get('/geocode',async (req,res) => {
   const ID = process.env.NCP_API_ID
   const KEY = process.env.NCP_API_KEY
   const headers = {
@@ -72,7 +72,7 @@ app.get('/geocode',(req,res) => {
   res.send(geocode)
 })
 
-app.get('/reversegeocode',(req,res) => {
+app.get('/reversegeocode',async (req,res) => {
   const ID = process.env.NCP_API_ID
   const KEY = process.env.NCP_API_KEY
   const headers = {
