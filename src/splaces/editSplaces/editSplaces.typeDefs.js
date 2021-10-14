@@ -15,6 +15,7 @@ export default gql`
       parking: Boolean
       pets: Boolean
       kids: Boolean
+      breakDays: [Int]
       intro: String
       url: String
       phone: String

@@ -6,6 +6,7 @@ import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils";
 import upload from './multer';
 import http from "http";
+import axios from "axios";
 
 
 
@@ -55,6 +56,36 @@ app.post('/upload', upload.array('photos'), (req, res, next) => {
   console.log(req);
   res.send(req.files);
 })
+
+app.get('/geocode',(req,res) => {
+  const ID = process.env.NCP_API_ID
+  const KEY = process.env.NCP_API_KEY
+  const headers = {
+    "headers": {
+      "X-NCP-APIGW-API-KEY-ID" : ID,
+      "X-NCP-APIGW-API-KEY" : KEY,
+    }
+  }
+  const keyword = req.params.keyword
+  const geocode = axios.get("https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="+keyword, headers) 
+  res.send(geocode)
+})
+
+app.get('/reverseGeocode',(req,res) => {
+  const ID = process.env.NCP_API_ID
+  const KEY = process.env.NCP_API_KEY
+  const headers = {
+    "headers": {
+      "X-NCP-APIGW-API-KEY-ID" : ID,
+      "X-NCP-APIGW-API-KEY" : KEY,
+    }
+  }
+  const lat = req.params.lat
+  const lon = req.params.lon
+  const reverseGeocode = axios.get("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr&output=json&coords="+lon+","+lat,headers);
+  res.send(reverseGeocode)
+})
+
 
 app.use(logger("tiny"));
 apollo.applyMiddleware({ app });

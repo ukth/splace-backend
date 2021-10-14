@@ -21,6 +21,7 @@ export default gql`
     bigCategories: [BigCategory]
     fixedContents: [FixedContent]
     photologs:     [Photolog]
+    breakDays: [Int]
     saves: [Save]
     parking: Boolean
     pets: Boolean

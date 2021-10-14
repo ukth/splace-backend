@@ -146,14 +146,7 @@ model Splace {
   phone    String? @db.VarChar(255)
   thumbnail String? @db.Text
   activate Boolean @default(false)
-
-  stringC String? @db.VarChar(255)
-
-  stringBC  String? @db.VarChar(255)
-
-  stringST  String? @db.VarChar(255)
-
-  stringRT  String? @db.VarChar(255)
+  breakDays Int[]
   
   timeSets   TimeSet[]
 
@@ -177,8 +170,6 @@ model Splace {
 
   moments     Moment[]
 
-  breakDays   BreakDay[]
-
   raffle Raffle[]
 }
 
@@ -192,18 +183,6 @@ model TimeSet {
   isBreakTime Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-}
-
-model BreakDay {
-  id Int @id @default(autoincrement())
-  week Int
-  day Int
-  splace Splace? @relation(fields: [splaceId], references: [id])
-  splaceId  Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
 }
 
 model FixedContent {

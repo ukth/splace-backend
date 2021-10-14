@@ -5,15 +5,9 @@ export default {
   Mutation: {
     createSplaces: protectedResolver(async (
       _,
-      { name },
+      { name, lat, lon, address},
       { loggedInUser }
     ) => {
-      if(loggedInUser.authority !== "root"){
-        return {
-          ok: false,
-          error: "ERROR5411"
-        }
-      }
       try {
         const a = await client.splace.create({
           data: {

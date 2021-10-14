@@ -5,12 +5,13 @@ export default {
   Mutation: {
     uploadMoment: protectedResolver(async (
       _,
-      { text, splaceId, videoUrl },
+      { text, splaceId, videoUrl, title },
       { loggedInUser }
     ) => {
       try {
         const a = await client.moment.create({
           data: {
+            title,
             author: {
               connect: {
                 id: loggedInUser.id
