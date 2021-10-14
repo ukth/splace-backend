@@ -28,7 +28,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get saves"
+          error: "ERROR4B17"
         };
       }
     })

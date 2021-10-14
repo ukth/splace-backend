@@ -9,20 +9,21 @@ export default {
       try {
         const user = await client.user.findFirst({
           where: {
-            username
+            username,
+            activate: true,
           },
         });
         if (!user) {
           return {
             ok: false,
-            error: "User not found.",
+            error: "ERROR2101",
           };
         }
         const passwordOk = await bcrypt.compare(password, user.password);
         if (!passwordOk) {
           return {
             ok: false,
-            error: "Incorrect password.",
+            error: "ERROR1101",
           };
         }
         const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);
@@ -36,7 +37,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "login failed"
+          error: "ERROR4104"
         }
       }
     },

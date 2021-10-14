@@ -29,7 +29,7 @@ export default {
         if(b.isPrivate){
           return {
             ok: false,
-            error: "you can't like private photolog"
+            error: "ERROR1212"
           }
         }
         const a = await client.user.update({
@@ -53,7 +53,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant like",
+          error: "ERROR4217",
         };
       }
     }),

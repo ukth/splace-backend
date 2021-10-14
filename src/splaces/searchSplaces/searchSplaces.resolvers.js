@@ -86,7 +86,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant search splace"
+          error: "ERROR4401"
         }
       }
     }

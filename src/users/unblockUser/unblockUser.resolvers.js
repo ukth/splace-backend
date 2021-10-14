@@ -20,13 +20,13 @@ export default {
         if (targetId === loggedInUser.id) {
           return {
             ok: false,
-            error: "You can't unblock yourself"
+            error: "ERROR1113"
           }
         }
         if (!target) {
           return {
             ok: false,
-            error: "That user does not exist."
+            error: "ERROR2116"
           };
         }
         await client.user.update({
@@ -48,7 +48,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant unblock user",
+          error: "ERROR4117",
         };
       }
     }),

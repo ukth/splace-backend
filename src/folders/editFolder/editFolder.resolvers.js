@@ -25,7 +25,7 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "you dont have authentication to add save."
+            error: "ERROR5B14"
           };
         }
 
@@ -47,7 +47,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create folder",
+          error: "ERROR4B15",
         };
       }
     }),

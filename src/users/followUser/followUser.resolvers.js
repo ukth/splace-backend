@@ -20,14 +20,14 @@ export default {
         if (targetId === loggedInUser.id) {
           return {
             ok: false,
-            error: "You can't follow yourself"
+            error: "ERROR1112"
           }
         }
         const target = await client.user.findUnique({ where: { id: targetId } });
         if (!target) {
           return {
             ok: false,
-            error: "That user does not exist."
+            error: "ERROR2112"
           };
         }
         const targetUser = await client.user.update({

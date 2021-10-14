@@ -18,7 +18,7 @@ export default {
         if(ok){
           return{
             ok: false,
-            error: "you already scrap this log"
+            error: "ERROR3121"
           }
         }
         const a = await client.scrapedLog.create({
@@ -43,7 +43,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant scrap photolog",
+          error: "ERROR4122",
         };
       }
     }),

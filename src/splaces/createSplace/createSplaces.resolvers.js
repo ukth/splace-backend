@@ -5,15 +5,9 @@ export default {
   Mutation: {
     createSplaces: protectedResolver(async (
       _,
-      { name },
+      { name, lat, lon, address},
       { loggedInUser }
     ) => {
-      if(loggedInUser.authority !== "root"){
-        return {
-          ok: false,
-          error: "only root user can create splace"
-        }
-      }
       try {
         const a = await client.splace.create({
           data: {
@@ -28,7 +22,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create splace",
+          error: "ERROR4411",
         };
       }
     }),

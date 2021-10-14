@@ -20,7 +20,7 @@ export default {
         if(!profile){
           return{
             ok: false,
-            error: "cant find profile"
+            error: "ERROR2115"
           }
         }
         return {
@@ -31,7 +31,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get profile"
+          error: "ERROR4116"
         }
       }
     }

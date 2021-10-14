@@ -25,7 +25,8 @@ model User {
   credit       Int    @default(0)
   lockedCredit  Int   @default(0)
   url          String?   @db.VarChar(255)
-  phone        String?   @db.VarChar(255)  
+  phone        String?   @db.VarChar(255)
+  activate    Boolean   @default(true)  
   
   followers      User[]     @relation("followRelation")
   
@@ -144,14 +145,8 @@ model Splace {
   url      String? @db.VarChar(255)
   phone    String? @db.VarChar(255)
   thumbnail String? @db.Text
-
-  stringC String? @db.VarChar(255)
-
-  stringBC  String? @db.VarChar(255)
-
-  stringST  String? @db.VarChar(255)
-
-  stringRT  String? @db.VarChar(255)
+  activate Boolean @default(false)
+  breakDays Int[]
   
   timeSets   TimeSet[]
 
@@ -175,8 +170,6 @@ model Splace {
 
   moments     Moment[]
 
-  breakDays   BreakDay[]
-
   raffle Raffle[]
 }
 
@@ -190,18 +183,6 @@ model TimeSet {
   isBreakTime Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-}
-
-model BreakDay {
-  id Int @id @default(autoincrement())
-  week Int
-  day Int
-  splace Splace? @relation(fields: [splaceId], references: [id])
-  splaceId  Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
 }
 
 model FixedContent {
@@ -434,6 +415,7 @@ model Message {
 model Moment {
   id Int @id @default(autoincrement())
   text String? @db.Text
+  title String @db.Text
   author User @relation(fields: [authorId], references: [id])
   authorId Int
 

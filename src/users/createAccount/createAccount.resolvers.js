@@ -16,7 +16,7 @@ export default {
         if (existingUser) {
           return {
             ok: false,
-            error: "this username/email is already taken!"
+            error: "ERROR3101"
           }
         }
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -45,7 +45,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create account",
+          error: "ERROR4101",
         };
       }
     },

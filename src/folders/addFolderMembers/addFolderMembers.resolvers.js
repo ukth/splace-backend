@@ -22,7 +22,7 @@ export default {
           if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
             return {
               ok: false,
-              error: "invalid member included"
+              error: "ERROR1B11"
             }
           }
         }
@@ -31,7 +31,7 @@ export default {
         if(!ok) {
           return {
             ok: false,
-            error: "you dont have authentication to edit member."
+            error: "ERROR5B11"
           };
         }
         await client.folder.update({
@@ -54,7 +54,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant add member",
+          error: "ERROR4B11",
         };
       }
     }),

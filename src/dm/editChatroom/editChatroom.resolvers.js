@@ -24,7 +24,7 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "you can edit only yours!"
+            error: "ERROR5M12"
           };
         }
         const a = await client.chatroom.update({
@@ -50,7 +50,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant edit chatroom",
+          error: "ERROR4M13",
         };
       }
     }),

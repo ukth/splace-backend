@@ -23,7 +23,7 @@ export default {
         if(log.isPrivate && log.authorId !== loggedInUser.id){
           return {
             ok: false,
-            error: "you cant see private log"
+            error: "ERROR5213"
           }
         }
 

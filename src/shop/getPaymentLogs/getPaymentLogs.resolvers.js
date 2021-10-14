@@ -25,7 +25,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get paymentLogs"
+          error: "ERROR4Q11"
         };
       }
     })

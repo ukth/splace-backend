@@ -20,7 +20,7 @@ export default {
         if(!a){
           return{
             ok: false,
-            error: "you can only delete yours"
+            error: "ERROR5312"
           }
         }
         const b = await client.series.delete({
@@ -37,7 +37,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant delete series",
+          error: "ERROR4312",
         };
       }
     }),

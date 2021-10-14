@@ -29,7 +29,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant get moments"
+          error: "ERROR4012"
         };
       }
     })

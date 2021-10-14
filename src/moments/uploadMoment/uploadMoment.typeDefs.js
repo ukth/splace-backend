@@ -6,6 +6,7 @@ export default gql`
       splaceId: Int
       videoUrl: String!
       text: String
+      title: String!
     ): defaultResult!
   }
 `;

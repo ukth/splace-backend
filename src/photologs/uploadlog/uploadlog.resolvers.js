@@ -77,7 +77,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create log",
+          error: "ERROR421B",
         };
       }
     }),

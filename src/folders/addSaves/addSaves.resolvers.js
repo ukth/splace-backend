@@ -26,7 +26,7 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "you dont have authentication to add save."
+            error: "ERROR5B82"
           };
         }
         var newIds = new Array();
@@ -64,7 +64,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant add save",
+          error: "ERROR4B82",
         };
       }
     }),

@@ -33,7 +33,7 @@ export default {
         console.log(e)
         return {
           ok: false,
-          error: "cant get blockedUser"
+          error: "ERROR4104"
         }
       }
     })

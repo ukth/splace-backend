@@ -13,7 +13,7 @@ export default {
         if (previous.ownerId != loggedInUser.id) {
           return {
             ok: false,
-            error: "you are not the owner of this splace!"
+            error: "ERROR5471"
           };
         }
         const a = await client.fixedContent.create({
@@ -34,7 +34,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant create fixedContents",
+          error: "ERROR4471",
         };
       }
     }),

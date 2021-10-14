@@ -40,7 +40,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant search users"
+          error: "ERROR4113"
         }
       }
     }

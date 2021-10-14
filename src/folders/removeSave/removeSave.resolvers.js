@@ -28,7 +28,7 @@ export default {
         if(!ok) {
           return {
             ok: false,
-            error: "you dont have authentication to remove save."
+            error: "ERROR5B83"
           };
         }
         const a = await client.save.delete({
@@ -45,7 +45,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant remove save",
+          error: "ERROR4B83",
         };
       }
     }),

@@ -11,6 +11,14 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        const otime = open.split(':');
+        const ctime = close.split(':');
+        if(day<0 || day > 6 || Number(otime[0])>=Number(ctime[0]) && Number(otime[1])>=Number(ctime[1])){
+          return{
+            ok: false,
+            error: "ERROR1441"
+          }
+        }
         const a = await client.timeSet.update({
           where: {
             id: timeSetId
@@ -28,7 +36,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "cant edit Timeset",
+          error: "ERROR4452",
         };
       }
     }),
