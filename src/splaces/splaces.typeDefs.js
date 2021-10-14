@@ -13,7 +13,6 @@ export default gql`
     updatedAt: String!
     ownerId: Int
     timeSets: [TimeSet]
-    breakDays: [BreakDay]
     items: [Item]
     badges: [Badge]
     ratingtags: [Ratingtag]
