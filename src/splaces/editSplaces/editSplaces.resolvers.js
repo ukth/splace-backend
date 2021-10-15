@@ -14,7 +14,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, itemName, itemPrice, menuUrls, categoryIds, bigCategoryIds, specialTagIds, noKids, parking, pets, breakDays, phone, url, hollydayBreak, intro },
+      { splaceId, name, itemName, itemPrice, menuUrls, categoryIds, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro },
       { loggedInUser }
     ) => {
       try {

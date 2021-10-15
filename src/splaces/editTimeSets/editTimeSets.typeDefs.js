@@ -12,6 +12,7 @@ export default gql`
       fri: [Int]!
       sat: [Int]!
       sun: [Int]!
+      holidayBreak: Boolean!
     ): defaultResult!
   }
 `;

@@ -52,7 +52,7 @@ export default {
   Mutation: {
     editTimeSets: protectedResolver(async (
       _,
-      { splaceId, mon, tue, wed, thr, fri, sat, sun, breakDays },
+      { splaceId, mon, tue, wed, thr, fri, sat, sun, breakDays, holidayBreak },
       { loggedInUser }
     ) => {
       try {
@@ -74,7 +74,8 @@ export default {
             id: splaceId
           },
           data: {
-            breakDays
+            breakDays,
+            holidayBreak
           }
         })
 
