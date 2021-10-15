@@ -42,7 +42,7 @@ export default {
             }
           }
         });
-        if (ok) {
+        if (!ok) {
           return {
             ok: false,
             error: "ERROR5471"
