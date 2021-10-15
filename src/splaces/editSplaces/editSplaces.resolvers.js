@@ -129,7 +129,14 @@ export default {
           body: document
         })
 
-        console.log(response);
+        //console.log(response);
+
+        if (response.body.result != "updated") {
+          return {
+            ok: false,
+            error: "ERROR4417"
+          }
+        }
 
         //console.log(a);
         return {
