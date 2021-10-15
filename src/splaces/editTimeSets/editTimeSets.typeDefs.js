@@ -3,9 +3,15 @@ import { gql } from "apollo-server";
 export default gql`
   type Mutation {
     editTimeSets(
-      timeSetId: Int!
-      open: String!
-      close: String!
+      splaceId: Int!
+      breakDays: [Int]!
+      mon: [Int]!
+      tue: [Int]!
+      wed: [Int]!
+      thr: [Int]!
+      fri: [Int]!
+      sat: [Int]!
+      sun: [Int]!
     ): defaultResult!
   }
 `;

@@ -188,5 +188,6 @@ ERROR _ _ _ _
   ERROR4415 "kakao api X request"
   ERROR1411 "kakaoId doesn't match with keyword"
   ERROR1412 "keyword not valid"
+  ERROR4416 "opensearch create falid"
 */
 

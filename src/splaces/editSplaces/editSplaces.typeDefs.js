@@ -5,9 +5,6 @@ export default gql`
     editSplaces(
       splaceId: Int!
       name: String
-      lon: Float
-      lat: Float
-      address: String
       itemName: String
       itemPrice: Int
       menuUrls: [String]
