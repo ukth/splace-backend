@@ -72,9 +72,10 @@ export default {
         //console.log(response)
         const searchedSplaces = response.body.hits.hits.map(result => result._source);
 
-        console.log(searchedSplaces)
+        //console.log(searchedSplaces)
         return {
           ok: true,
+          searchedSplaces
         };
       } catch (e) {
         console.log(e);
