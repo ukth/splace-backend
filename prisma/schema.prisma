@@ -138,6 +138,7 @@ model Splace {
   createdAt   DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   ownerId Int?
+  kakaoId Int?
   parking  Boolean @default(false)
   pets     Boolean @default(false)      
   noKids     Boolean @default(false)

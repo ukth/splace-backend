@@ -13,10 +13,14 @@ export default {
         const a = await client.splace.create({
           data: {
             name,
+            lat,
+            lon,
+            address,
+            activate: false,
           },
         });
 
-        const location = lat + ", " + lon
+        /*const location = lat + ", " + lon
         var index_name = "splace_search_test"
         
         var document = {
@@ -33,7 +37,7 @@ export default {
           body: document
         })
 
-        console.log(response);
+        console.log(response); */
         //console.log(a);
         return {
           ok: true,
