@@ -11,17 +11,10 @@ function toSearch(arr) {
 
 export default {
   Query: {
-    searchSplaces: async (_, { keyword, lat, long, distance, categoryIds, bigCategoryIds, specialTagIds, ratingTagIds }) => {
+    searchSplaces: async (_, { keyword, lat, long, distance, bigCategoryIds, specialTagIds, ratingTagIds }) => {
       try {
         var index_name = "splace_search"
         var filter = new Array();
-        if (categoryIds) {
-          filter.push({
-            "terms": {
-              "stringC": toSearch(categoryIds),
-            }
-          })
-        }
         if (bigCategoryIds) {
           filter.push({
             "terms": {
@@ -77,8 +70,9 @@ export default {
         })
 
         //console.log(response)
-        console.log(response.body.hits.hits);
+        const searchedSplaces = response.body.hits.hits.map(result => result._source);
 
+        console.log(searchedSplaces)
         return {
           ok: true,
         };
