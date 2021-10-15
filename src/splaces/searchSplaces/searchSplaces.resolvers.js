@@ -55,7 +55,9 @@ export default {
               "filter": filter,
               "must": [
                 {
-                  "match_all": {}
+                  "term" : {
+                    "_all" : keyword
+                  }
                 }
               ]
             }
