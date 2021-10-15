@@ -37,7 +37,7 @@ export default {
           })
         }
 
-        if (lat&&long&&distance){
+        if (lat && long && distance) {
           filter.push({
             "geo_distance": {
               "distance": distance,
@@ -49,16 +49,22 @@ export default {
           })
         }
 
+        if (keyword) {
+          filter.push({
+            "multi_match": {
+              "fields": ["*"],
+              "query": keyword
+            }
+          })
+        }
+
         var query = {
           "query": {
             "bool": {
               "filter": filter,
               "must": [
                 {
-                  "multi_match" : {
-                    "fields" : ["*"],
-                    "query" : keyword
-                  }
+                  "match_all": {}
                 }
               ]
             }
