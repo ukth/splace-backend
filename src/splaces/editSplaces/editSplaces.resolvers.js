@@ -48,7 +48,7 @@ export default {
             error: "ERROR5471"
           };
         }
-        
+
 
         const a = await client.splace.update({
           where: {
@@ -66,7 +66,6 @@ export default {
             phone,
             url,
             thumbnail,
-            hollydayBreak,
             ...(categoryIds != null && {
               categories: {
                 disconnect: previous.categories.map(category => ({
@@ -104,22 +103,20 @@ export default {
         var index_name = "splace_search"
 
         var document = {
-          "doc": {
-            ...(name && { "name" : name }),
-            ...(categoryIds && { 
-              "categories" : AtoS(cNames)
-            }),
-            ...(bigCategoryIds && { 
-              "stringBC" : AtoS(bigCategoryIds),
-              "bigCategories" : AtoS(bcNames)
-            }),
-            ...(specialTagIds && { 
-              "stringST" : AtoS(specialTagIds),
-              "specialTags" : AtoS(stNames)
-            }),
-            ...(intro && { "intro" : intro}),
-            ...(thumbnail && { "thumbnail" : thumbnail})
-          }
+          ...(name && { "name": name }),
+          ...(categoryIds && {
+            "categories": AtoS(cNames)
+          }),
+          ...(bigCategoryIds && {
+            "stringBC": AtoS(bigCategoryIds),
+            "bigCategories": AtoS(bcNames)
+          }),
+          ...(specialTagIds && {
+            "stringST": AtoS(specialTagIds),
+            "specialTags": AtoS(stNames)
+          }),
+          ...(intro && { "intro": intro }),
+          ...(thumbnail && { "thumbnail": thumbnail })
         }
 
         //console.log(ok.body.hits.hits[0]._id)
