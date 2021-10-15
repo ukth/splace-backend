@@ -17,7 +17,6 @@ export default gql`
     itemPrice: Int
     menuUrls: [String]
     hollydayBreak : Boolean!
-    badges: [Badge]
     ratingtags: [Ratingtag]
     categories: [Category]
     bigCategories: [BigCategory]
@@ -37,7 +36,7 @@ export default gql`
     raffles: [Raffle]
   }
   type FixedContent {
-    fixedContentid: Int!
+    id: Int!
     title: String!
     imageUrl: String
     createdAt: String!
@@ -45,37 +44,21 @@ export default gql`
     splace: Splace!
     text: String
   }
-  type Badge {
-    badgeId: Int!
-    name: String!
-    splaces: [Splace]
-    createdAt: String!
-    updatedAt: String!
-  }
   type Ratingtag {
-    ratingtagId: Int!
+    id: Int!
     name: String!
     splaces: [Splace]
     createdAt: String!
     updatedAt: String!
   }
   type TimeSet {
-    timeSetId: Int!
+    id: Int!
     open: String!
     close: String!
     day: Int!
     splace: Splace!
     splaceId: Int!
     isBreakTime: Boolean!
-    createdAt: String!
-    updatedAt: String!
-  }
-  type BreakDay {
-    timeSetId: Int!
-    week: Int!
-    day: Int!
-    splace: Splace!
-    splaceId: Int!
     createdAt: String!
     updatedAt: String!
   }

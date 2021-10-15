@@ -48,7 +48,7 @@ export default {
         }
 
         const location = lat + ", " + lon
-        var index_name = "splace"
+        var index_name = "splace_search"
 
         /*var query = {
           "query": {
