@@ -13,7 +13,7 @@ export default {
   Query: {
     searchSplaces: async (_, { keyword, lat, long, distance, categoryIds, bigCategoryIds, specialTagIds, ratingTagIds }) => {
       try {
-        var index_name = "splace"
+        var index_name = "splace_search"
         var filter = new Array();
         if (categoryIds) {
           filter.push({

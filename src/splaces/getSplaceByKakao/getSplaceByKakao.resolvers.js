@@ -81,7 +81,7 @@ export default {
           }
         })
 
-        for (var i = 0; i< 7 ;i++) {
+        for (var i = 0; i < 7; i++) {
           //console.log(1)
           const c = await client.timeSet.create({
             data: {
@@ -100,12 +100,10 @@ export default {
         var index_name = "splace_search"
 
         var document = {
-          "doc": {
-            "name": b.name,
-            "address": b.address,
-            "location": location,
-            "intro": place.category_name
-          }
+          "name": b.name,
+          "address": b.address,
+          "location": location,
+          "intro": place.category_name
         }
 
         var response = await searchEngine.create({
