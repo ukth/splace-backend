@@ -103,20 +103,22 @@ export default {
         var index_name = "splace_search"
 
         var document = {
-          ...(name && { "name": name }),
-          ...(categoryIds && {
-            "categories": AtoS(cNames)
-          }),
-          ...(bigCategoryIds && {
-            "stringBC": AtoS(bigCategoryIds),
-            "bigCategories": AtoS(bcNames)
-          }),
-          ...(specialTagIds && {
-            "stringST": AtoS(specialTagIds),
-            "specialTags": AtoS(stNames)
-          }),
-          ...(intro && { "intro": intro }),
-          ...(thumbnail && { "thumbnail": thumbnail })
+          "doc": {
+            ...(name && { "name": name }),
+            ...(categoryIds && {
+              "categories": AtoS(cNames)
+            }),
+            ...(bigCategoryIds && {
+              "stringBC": AtoS(bigCategoryIds),
+              "bigCategories": AtoS(bcNames)
+            }),
+            ...(specialTagIds && {
+              "stringST": AtoS(specialTagIds),
+              "specialTags": AtoS(stNames)
+            }),
+            ...(intro && { "intro": intro }),
+            ...(thumbnail && { "thumbnail": thumbnail })
+          }
         }
 
         //console.log(ok.body.hits.hits[0]._id)
