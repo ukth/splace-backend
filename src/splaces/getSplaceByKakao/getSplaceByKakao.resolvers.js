@@ -112,7 +112,7 @@ export default {
           body: document
         })
 
-        //console.log(response); 
+        console.log(response); 
 
         if (response.body.result != "created") {
           return {
