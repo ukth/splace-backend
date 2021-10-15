@@ -48,12 +48,7 @@ export default {
             error: "ERROR5471"
           };
         }
-        if(!(lat && lon) && (lat || lon)){
-          return {
-            ok: false,
-            error: "ERROR1413"
-          }
-        }
+        
 
         const a = await client.splace.update({
           where: {
