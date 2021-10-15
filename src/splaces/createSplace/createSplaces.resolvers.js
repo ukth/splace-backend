@@ -1,5 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import searchEngine from "../../opensearch"
 
 export default {
   Mutation: {
@@ -16,7 +17,7 @@ export default {
         });
 
         const location = lat + ", " + lon
-        var index_name = "splace_search"
+        var index_name = "splace_search_test"
         
         var document = {
           "doc": {
