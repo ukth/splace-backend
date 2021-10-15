@@ -14,7 +14,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, lat, lon, address, itemId, categoryIds, bigCategoryIds, specialTagIds, kids, parking, pets, breakDays },
+      { splaceId, name, lat, lon, address, itemName, itemPrice, menuUrls, categoryIds, bigCategoryIds, specialTagIds, noKids, parking, pets, breakDays, phone, url, hollydayBreak },
       { loggedInUser }
     ) => {
       try {
@@ -88,17 +88,16 @@ export default {
             lon,
             lat,
             address,
-            kids,
+            noKids,
             parking,
             pets,
-            ...(itemId != null && {
-              item: {
-                disconnect: true,
-                connect: {
-                  id: itemId
-                }
-              },
-            }),
+            itemName,
+            itemPrice,
+            menuUrls,
+            breakDays,
+            phone,
+            url,
+            hollydayBreak,
             ...(categoryIds != null && {
               categories: {
                 disconnect: previous.categories.map(category => ({
@@ -157,7 +156,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "ERROR4412",
+          error: "ERROR4413",
         };
       }
     }),

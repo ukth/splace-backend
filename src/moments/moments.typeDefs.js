@@ -5,6 +5,7 @@ export default gql`
     id: Int!   
     text: String
     author: User!  
+    title: String!
     videoUrl: String   
     createdAt: String! 
     updatedAt: String!

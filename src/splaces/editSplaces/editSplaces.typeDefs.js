@@ -8,7 +8,10 @@ export default gql`
       lon: Float
       lat: Float
       address: String
-      itemId: Int
+      itemName: String
+      itemPrice: Int
+      menuUrls: [String]
+      hollydayBreak: Boolean
       categoryIds: [Int]
       bigCategoryIds: [Int]
       specialTagIds: [Int]
