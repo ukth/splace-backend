@@ -119,6 +119,7 @@ export default {
               }
             }
           })
+          console.log(c)
         }
 
         //console.log(a);
