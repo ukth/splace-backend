@@ -63,7 +63,6 @@ export default {
             itemName,
             itemPrice,
             menuUrls,
-            breakDays,
             phone,
             url,
             thumbnail,
