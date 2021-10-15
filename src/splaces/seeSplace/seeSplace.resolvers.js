@@ -18,6 +18,7 @@ export default {
             bigCategories: true,
             bigCategories: true,
             fixedContents: true,
+            owner: true
           },
         })
         return {
