@@ -81,6 +81,20 @@ export default {
           }
         })
 
+        for (var i = 0; i++ ;i < 7) {
+          const c = await client.timeSet.create({
+            data: {
+              day: i,
+              splace: {
+                connect: {
+                  id: b.id
+                }
+              }
+            }
+          })
+          console.log(c)
+        }
+
         const location = b.lat + ", " + b.lon
         var index_name = "splace_search"
 
@@ -106,20 +120,6 @@ export default {
             ok: false,
             error: "ERROR4416"
           }
-        }
-
-        for (var i = 0; i++ ;i < 7) {
-          const c = await client.timeSet.create({
-            data: {
-              day: i,
-              splace: {
-                connect: {
-                  id: b.id
-                }
-              }
-            }
-          })
-          console.log(c)
         }
 
         //console.log(a);
