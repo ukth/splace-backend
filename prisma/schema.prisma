@@ -147,10 +147,12 @@ model Splace {
   thumbnail String? @db.Text
   activate Boolean @default(false)
   breakDays Int[]
-  
-  timeSets   TimeSet[]
+  menuUrls String[] @db.VarChar(255)
+  itemName String? @db.VarChar()
+  itemPrice Int?
+  holidayBreak Boolean @default(false) 
 
-  item          Item?
+  timeSets   TimeSet[]
 
   owner User? @relation(fields: [ownerId], references: [id])
   
@@ -294,22 +296,6 @@ model Ratingtag {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
-model Item {
-  id Int @id @default(autoincrement())
-
-  name String @db.Text
-  price Int?
-
-  imageUrls String[] @db.VarChar(255)
-  
-  splace Splace @relation(fields: [splaceId], references: [id])
-  splaceId Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 
 model Comment {
   id Int @id @default(autoincrement())

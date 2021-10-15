@@ -37,7 +37,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "ERROR4104"
+          error: "ERROR4106"
         }
       }
     },

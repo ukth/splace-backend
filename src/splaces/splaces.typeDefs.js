@@ -13,7 +13,10 @@ export default gql`
     updatedAt: String!
     ownerId: Int
     timeSets: [TimeSet]
-    items: [Item]
+    itemName: String
+    itemPrice: Int
+    menuUrls: [String]
+    hollydayBreak : Boolean!
     badges: [Badge]
     ratingtags: [Ratingtag]
     categories: [Category]
@@ -22,9 +25,9 @@ export default gql`
     photologs:     [Photolog]
     breakDays: [Int]
     saves: [Save]
-    parking: Boolean
-    pets: Boolean
-    noKids: Boolean
+    parking: Boolean!
+    pets: Boolean!
+    noKids: Boolean!
     intro: String
     url: String
     phone: String
@@ -41,15 +44,6 @@ export default gql`
     updatedAt: String!
     splace: Splace!
     text: String
-  }
-  type Item {
-    itemId: Int!
-    name: String!
-    price: Int
-    imageUrls: [String]
-    splace: Splace!
-    createdAt: String!
-    updatedAt: String!
   }
   type Badge {
     badgeId: Int!
