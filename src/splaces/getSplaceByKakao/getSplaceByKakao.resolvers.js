@@ -81,7 +81,8 @@ export default {
           }
         })
 
-        for (var i = 0; i++ ;i < 7) {
+        for (var i = 0; i< 7 ;i++) {
+          //console.log(1)
           const c = await client.timeSet.create({
             data: {
               day: i,
@@ -92,7 +93,7 @@ export default {
               }
             }
           })
-          console.log(c)
+          //console.log(c)
         }
 
         const location = b.lat + ", " + b.lon

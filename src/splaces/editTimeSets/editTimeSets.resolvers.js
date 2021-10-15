@@ -2,6 +2,19 @@ import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import dayjs from 'dayjs';
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+dayjs.extend(customParseFormat);
+dayjs.extend(utc);
+
+function toTime(time) {
+  var hours = Math.floor(time / 60);
+  var minutes = Math.floor(time % 60);
+
+  if (hours < 10) { hours = "0" + hours; }
+  if (minutes < 10) { minutes = "0" + minutes; }
+  return hours + ':' + minutes;
+}
 
 async function updateTime(splaceId, day, times) {
   try {
@@ -11,34 +24,32 @@ async function updateTime(splaceId, day, times) {
         day
       }
     })
-    times = times.sort()
+    times = times.sort(function (a, b) {
+      return a - b;
+    })
 
-    var openT = null
-    var closeT = null
-    var breakOpenT = null
-    var breakCloseT = null
-
-    if (times.length == 2) {
-      openT = times[0] / 60 + ":" + times[0] % 60
-      closeT = times[1] / 60 + ":" + times[1] % 60
+    if(times.length%2){
+      return false
     }
-    if (times.length == 2) {
-      openT = times[0] / 60 + ":" + times[0] % 60
-      closeT = times[1] / 60 + ":" + times[1] % 60
-      breakOpenT = times[2] / 60 + ":" + times[2] % 60
-      breakCloseT = times[3] / 60 + ":" + times[3] % 60
+    if (times.length != 0 && (times[0] < 0 || times[times.length - 1] > 1440)) {
+      return false
     }
 
+    const openT = times.length >= 2 ? dayjs.utc(toTime(times[0]), 'HH:mm').toISOString() : null
+    const closeT = times.length >= 2 ? dayjs.utc(toTime(times[times.length-1]), 'HH:mm').toISOString() : null
+    const breakOpenT = times.length == 4 ? dayjs.utc(toTime(times[1]), 'HH:mm').toISOString() : null
+    const breakCloseT = times.length == 4 ? dayjs.utc(toTime(times[2]), 'HH:mm').toISOString() : null
+    //console.log(openT)
     const a = await client.timeSet.update({
       where: {
         id: b.id
       },
       data: {
         day,
-        ...(openT && { open: dayjs.utc(openT, 'HH:mm').toISOString() }),
-        ...(closeT && { close: dayjs.utc(closeT, 'HH:mm').toISOString() }),
-        ...(breakOpenT && { breakOpen: dayjs.utc(breakOpenT, 'HH:mm').toISOString() }),
-        ...(breakCloseT && { breakClose: dayjs.utc(breakCloseT, 'HH:mm').toISOString() }),
+        open: openT,
+        close: closeT,
+        breakOpen: breakOpenT,
+        breakClose: breakCloseT
       },
     });
     return true
@@ -56,12 +67,25 @@ export default {
       { loggedInUser }
     ) => {
       try {
-
+        const ok = await client.splace.findFirst({
+          where: {
+            id: splaceId,
+            ownerId: loggedInUser.id,
+            activate: true,
+          }
+        })
+        if (!ok) {
+          return {
+            ok: false,
+            error: "ERROR5471"
+          }
+        }
         const week = [mon, tue, wed, thr, fri, sat, sun]
 
-        for (var i = 0; i++; i < 7) {
+        for (var i = 0; i < 7; i++) {
           const a = await updateTime(splaceId, i, week[i])
-          if(!a){
+          //console.log(a)
+          if (!a) {
             return {
               ok: false,
               error: "ERROR4452"
@@ -79,7 +103,7 @@ export default {
           }
         })
 
-        
+
         //console.log(a);
         return {
           ok: true,
