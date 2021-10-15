@@ -55,8 +55,9 @@ export default {
               "filter": filter,
               "must": [
                 {
-                  "term" : {
-                    "_all" : keyword
+                  "multi_match" : {
+                    "fields" : ["*"],
+                    "query" : keyword
                   }
                 }
               ]
