@@ -14,6 +14,25 @@ export default {
             name,
           },
         });
+
+        const location = lat + ", " + lon
+        var index_name = "splace_search"
+        
+        var document = {
+          "doc": {
+            "name" : name,
+            "address" : address,
+            "location": location
+          }
+        }
+
+        var response = await searchEngine.create({
+          id: a.id,
+          index: index_name,
+          body: document
+        })
+
+        console.log(response);
         //console.log(a);
         return {
           ok: true,
