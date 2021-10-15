@@ -24,6 +24,7 @@ export default gql`
     photologs:     [Photolog]
     breakDays: [Int]
     saves: [Save]
+    owner: User
     parking: Boolean!
     pets: Boolean!
     noKids: Boolean!
