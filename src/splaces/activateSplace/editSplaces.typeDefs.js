@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Mutation {
-    editSplaces(
+    activateSplace(
       splaceId: Int!
     ): defaultResult!
   }
