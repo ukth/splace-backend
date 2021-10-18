@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    editSplaces: protectedResolver(async (
+    activateSplace: protectedResolver(async (
       _,
       { splaceId },
       { loggedInUser }
