@@ -192,5 +192,7 @@ ERROR _ _ _ _
   ERROR4416 "opensearch create falid"
   ERROR4417 "opensearch update faild"
   ERROR4241 "prisma issue for get photologs by splace"
+  ERROR5472 "only root user can activate splace & splace already activated"
+  ERROR4418 "prisma issue for activate splace"
 */
 
