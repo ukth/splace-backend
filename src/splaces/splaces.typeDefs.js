@@ -56,12 +56,13 @@ export default gql`
   }
   type TimeSet {
     id: Int!
-    open: String!
-    close: String!
+    open: String
+    close: String
+    breakOpen: String
+    braekClose: String
     day: Int!
     splace: Splace!
     splaceId: Int!
-    isBreakTime: Boolean!
     createdAt: String!
     updatedAt: String!
   }

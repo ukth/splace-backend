@@ -7,6 +7,7 @@ import { getUser } from "./users/users.utils";
 import upload from './multer';
 import http from "http";
 import axios from "axios";
+import depthLimit from 'graphql-depth-limit'
 
 
 
@@ -43,6 +44,7 @@ const apollo = new ApolloServer({
   formatError: (err) => {
     console.log(err);
   },
+  validationRules: [depthLimit(8)]
 });
 
 const app = express();
