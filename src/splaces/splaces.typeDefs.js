@@ -25,6 +25,7 @@ export default gql`
     breakDays: [Int]
     saves: [Save]
     owner: User
+    kakaoId: Int
     parking: Boolean!
     pets: Boolean!
     noKids: Boolean!

@@ -13,7 +13,7 @@ export default {
   Mutation: {
     uploadLog: protectedResolver(async (
       _,
-      { title, imageUrls, photoSize, text, splaceId, isPrivate, categoryIds, bigCategoryIds, specialTagIds, seriesIds },
+      { title, imageUrls, photoSize, text, splaceId, isPrivate, categoryIds, bigCategoryIds, specialTagIds, seriesIds},
       { loggedInUser }
     ) => {
       try {

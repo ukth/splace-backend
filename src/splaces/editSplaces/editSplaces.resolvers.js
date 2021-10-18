@@ -14,13 +14,15 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, lat, lon, address, itemName, itemPrice, menuUrls, categoryIds, bigCategoryIds, specialTagIds, noKids, parking, pets, breakDays, phone, url, hollydayBreak },
+      { splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categoryIds, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro, cNames, bcNames, stNames },
       { loggedInUser }
     ) => {
       try {
-        const previous = await client.splace.findUnique({
+        const ok = await client.splace.findFirst({
           where: {
-            id: splaceId
+            id: splaceId,
+            ownerId: loggedInUser.id,
+            activate: true,
           },
           include: {
             categories: {
@@ -40,44 +42,13 @@ export default {
             }
           }
         });
-        if (previous.ownerId != loggedInUser.id) {
+        if (!ok) {
           return {
             ok: false,
             error: "ERROR5471"
           };
         }
 
-        const location = lat + ", " + lon
-        var index_name = "splace_search"
-
-        /*var query = {
-          "query": {
-            "bool": {
-              "filter": {
-                "term": {
-                  "id": previous.id,
-                }
-              },
-              "must": [
-                {
-                  "match_all": {}
-                }
-              ]
-            }
-          }
-        }
-
-        var ok = await searchEngine.search({
-          index: index_name,
-          body: query
-        })
-
-        if (ok.body.hits.hits.length !== 1) {
-          return {
-            ok: false,
-            error: "opensearch error"
-          }
-        }   */
 
         const a = await client.splace.update({
           where: {
@@ -85,19 +56,16 @@ export default {
           },
           data: {
             name,
-            lon,
-            lat,
-            address,
+            intro,
             noKids,
             parking,
             pets,
             itemName,
             itemPrice,
             menuUrls,
-            breakDays,
             phone,
             url,
-            hollydayBreak,
+            thumbnail,
             ...(categoryIds != null && {
               categories: {
                 disconnect: previous.categories.map(category => ({
@@ -132,9 +100,24 @@ export default {
           }
         });
 
+        var index_name = "splace_search"
+
         var document = {
           "doc": {
-            "location": location
+            ...(name && { "name": name }),
+            ...(categoryIds && {
+              "categories": AtoS(cNames)
+            }),
+            ...(bigCategoryIds && {
+              "stringBC": AtoS(bigCategoryIds),
+              "bigCategories": AtoS(bcNames)
+            }),
+            ...(specialTagIds && {
+              "stringST": AtoS(specialTagIds),
+              "specialTags": AtoS(stNames)
+            }),
+            ...(intro && { "intro": intro }),
+            ...(thumbnail && { "thumbnail": thumbnail })
           }
         }
 
@@ -146,7 +129,14 @@ export default {
           body: document
         })
 
-        console.log(response);
+        //console.log(response);
+
+        if (response.body.result != "updated") {
+          return {
+            ok: false,
+            error: "ERROR4417"
+          }
+        }
 
         //console.log(a);
         return {

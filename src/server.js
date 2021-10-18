@@ -59,12 +59,10 @@ app.post('/upload', upload.array('photos'), (req, res, next) => {
 
 app.get('/geocode', async (req, res) => {
   try {
-    const ID = process.env.NCP_API_ID
-    const KEY = process.env.NCP_API_KEY
+    const auth = process.env.KAKAO_AUTH
     const headers = {
       "headers": {
-        "X-NCP-APIGW-API-KEY-ID": ID,
-        "X-NCP-APIGW-API-KEY": KEY,
+        "Authorization": auth
       }
     }
     //console.log(req)
@@ -81,12 +79,10 @@ app.get('/geocode', async (req, res) => {
 
 app.get('/reversegeocode', async (req, res) => {
   try {
-    const ID = process.env.NCP_API_ID
-    const KEY = process.env.NCP_API_KEY
+    const auth = process.env.KAKAO_AUTH
     const headers = {
       "headers": {
-        "X-NCP-APIGW-API-KEY-ID": ID,
-        "X-NCP-APIGW-API-KEY": KEY,
+        "Authorization": auth
       }
     }
     const lat = req.query.lat
@@ -95,7 +91,7 @@ app.get('/reversegeocode', async (req, res) => {
     const reverseGeocode = await axios.get(encodeURI("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr&output=json&coords=" + lon + "," + lat), headers);
     //console.log(reverseGeocode.data)
     res.send(reverseGeocode.data)
-  } catch(e) {
+  } catch (e) {
     console.log(e)
     return null;
   }

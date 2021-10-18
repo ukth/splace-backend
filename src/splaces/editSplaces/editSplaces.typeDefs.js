@@ -5,23 +5,22 @@ export default gql`
     editSplaces(
       splaceId: Int!
       name: String
-      lon: Float
-      lat: Float
-      address: String
       itemName: String
       itemPrice: Int
       menuUrls: [String]
-      hollydayBreak: Boolean
       categoryIds: [Int]
       bigCategoryIds: [Int]
       specialTagIds: [Int]
       parking: Boolean
       pets: Boolean
       kids: Boolean
-      breakDays: [Int]
       intro: String
+      thumbnail: String
       url: String
       phone: String
+      cNames: [String]
+      bcNames: [String]
+      stNames: [String]
     ): defaultResult!
   }
 `;

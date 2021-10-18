@@ -185,5 +185,11 @@ ERROR _ _ _ _
   ERROR3103 "phone number already exist"
   ERROR4107 "prisma issue for create certificate"
   ERROR4414 "prisma issue for seeSplace"
+  ERROR4415 "kakao api X request"
+  ERROR1411 "kakaoId doesn't match with keyword"
+  ERROR1412 "keyword not valid"
+  ERROR1413 "lattitude and longitude sould be given at the same time"
+  ERROR4416 "opensearch create falid"
+  ERROR4417 "opensearch update faild"
 */
 

@@ -138,6 +138,7 @@ model Splace {
   createdAt   DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   ownerId Int?
+  kakaoId Int?
   parking  Boolean @default(false)
   pets     Boolean @default(false)      
   noKids     Boolean @default(false)
@@ -177,12 +178,13 @@ model Splace {
 
 model TimeSet {
   id Int @id @default(autoincrement())
-  open DateTime  @db.Time()
-  close DateTime @db.Time()
+  open DateTime?  @db.Time()
+  close DateTime? @db.Time()
+  breakOpen DateTime? @db.Time()
+  breakClose DateTime? @db.Time()
   day Int
   splace Splace? @relation(fields: [splaceId], references: [id])
   splaceId  Int?
-  isBreakTime Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

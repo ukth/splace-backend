@@ -11,17 +11,10 @@ function toSearch(arr) {
 
 export default {
   Query: {
-    searchSplaces: async (_, { keyword, lat, long, distance, categoryIds, bigCategoryIds, specialTagIds, ratingTagIds }) => {
+    searchSplaces: async (_, { keyword, lat, long, distance, bigCategoryIds, specialTagIds, ratingTagIds }) => {
       try {
-        var index_name = "splace"
+        var index_name = "splace_search"
         var filter = new Array();
-        if (categoryIds) {
-          filter.push({
-            "terms": {
-              "stringC": toSearch(categoryIds),
-            }
-          })
-        }
         if (bigCategoryIds) {
           filter.push({
             "terms": {
@@ -44,7 +37,7 @@ export default {
           })
         }
 
-        if (lat&&long&&distance){
+        if (lat && long && distance) {
           filter.push({
             "geo_distance": {
               "distance": distance,
@@ -52,6 +45,15 @@ export default {
                 "lat": lat,
                 "lon": long
               }
+            }
+          })
+        }
+
+        if (keyword) {
+          filter.push({
+            "multi_match": {
+              "fields": ["*"],
+              "query": keyword
             }
           })
         }
@@ -77,10 +79,12 @@ export default {
         })
 
         //console.log(response)
-        console.log(response.body.hits.hits);
+        const searchedSplaces = response.body.hits.hits.map(result => result._source);
 
+        //console.log(searchedSplaces)
         return {
           ok: true,
+          searchedSplaces
         };
       } catch (e) {
         console.log(e);
