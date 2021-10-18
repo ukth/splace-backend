@@ -9,7 +9,7 @@ export default {
         const splace = await client.splace.findFirst({
           where: {
             id: splaceId,
-            activate: false,
+            activate: true,
           },
           include:{
             timeSets: true,
@@ -21,6 +21,7 @@ export default {
             owner: true
           },
         })
+        //console.log(splace)
         return {
           ok: true,
           splace
