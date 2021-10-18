@@ -59,7 +59,7 @@ export default gql`
     open: String
     close: String
     breakOpen: String
-    braekClose: String
+    breakClose: String
     day: Int!
     splace: Splace!
     splaceId: Int!
