@@ -191,5 +191,6 @@ ERROR _ _ _ _
   ERROR1413 "lattitude and longitude sould be given at the same time"
   ERROR4416 "opensearch create falid"
   ERROR4417 "opensearch update faild"
+  ERROR4241 "prisma issue for get photologs by splace"
 */
 

@@ -26,7 +26,10 @@ export default {
             error: "ERROR1101",
           };
         }
-        const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+        const now = new Date();
+        //const duration = 5000;
+        const duration = 5184000000;
+        const token = await jwt.sign({ id: user.id, iat: now.getTime(), eat: now.getTime() + duration}, process.env.SECRET_KEY);
 
         return {
           ok: true,

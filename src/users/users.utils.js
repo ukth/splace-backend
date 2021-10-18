@@ -6,7 +6,13 @@ export const getUser = async (token) => {
     if (!token) {
       return null;
     }
-    const { id } = await jwt.verify(token, process.env.SECRET_KEY);
+    const { id, iat, eat } = await jwt.verify(token, process.env.SECRET_KEY);
+    const now = new Date()
+    
+    if(iat > now.getTime() || eat < now.getTime()){
+      return null;
+    }
+
     const user = await client.user.findFirst({
       where: {
         id,

@@ -59,10 +59,12 @@ app.post('/upload', upload.array('photos'), (req, res, next) => {
 
 app.get('/geocode', async (req, res) => {
   try {
-    const auth = process.env.KAKAO_AUTH
+    const ID = process.env.NCP_API_ID
+    const KEY = process.env.NCP_API_KEY
     const headers = {
       "headers": {
-        "Authorization": auth
+        "X-NCP-APIGW-API-KEY-ID": ID,
+        "X-NCP-APIGW-API-KEY": KEY,
       }
     }
     //console.log(req)
@@ -79,10 +81,12 @@ app.get('/geocode', async (req, res) => {
 
 app.get('/reversegeocode', async (req, res) => {
   try {
-    const auth = process.env.KAKAO_AUTH
+    const ID = process.env.NCP_API_ID
+    const KEY = process.env.NCP_API_KEY
     const headers = {
       "headers": {
-        "Authorization": auth
+        "X-NCP-APIGW-API-KEY-ID": ID,
+        "X-NCP-APIGW-API-KEY": KEY,
       }
     }
     const lat = req.query.lat
