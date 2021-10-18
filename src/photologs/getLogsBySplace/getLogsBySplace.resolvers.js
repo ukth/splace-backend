@@ -4,46 +4,97 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getLogsBySplace: protectedResolver(async (_, { splaceId, lastId }, { loggedInUser }) => {
+    getLogsBySplace: protectedResolver(async (_, { splaceId, orderBy, lastId }, { loggedInUser }) => {
       try {
-        const logs = await client.photolog.findMany({
-          where: {
-            splaceId,
-            isPrivate: false,
-            NOT: [
-              {
-                author: {
-                  blockingUser: {
+        if(orderBy !== "time" && orderBy !== "like"){
+          return {
+            ok: false,
+            error: "ERROR1241"
+          }
+        }
+        var logs = null;
+        if (orderBy == "time") {
+          logs = await client.photolog.findMany({
+            where: {
+              splaceId,
+              isPrivate: false,
+              NOT: [
+                {
+                  author: {
+                    blockingUser: {
+                      some: {
+                        id: loggedInUser.id
+                      }
+                    }
+                  },
+                },
+                {
+                  hiddenUsers: {
                     some: {
                       id: loggedInUser.id
                     }
                   }
                 },
-              },
-              {
-                hiddenUsers: {
-                  some: {
-                    id: loggedInUser.id
+              ]
+            },
+            include: {
+              splace: true,
+              categories: true,
+              bigCategories: true,
+              specialtags: true,
+              author: true,
+              series: true,
+            },
+            take: 5,
+            ...(lastId && { cursor: { id: lastId } }),
+            skip: lastId ? 1 : 0,
+            orderBy: {
+              createdAt: "desc",
+            },
+          })
+        }
+        if (orderBy == "like") {
+          logs = await client.photolog.findMany({
+            where: {
+              splaceId,
+              isPrivate: false,
+              NOT: [
+                {
+                  author: {
+                    blockingUser: {
+                      some: {
+                        id: loggedInUser.id
+                      }
+                    }
+                  },
+                },
+                {
+                  hiddenUsers: {
+                    some: {
+                      id: loggedInUser.id
+                    }
                   }
-                }
+                },
+              ]
+            },
+            include: {
+              splace: true,
+              categories: true,
+              bigCategories: true,
+              specialtags: true,
+              author: true,
+              series: true,
+            },
+            take: 5,
+            ...(lastId && { cursor: { id: lastId } }),
+            skip: lastId ? 1 : 0,
+            orderBy: {
+              likedUser: {
+                _count: "desc"
               },
-            ]
-          },
-          include: {
-            splace: true,
-            categories: true,
-            bigCategories: true,
-            specialtags: true,
-            author: true,
-            series: true,
-          },
-          take: 5,
-          ...(lastId && { cursor: { id: lastId } }),
-          skip: lastId ? 1 : 0,
-          orderBy: {
-            createdAt: "desc",
-          },
-        })
+            },
+          })
+        }
         return {
           ok: true,
           logs: logs
@@ -52,7 +103,7 @@ export default {
         console.log(e)
         return {
           ok: false,
-          error: "ERROR4231"
+          error: "ERROR4241"
         };
       }
     })

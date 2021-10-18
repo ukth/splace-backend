@@ -7,6 +7,6 @@ export default gql`
     logs: [Photolog]
   }
   type Query {
-    getLogsBySplace(splaceId: Int!, lastId: Int): getLogsBySplaceResult!
+    getLogsBySplace(splaceId: Int!, orderBy: String!, lastId: Int): getLogsBySplaceResult!
   }
 `;

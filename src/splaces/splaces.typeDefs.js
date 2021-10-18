@@ -22,6 +22,7 @@ export default gql`
     bigCategories: [BigCategory]
     fixedContents: [FixedContent]
     photologs:     [Photolog]
+    totalPhotologs: Int
     breakDays: [Int]
     saves: [Save]
     owner: User
