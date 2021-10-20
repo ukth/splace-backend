@@ -139,6 +139,8 @@ export default {
         })
 
         //console.log(response);
+        
+        console.log(response.body.result);
 
         if (response.body.result != "updated") {
           return {
@@ -183,7 +185,7 @@ export default {
             body: document
           })
 
-          //console.log(response);
+          console.log(response.body.result)
 
           if (response.body.result != "updated") {
             return {
