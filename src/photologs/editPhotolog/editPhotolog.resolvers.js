@@ -46,7 +46,7 @@ export default {
 
           const a = await client.splace.findFirst({
             where: {
-              id: splaceId,
+              id: b.splaceId,
               activate: true,
             },
             include: {
