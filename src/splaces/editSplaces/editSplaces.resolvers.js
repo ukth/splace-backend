@@ -106,21 +106,21 @@ export default {
             specialtags: true,
           }
         });
-
-
-
+        
         var index_name = "splace_search"
         const cNames = a.categories.map(category => category.name)
         const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
+        const bcIds = a.bigCategories.map(bigCategory => bigCategory.id)
         const stNames = a.specialtags.map(specialTag => specialTag.name)
+        const stIds = a.specialtags.map(specialTag => specialTag.id)
 
         var document = {
           "doc": {
             "name": a.name,
             "categories": AtoS(cNames),
-            "stringBC": AtoS(bigCategoryIds),
+            "stringBC": AtoS(bcIds),
             "bigCategories": AtoS(bcNames),
-            "stringST": AtoS(specialTagIds),
+            "stringST": AtoS(stIds),
             "specialTags": AtoS(stNames),
             "intro": a.intro,
             "thumbnail": a.thumbnail,
@@ -164,9 +164,9 @@ export default {
             "doc": {
               "name": a.name,
               "categories": AtoS(cNames),
-              "stringBC": AtoS(bigCategoryIds),
+              "stringBC": AtoS(bcIds),
               "bigCategories": AtoS(bcNames),
-              "stringST": AtoS(specialTagIds),
+              "stringST": AtoS(stIds),
               "specialTags": AtoS(stNames),
               "intro": a.intro,
               "nokids": a.noKids,
