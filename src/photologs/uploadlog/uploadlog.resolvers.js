@@ -1,5 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import searchEngine from "../../opensearch"
 
 
 function AtoS(arr) {
