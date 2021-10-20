@@ -8,7 +8,7 @@ export default gql`
       itemName: String
       itemPrice: Int
       menuUrls: [String]
-      categoryIds: [Int]
+      categories: [String]
       bigCategoryIds: [Int]
       specialTagIds: [Int]
       parking: Boolean
