@@ -92,7 +92,7 @@ export default {
             const specialTagIds = a.specialtags.map(specialTag => specialTag.id)
 
             var document = {
-              "id": photologId,
+              "id": b.id,
               "name": a.name,
               "address": a.address,
               "location": location,
