@@ -89,12 +89,6 @@ model Photolog {
   
   splace     Splace?    @relation(fields: [splaceId], references: [id])
   splaceId   Int?
-
-  stringC String? @db.VarChar(255)
-
-  stringBC  String? @db.VarChar(255)
-
-  stringST  String? @db.VarChar(255)
   
   series     Series[]    @relation("seriesRelation")
   
