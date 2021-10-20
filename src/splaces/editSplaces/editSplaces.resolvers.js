@@ -14,7 +14,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categoryIds, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro, cNames, bcNames, stNames },
+      { splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categoryIds, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro },
       { loggedInUser }
     ) => {
       try {
@@ -66,6 +66,9 @@ export default {
             phone,
             url,
             thumbnail,
+            cNames,
+            bcNames,
+            stNames,
             ...(categoryIds != null && {
               categories: {
                 disconnect: previous.categories.map(category => ({
@@ -96,28 +99,34 @@ export default {
                 })),
               },
             }),
-
+          },
+          include: {
+            categories: true,
+            bigCategories: true,
+            specialtags: true,
           }
         });
 
+
+
         var index_name = "splace_search"
+        const cNames = a.categories.map(category => category.name)
+        const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
+        const stNames = a.specialtags.map(specialTag => specialTag.name)
 
         var document = {
           "doc": {
-            ...(name && { "name": name }),
-            ...(categoryIds && {
-              "categories": AtoS(cNames)
-            }),
-            ...(bigCategoryIds && {
-              "stringBC": AtoS(bigCategoryIds),
-              "bigCategories": AtoS(bcNames)
-            }),
-            ...(specialTagIds && {
-              "stringST": AtoS(specialTagIds),
-              "specialTags": AtoS(stNames)
-            }),
-            ...(intro && { "intro": intro }),
-            ...(thumbnail && { "thumbnail": thumbnail })
+            "name": a.name,
+            "categories": AtoS(cNames),
+            "stringBC": AtoS(bigCategoryIds),
+            "bigCategories": AtoS(bcNames),
+            "stringST": AtoS(specialTagIds),
+            "specialTags": AtoS(stNames),
+            "intro": a.intro,
+            "thumbnail": a.thumbnail,
+            "nokids": a.noKids,
+            "parking": a.parking,
+            "pets": a.pets,
           }
         }
 
@@ -137,6 +146,53 @@ export default {
             error: "ERROR4417"
           }
         }
+
+        const ids = await client.photolog.findMany({
+          where: {
+            splaceId
+          },
+          select: {
+            id: true
+          }
+        })
+
+        for (var i = 0; i < ids.length; i++) {
+          const id = ids[i].id
+          index_name = "photolog_search"
+
+          var document = {
+            "doc": {
+              "name": a.name,
+              "categories": AtoS(cNames),
+              "stringBC": AtoS(bigCategoryIds),
+              "bigCategories": AtoS(bcNames),
+              "stringST": AtoS(specialTagIds),
+              "specialTags": AtoS(stNames),
+              "intro": a.intro,
+              "nokids": a.noKids,
+              "parking": a.parking,
+              "pets": a.pets,
+            }
+          }
+
+          //console.log(ok.body.hits.hits[0]._id)
+
+          var response = await searchEngine.update({
+            id: id,
+            index: index_name,
+            body: document
+          })
+
+          //console.log(response);
+
+          if (response.body.result != "updated") {
+            return {
+              ok: false,
+              error: "ERROR4417"
+            }
+          }
+        }
+
 
         //console.log(a);
         return {

@@ -1,5 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import searchEngine from "../../opensearch"
 
 export default {
   Mutation: {
@@ -44,6 +45,32 @@ export default {
             }
           })
           //console.log(c)
+        }
+
+        const location = a.lat + ", " + a.lon
+        var index_name = "splace_search"
+
+        var document = {
+          "id" : a.id,
+          "name": a.name,
+          "address": a.address,
+          "location": location,
+          "intro": a.intro,
+        }
+
+        var response = await searchEngine.create({
+          id: a.id,
+          index: index_name,
+          body: document
+        })
+
+        console.log(response); 
+
+        if (response.body.result != "created") {
+          return {
+            ok: false,
+            error: "ERROR4416"
+          }
         }
 
         //console.log(a);

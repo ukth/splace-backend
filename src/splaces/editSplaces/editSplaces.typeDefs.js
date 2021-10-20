@@ -18,9 +18,6 @@ export default gql`
       thumbnail: String
       url: String
       phone: String
-      cNames: [String]
-      bcNames: [String]
-      stNames: [String]
     ): defaultResult!
   }
 `;

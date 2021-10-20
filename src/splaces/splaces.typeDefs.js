@@ -16,7 +16,7 @@ export default gql`
     itemName: String
     itemPrice: Int
     menuUrls: [String]
-    hollydayBreak : Boolean!
+    holidayBreak : Boolean!
     ratingtags: [Ratingtag]
     categories: [Category]
     bigCategories: [BigCategory]

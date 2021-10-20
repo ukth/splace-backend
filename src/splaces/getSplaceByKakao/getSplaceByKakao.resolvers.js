@@ -100,6 +100,7 @@ export default {
         var index_name = "splace_search"
 
         var document = {
+          "id" : b.id,
           "name": b.name,
           "address": b.address,
           "location": location,
