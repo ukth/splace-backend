@@ -138,8 +138,7 @@ export default {
           body: document
         })
 
-        //console.log(response);
-        
+        console.log(response);
         console.log(response.body.result);
 
         if (response.body.result != "updated") {
