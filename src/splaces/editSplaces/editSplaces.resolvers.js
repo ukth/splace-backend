@@ -69,7 +69,7 @@ export default {
             cNames,
             bcNames,
             stNames,
-            ...(categoryIds != null && {
+            ...(categories != null && {
               categories: {
                 disconnect: previous.categories.map(category => ({
                   id: category.id
