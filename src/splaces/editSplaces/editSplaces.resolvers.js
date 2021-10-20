@@ -74,9 +74,10 @@ export default {
                 disconnect: previous.categories.map(category => ({
                   id: category.id
                 })),
-                connect: categoryIds.map(categoryId => ({
-                  id: categoryId
-                })),
+                connectOrCreate: categories.map(category => ({
+                  create: { name: category },
+                  where: { name: category }
+                }))
               },
             }),
             ...(bigCategoryIds != null && {
@@ -84,10 +85,9 @@ export default {
                 disconnect: previous.bigCategories.map(bigCategory => ({
                   id: bigCategory.id
                 })),
-                connectOrCreate: categories.map(category => ({
-                  create: { name: category },
-                  where: { name: category }
-                }))
+                connect: bigCategoryIds.map(bigCategoryId => ({
+                  id: bigCategoryId
+                })),
               },
             }),
             ...(specialTagIds != null && {
