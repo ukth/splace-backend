@@ -71,7 +71,7 @@ export default {
             stNames,
             ...(categories != null && {
               categories: {
-                disconnect: previous.categories.map(category => ({
+                disconnect: ok.categories.map(category => ({
                   id: category.id
                 })),
                 connectOrCreate: categories.map(category => ({
@@ -82,7 +82,7 @@ export default {
             }),
             ...(bigCategoryIds != null && {
               bigCategories: {
-                disconnect: previous.bigCategories.map(bigCategory => ({
+                disconnect: ok.bigCategories.map(bigCategory => ({
                   id: bigCategory.id
                 })),
                 connect: bigCategoryIds.map(bigCategoryId => ({
@@ -92,7 +92,7 @@ export default {
             }),
             ...(specialTagIds != null && {
               specialtags: {
-                disconnect: previous.specialtags.map(specialTag => ({
+                disconnect: ok.specialtags.map(specialTag => ({
                   id: specialTag.id
                 })),
                 connect: specialTagIds.map(specialTagId => ({
