@@ -1,4 +1,4 @@
-FROM ubuntu:latest AS builder
+FROM ubuntu:latest
 USER root
 
 LABEL MAINTAINER maknae <maknae@lunen.co.kr>
@@ -15,7 +15,7 @@ RUN npm install --silent
 
 COPY . .
 
-RUN npm run build --silent
+RUN npm run build
 RUN npx prisma generate
 
 
@@ -35,9 +35,11 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
 RUN npm install --silent
 
-COPY --from=builder /app/node_modules/@prisma ./node_modules/
-COPY --from=builder /app/build .
-COPY --from=builder /app/.env .
+
+COPY --from=0 /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=0 /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=0 /app/build ./build
+COPY --from=0 /app/.env .
 
 EXPOSE 4000
 CMD ["npm", "start"]
