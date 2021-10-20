@@ -150,7 +150,8 @@ export default {
 
         const ids = await client.photolog.findMany({
           where: {
-            splaceId
+            splaceId,
+            isPrivate: false
           },
           select: {
             id: true
