@@ -138,8 +138,8 @@ export default {
           body: document
         })
 
-        console.log(response);
-        console.log(response.body.result);
+        //console.log(response);
+        //console.log(response.body.result);
 
         if (response.body.result != "updated") {
           return {
@@ -158,7 +158,8 @@ export default {
         })
 
         for (var i = 0; i < ids.length; i++) {
-          const id = ids[i].id
+          const photologId = ids[i].id
+          console.log(photologId)
           index_name = "photolog_search"
 
           var document = {
@@ -179,7 +180,7 @@ export default {
           //console.log(ok.body.hits.hits[0]._id)
 
           var response = await searchEngine.update({
-            id: id,
+            id: photologId,
             index: index_name,
             body: document
           })
