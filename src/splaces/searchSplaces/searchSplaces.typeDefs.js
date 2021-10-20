@@ -2,6 +2,7 @@ import { gql } from "apollo-server";
 
 export default gql`
   type searchedSplace{
+    id: Int!
     address: String
     bigCategories : String
     categories: String
@@ -10,6 +11,9 @@ export default gql`
     name : String!
     ratingTags : String
     thumbnail: String
+    noKids: Boolean
+    parking: Boolean
+    pets: Boolean
   }
   type searchSplacesResult {
     ok: Boolean!
@@ -18,6 +22,7 @@ export default gql`
   }
   type Query {
     searchSplaces(
+      type: String!
       keyword: String, 
       lat: Float,
       long: Float, 

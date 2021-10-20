@@ -161,7 +161,7 @@ export default {
 
         for (var i = 0; i < ids.length; i++) {
           const photologId = ids[i].id
-          console.log(photologId)
+          //console.log(photologId)
           index_name = "photolog_search"
 
           var document = {
@@ -187,7 +187,7 @@ export default {
             body: document
           })
 
-          console.log(response.body.result)
+          //console.log(response.body.result)
 
           if (response.body.result != "updated") {
             return {
