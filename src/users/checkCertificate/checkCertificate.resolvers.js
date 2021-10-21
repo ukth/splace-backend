@@ -9,9 +9,10 @@ export default {
       { certificate, phone }
     ) => {
       try {
-        const key = redisClient.get(phone)
-
-        console.log(key)
+        const key = redisClient.get(phone, (err, reply) => {
+          console.log(err);
+          return reply;
+        });
 
         if(certificate!=key){
           return {
