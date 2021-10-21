@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import client from "../../client";
 import redisClient from "../../redis"
+const { promisify } = require('util');
+
 
 export default {
   Mutation: {
@@ -9,8 +11,9 @@ export default {
       { certificate, phone }
     ) => {
       try {
+        const getAsync = promisify(redisClient.get).bind(redisClient);
 
-        const reply = await redisClient.get(phone)
+        const reply = await redisClient.getAsync(phone)
 
         if(certificate!=reply){
           return {
