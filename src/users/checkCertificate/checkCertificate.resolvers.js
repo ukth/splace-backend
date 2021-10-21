@@ -14,6 +14,8 @@ export default {
           return reply;
         });
 
+        console.log(key)
+        
         if(certificate!=key){
           return {
             ok: false,
