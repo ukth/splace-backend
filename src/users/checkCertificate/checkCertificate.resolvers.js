@@ -10,11 +10,13 @@ export default {
     ) => {
       try {
         const key = redisClient.get(phone, function (err, reply) {
-          console.log(err)
+          //console.log(err)
           console.log(reply)
           return reply.toString();
         });
 
+
+        console.log(certificate)
         console.log(key)
 
         if(certificate!=key){
