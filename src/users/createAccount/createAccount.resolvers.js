@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import client from "../../client";
 import redisClient from "../../redis"
+const { promisify } = require('util');
 
 function validateUsername(text) {
   const exp = /^[0-9a-z._]*$/;
@@ -45,9 +46,11 @@ export default {
           }
         }
 
-        const key = redisClient.get(phone)
+        const getAsync = promisify(redisClient.get).bind(redisClient);
 
-        if(certificate!=key){
+        const reply = await getAsync(phone)
+
+        if(certificate!=reply){
           return {
             ok: false,
             error: "ERROR1103"
