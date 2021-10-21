@@ -18,7 +18,12 @@ export default {
             error: "ERROR1M14"
           }
         }
-
+        if(!isPersonal && memberIds.length <= 2) {
+          return {
+            ok: false,
+            error: "ERROR1M16"
+          }
+        }
         if (isPersonal) {
           if (memberIds.length !== 2) {
             return {

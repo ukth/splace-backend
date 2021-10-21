@@ -167,6 +167,7 @@ ERROR _ _ _ _
   ERROR4M11 "prisma issue for add chatroom member"
   ERROR1M14 "to create chatroom, please include yourself"
   ERROR1M15 "to create personal chattroom, member shold be 2"
+  ERROR1M16 "to create group chat, member should be greater than 2"
   ERROR3M11 "personal chatroom already exist"
   ERROR4M12 "prisma issue for create chatroom"
   ERROR5M12 "only member can edit chatroom"

@@ -59,6 +59,8 @@ app.post('/upload', upload.array('photos'), (req, res, next) => {
   res.send(req.files);
 })
 
+app.use('/healthcheck', require('express-healthcheck')());
+
 app.get('/geocode', async (req, res) => {
   try {
     const ID = process.env.NCP_API_ID

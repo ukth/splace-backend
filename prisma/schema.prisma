@@ -72,6 +72,14 @@ model User {
   chatroomReaded ChatroomReaded[]
 
   myReports Report[]
+
+  followLogs FollowLog[] @relation("followLogRelation")
+
+  followedLogs FollowLog[] @relation("followedLogRelation")
+
+  likeLogs LikeLog[] @relation("likeLogRelation")
+
+  editFolderLogs EditFolderLog[] @relation("editFolderRelation")
 }
 
 model Photolog {
@@ -105,6 +113,8 @@ model Photolog {
   comments Comment[]
 
   hiddenUsers User[]  @relation("hiddenLogsRelation")
+
+  likedLogs LikeLog[] @relation("likedLogRelation")
 }
 
 model Series {
@@ -244,6 +254,8 @@ model Folder {
   members   User[] @relation("folderRelation")
   
   saves     Save[]
+
+  editedFolderLogs EditFolderLog[] @relation("editedFolderRelation")
 }
 
 model Category {
@@ -418,6 +430,36 @@ model Report {
   reportedUser User @relation(fields: [userId], references: [id])
   userId Int
   reason String? @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FollowLog {
+  id Int @id @default(autoincrement())
+  target User @relation("followedLogRelation", fields: [targetId], references: [id])
+  targetId Int
+  requestUser User @relation("followLogRelation", fields: [requestUserId], references: [id])
+  requestUserId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EditFolderLog {
+  id Int @id @default(autoincrement())
+  target Folder @relation("editedFolderRelation", fields: [targetId], references: [id])
+  targetId Int
+  requestUser User @relation("editFolderRelation", fields: [requestUserId], references: [id])
+  requestUserId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LikeLog {
+  id Int @id @default(autoincrement())
+  target Photolog @relation("likedLogRelation", fields: [targetId], references: [id])
+  targetId Int
+  requestUser User @relation("likeLogRelation", fields: [requestUserId], references: [id])
+  requestUserId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

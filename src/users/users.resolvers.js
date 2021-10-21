@@ -77,6 +77,26 @@ export default {
         console.log(e);
         return null;
       }
+    },
+    unreadChatExist: async ({ id }) => {
+      try {
+          const chatread = await client.chatroomReaded.findMany({
+            where: {
+              userId: id
+            },
+            include: {
+              chatroom: true,
+            },
+            take: 50,
+          })
+          const unread = chatread.filter(chatread => 
+            chatread.updatedAt < chatread.chatroom.updatedAt
+          )
+          return unread.length!=0
+      } catch(e) {
+        console.log(e)
+        return null;
+      }
     }
   },
 };
