@@ -11,6 +11,8 @@ export default {
       try {
         const key = redisClient.get(phone)
 
+        console.log(key)
+
         if(certificate!=key){
           return {
             ok: false,
