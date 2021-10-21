@@ -5,15 +5,10 @@ export default gql`
     id: Int!
     address: String
     bigCategories : String
-    categories: String
-    intro : String
+    stringBC: String
     location: String!
     name : String!
-    ratingTags : String
     thumbnail: String
-    noKids: Boolean
-    parking: Boolean
-    pets: Boolean
   }
   type searchSplacesResult {
     ok: Boolean!
