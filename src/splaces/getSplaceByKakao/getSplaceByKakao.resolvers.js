@@ -64,10 +64,7 @@ export default {
 
         //console.log(place)
 
-        var address_array = place.address_name.split(" ")
-        const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
-        const address = address_array[0] + " " + address_2
-
+      
         const b = await client.splace.create({
           data: {
             name: place.place_name,
@@ -75,7 +72,7 @@ export default {
             lat: place.y,
             lon: place.x,
             kakaoId,
-            address,
+            address: place.address_name,
             activate: true,
             intro: place.category_name
           }
