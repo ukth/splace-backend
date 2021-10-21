@@ -10,7 +10,7 @@ export default {
     ) => {
       try {
 
-        const reply = await redisClient.getAsync(phone)
+        const reply = await redisClient.get(phone)
 
         if(certificate!=reply){
           return {
