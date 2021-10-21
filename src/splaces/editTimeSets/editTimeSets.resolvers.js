@@ -80,7 +80,7 @@ export default {
             error: "ERROR5471"
           }
         }
-        const week = [mon, tue, wed, thr, fri, sat, sun]
+        const week = [sun, mon, tue, wed, thr, fri, sat]
 
         for (var i = 0; i < 7; i++) {
           const a = await updateTime(splaceId, i, week[i])
