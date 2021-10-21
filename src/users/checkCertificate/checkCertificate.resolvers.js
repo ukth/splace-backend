@@ -12,14 +12,14 @@ export default {
 
         console.log(redisClient.get(phone))
 
-        const key = redisClient.get(phone, function (err, reply) {
+        const reply = redisClient.get(phone, (err, reply) => {
           //console.log(err)
           console.log(reply)
           console.log(reply.toString())
           return reply.toString();
         });
 
-        if(certificate!=key){
+        if(certificate!=reply){
           return {
             ok: false,
             error: "ERROR1103"
