@@ -4,7 +4,7 @@ import redisClient from "../../redis"
 
 export default {
   Mutation: {
-    createAccount: async (
+    checkCertificate: async (
       _,
       { certificate, phone }
     ) => {
