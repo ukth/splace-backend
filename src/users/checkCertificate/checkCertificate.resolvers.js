@@ -13,7 +13,7 @@ export default {
       try {
         const getAsync = promisify(redisClient.get).bind(redisClient);
 
-        const reply = await redisClient.getAsync(phone)
+        const reply = await getAsync(phone)
 
         if(certificate!=reply){
           return {
