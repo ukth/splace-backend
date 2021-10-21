@@ -12,6 +12,7 @@ export default {
         const key = redisClient.get(phone, function (err, reply) {
           //console.log(err)
           console.log(reply)
+          console.log(reply.toString)
           return reply.toString();
         });
 
