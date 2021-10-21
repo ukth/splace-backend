@@ -52,6 +52,7 @@ export default {
             }
           }
         }
+        
         //console.log(email)
         if (email) {
           const existEmail = await client.user.findFirst({
@@ -67,6 +68,13 @@ export default {
                 error: "ERROR3102",
               };
             }
+          }
+        }
+
+        if((username && !validateUsername(username)) || (newPassword && !validatePassword(newPassword)) || (email && !validateEmail(email)) || (url && !validateUrl(url))){
+          return {
+            ok: false,
+            error: "ERROR1104"
           }
         }
 

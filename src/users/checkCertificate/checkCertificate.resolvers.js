@@ -1,42 +1,22 @@
 import bcrypt from "bcrypt";
 import client from "../../client";
+import redisClient from "../../redis"
 
 export default {
   Mutation: {
     createAccount: async (
       _,
-      { username, password, phone }
+      { certificate, phone }
     ) => {
       try {
-        const existingUser = await client.user.findFirst({
-          where: {
-            username
-          },
-        });
-        if (existingUser) {
+        const key = redisClient.get(phone)
+
+        if(certificate!=key){
           return {
             ok: false,
-            error: "ERROR3101"
+            error: "ERROR1103"
           }
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const a = await client.user.create({
-          data: {
-            username,
-            password: hashedPassword,
-            phone
-          },
-        });
-        const f = await client.folder.create({
-          data: {
-            members: {
-              connect: {
-                id: a.id
-              }
-            },
-            title: "저장된 항목"
-          }
-        })
         //console.log(a);
         return {
           ok: true,
@@ -45,7 +25,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "ERROR4101",
+          error: "ERROR4108",
         };
       }
     },
