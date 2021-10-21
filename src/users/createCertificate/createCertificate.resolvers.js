@@ -41,14 +41,15 @@ export default {
         }
         //redis
 
-        console.log(certificate)
+        //console.log(certificate)
 
         if(redisClient.exists(phone)){
           redisClient.del(phone);
         }
+
         redisClient.set(phone, certificate);
 
-        console.log(redisClient.exists(phone))
+        //console.log(redisClient.exists(phone))
 
         //send message
         const a = await send({

@@ -9,7 +9,11 @@ export default {
       { certificate, phone }
     ) => {
       try {
-        const key = await redisClient.get(phone)
+        const key = client.get(phone, function (err, reply) {
+          console.log(err)
+          console.log(reply)
+          return reply.toString();
+        });
 
         console.log(key)
 
