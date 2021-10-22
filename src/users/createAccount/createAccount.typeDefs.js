@@ -6,6 +6,7 @@ export default gql`
       username: String!
       password: String!
       phone: String!
+      certificate: String!
     ): defaultResult!
   }
 `;

@@ -9,7 +9,7 @@ export default gql`
       text: String
       splaceId: Int
       seriesIds: [Int]
-      categoryIds: [Int]
+      categories: [String]
       bigCategoryIds: [Int]
       specialTagIds: [Int]
       isPrivate: Boolean!

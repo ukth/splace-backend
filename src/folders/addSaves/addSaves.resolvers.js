@@ -1,7 +1,5 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
-import pubsub from "../../pubsub";
-import { FOLDER_UPDATE } from "../../constants";
 
 export default {
   Mutation: {
@@ -53,10 +51,21 @@ export default {
             }))
         });
 
-        //console.log(a);
+        const log = await client.editFolderLog.create({
+          data: {
+            target: {
+              connect: {
+                id: folderId
+              }
+            },
+            requestUser: {
+              connect: {
+                id: loggedInUser.id
+              }
+            }
+          }
+        })
 
-        pubsub.publish(FOLDER_UPDATE, { folderUpdated: { folder: ok, user: loggedInUser, state: "added" } });
-        //console.log(a);
         return {
           ok: true,
         };

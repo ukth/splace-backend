@@ -1,18 +1,10 @@
 import bcrypt from "bcrypt";
 import client from "../../client";
+import redisClient from "../../redis"
+const { promisify } = require('util');
 
 function validateUsername(text) {
   const exp = /^[0-9a-z._]*$/;
-  return exp.test(String(text).toLowerCase());
-};
-
-function validateUrl(text) {
-  const exp = /^[0-9a-z_\-.&?=:\/]*$/;
-  return exp.test(String(text).toLowerCase());
-};
-
-function validateEmail(text) {
-  const exp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
   return exp.test(String(text).toLowerCase());
 };
 
@@ -21,11 +13,18 @@ function validatePassword(text) {
   return exp.test(String(text).toLowerCase());
 };
 
+function validatePhone(text) {
+  const exp = /^01([0|1|6|7|8|9])?([0-9]{7,8})$/;
+  return exp.test(String(text).toLowerCase());
+};
+
+
+
 export default {
   Mutation: {
     createAccount: async (
       _,
-      { username, password, phone }
+      { username, password, phone, certificate }
     ) => {
       try {
         const existingUser = await client.user.findFirst({
@@ -39,6 +38,25 @@ export default {
             error: "ERROR3101"
           }
         }
+
+        if(!validateUsername(username) || !validatePassword(password) || !validatePhone(phone)) {
+          return {
+            ok: false,
+            error: "ERROR1104"
+          }
+        }
+
+        const getAsync = promisify(redisClient.get).bind(redisClient);
+
+        const reply = await getAsync(phone)
+
+        if(certificate!=reply){
+          return {
+            ok: false,
+            error: "ERROR1103"
+          }
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const a = await client.user.create({
           data: {

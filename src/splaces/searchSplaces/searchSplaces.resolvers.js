@@ -11,9 +11,9 @@ function toSearch(arr) {
 
 export default {
   Query: {
-    searchSplaces: async (_, { keyword, lat, long, distance, bigCategoryIds, specialTagIds, ratingTagIds }) => {
+    searchSplaces: async (_, { type, keyword, lat, long, distance, bigCategoryIds, specialTagIds, ratingTagIds }) => {
       try {
-        var index_name = "splace_search"
+        var index_name = type + "_search"
         var filter = new Array();
         if (bigCategoryIds) {
           filter.push({

@@ -2,13 +2,12 @@ import { gql } from "apollo-server";
 
 export default gql`
   type searchedSplace{
+    id: Int!
     address: String
     bigCategories : String
-    categories: String
-    intro : String
+    stringBC: String
     location: String!
     name : String!
-    ratingTags : String
     thumbnail: String
   }
   type searchSplacesResult {
@@ -18,6 +17,7 @@ export default gql`
   }
   type Query {
     searchSplaces(
+      type: String!
       keyword: String, 
       lat: Float,
       long: Float, 

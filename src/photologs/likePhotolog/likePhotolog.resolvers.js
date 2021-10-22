@@ -1,7 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
-import pubsub from "../../pubsub";
-import { NEW_LIKED } from "../../constants";
+
 
 export default {
   Mutation: {
@@ -10,16 +9,6 @@ export default {
       { photologId },
       { loggedInUser }
     ) => {
-      /*const isLiked = await client.photolog.findUnique({ where: { photologId } })
-      .likedUser({
-        where: { userId: loggedInUser.userId }
-      })
-      if(isLiked.length == 1){
-        return {
-          ok: false,
-          error: "you already liked this photolog"
-        }
-      }*/
       try {
         const b = await client.photolog.findUnique({
           where: {
@@ -44,7 +33,20 @@ export default {
             }
           },
         });
-        pubsub.publish(NEW_LIKED, { newLiked: { photolog: b, user: loggedInUser }})
+        const log = await client.likeLog.create({
+          data: {
+            target: {
+              connect: {
+                id: photologId
+              }
+            },
+            requestUser: {
+              connect: {
+                id: loggedInUser.id
+              }
+            }
+          }
+        })
         //console.log(a);
         return {
           ok: true,

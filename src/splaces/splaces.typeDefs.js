@@ -8,6 +8,7 @@ export default gql`
     lon: Float!     
     location: String!
     address: String
+    detailAddress: String
     opearatingTimes: [String]
     createdAt:  String!
     updatedAt: String!
@@ -16,7 +17,7 @@ export default gql`
     itemName: String
     itemPrice: Int
     menuUrls: [String]
-    hollydayBreak : Boolean!
+    holidayBreak : Boolean!
     ratingtags: [Ratingtag]
     categories: [Category]
     bigCategories: [BigCategory]

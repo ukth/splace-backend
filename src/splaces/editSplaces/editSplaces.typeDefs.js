@@ -8,7 +8,7 @@ export default gql`
       itemName: String
       itemPrice: Int
       menuUrls: [String]
-      categoryIds: [Int]
+      categories: [String]
       bigCategoryIds: [Int]
       specialTagIds: [Int]
       parking: Boolean
@@ -18,9 +18,7 @@ export default gql`
       thumbnail: String
       url: String
       phone: String
-      cNames: [String]
-      bcNames: [String]
-      stNames: [String]
+      detailAdress: String
     ): defaultResult!
   }
 `;

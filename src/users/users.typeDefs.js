@@ -28,6 +28,8 @@ export default gql`
     scrapedSeries: [ScrapedSeries]
     buyRaffleLogs: [BuyRaffleLog]
     activate: Boolean!
+    unreadChatExist: Boolean
+    preference: [Int]
   }
   
   type ScrapedLog {

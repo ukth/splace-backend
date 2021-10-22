@@ -1,10 +1,10 @@
-import { OpsWorks } from "aws-sdk";
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import searchEngine from "../../opensearch"
 
 function AtoS(arr) {
   var str = ""
-  for(var i = 0; i < arr.length; i++){
+  for (var i = 0; i < arr.length; i++) {
     str = str + arr[i] + ' '
   }
   return str
@@ -14,7 +14,7 @@ export default {
   Mutation: {
     editPhotolog: protectedResolver(async (
       _,
-      { photologId, title, imageUrls, photoSize, text, splaceId, categoryIds, bigCategoryIds, specialTagIds, isPrivate },
+      { photologId, text, isPrivate },
       { loggedInUser }
     ) => {
       try {
@@ -25,23 +25,6 @@ export default {
               id: loggedInUser.id
             }
           },
-          include: {
-            categories: {
-              select: {
-                id: true
-              }
-            },
-            bigCategories: {
-              select: {
-                id: true
-              }
-            },
-            specialtags: {
-              select: {
-                id: true
-              }
-            }
-          }
         });
         if (!ok) {
           return {
@@ -49,59 +32,91 @@ export default {
             error: "ERROR5212"
           };
         }
-        const a = await client.photolog.update({
+        const b = await client.photolog.update({
           where: {
             id: photologId
           },
           data: {
-            title,
-            imageUrls,
             text,
-            photoSize,
             isPrivate,
-            ...(splaceId != null && {
-              splace: {
-                disconnect: true,
-                connect: {
-                  id: splaceId
-                },
-              },
-            }),
-            ...(categoryIds != null && {
-              categories: {
-                disconnect: ok.categories.map(category => ({
-                  id: category.id
-                })),
-                connect: categoryIds.map(categoryId => ({
-                  id: categoryId
-                })),
-              },
-              stringC: AtoS(categoryIds)
-            }),
-            ...(bigCategoryIds != null && {
-              bigCategories: {
-                disconnect: ok.bigCategories.map(bigCategory => ({
-                  id: bigCategory.id
-                })),
-                connect: bigCategoryIds.map(bigCategoryId => ({
-                  id: bigCategoryId
-                })),
-              },
-              stringBC: AtoS(bigCategoryIds)
-            }),
-            ...(specialTagIds != null && {
-              specialtags: {
-                disconnect: ok.specialtags.map(specialTag => ({
-                  id: specialTag.id
-                })),
-                connect: specialTagIds.map(specialTagId => ({
-                  id: specialTagId
-                })),
-              },
-              stringST: AtoS(specialTagIds)
-            }),
           }
         });
+
+        if (b.splaceId && (ok.isPrivate == true && b.isPrivate == false)) {
+
+          const a = await client.splace.findFirst({
+            where: {
+              id: b.splaceId,
+              activate: true,
+            },
+            include: {
+              categories: true,
+              bigCategories: true,
+              specialtags: true,
+            }
+          })
+
+          if (a && b.isPrivate == false) {
+            const location = a.lat + ", " + a.lon
+            var index_name = "photolog_search"
+
+            const cNames = a.categories.map(category => category.name)
+            const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
+            const bigCategoryIds = a.bigCategories.map(bigCategory => bigCategory.id)
+            const stNames = a.specialtags.map(specialTag => specialTag.name)
+            const specialTagIds = a.specialtags.map(specialTag => specialTag.id)
+
+            var document = {
+              "id": photologId,
+              "name": a.name,
+              "address": a.address,
+              "location": location,
+              "intro": a.intro,
+              "thumbnail": b.imageUrls[0],
+              "noKids": a.noKids,
+              "pets": a.pets,
+              "parking": a.parking,
+              "categories": AtoS(cNames),
+              "stringBC": AtoS(bigCategoryIds),
+              "bigCategories": AtoS(bcNames),
+              "stringST": AtoS(specialTagIds),
+              "specialTags": AtoS(stNames)
+            }
+
+            var response = await searchEngine.create({
+              id: b.id,
+              index: index_name,
+              body: document
+            })
+
+            if (response.body.result != "created") {
+              return {
+                ok: false,
+                error: "ERROR4416"
+              }
+            }
+          }
+        }
+
+        if (b.splaceId && (ok.isPrivate == false && b.isPrivate == true)) {
+
+
+          var index_name = "photolog_search"
+          var response = await searchEngine.delete({
+            id: photologId,
+            index: index_name,
+          })
+
+          console.log(response.body.result);
+
+          if (response.body.result != "deleted") {
+            return {
+              ok: false,
+              error: "ERROR4419"
+            }
+          }
+        }
+
         //console.log(a);
         return {
           ok: true,

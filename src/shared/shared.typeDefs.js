@@ -36,4 +36,25 @@ export default gql`
     ok: Boolean!
     error: String
   }
+  type LikeLog {
+    id: Int!
+    target: Photolog!
+    requestUser: User!
+    createdAt: String!
+    updatedAt: String!
+  }
+  type EditFolderLog {
+    id: Int!
+    target: Folder!
+    requestUser: User!
+    createdAt: String!
+    updatedAt: String!
+  }
+  type FollowLog {
+    id: Int!
+    target: User!
+    requestUser: User!
+    createdAt: String!
+    updatedAt: String!
+  }
 `;

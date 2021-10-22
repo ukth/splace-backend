@@ -1,7 +1,12 @@
 import bcrypt from "bcrypt";
 import client from "../../client";
-//import redisClient from "../../redis"
+import redisClient from "../../redis"
 import send from "../../coolsms"
+
+function validatePhone(text) {
+  const exp = /^01([0|1|6|7|8|9])?([0-9]{7,8})$/;
+  return exp.test(String(text).toLowerCase());
+};
 
 export default {
   Mutation: {
@@ -22,32 +27,44 @@ export default {
           }
         }
 
-        const certificate = "";
+        if(!validatePhone(phone)){
+          return {
+            ok: false,
+            error: "ERROR1102"
+          }
+        }
 
-        for(var i = 0; i++; i<6) {
+        var certificate = "";
+
+        for(var i = 0; i<6; i++) {
           certificate += parseInt(Math.random() * 10);
         }
         //redis
 
-        console.log(certificate)
+        //console.log(certificate)
 
-        //redisClient.set(phone, certificate);
+        if(redisClient.exists(phone)){
+          redisClient.del(phone);
+        }
+
+        redisClient.set(phone, certificate);
+
+        //console.log(redisClient.exists(phone))
 
         //send message
-        const a = send({
+        const a = await send({
           messages: [
             {
-              to: '01000000001',
-              from: '029302266',
-              text: '한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 발송됩니다.'
+              to: phone,
+              from: '15330149',
+              text: "[Splace] 본인확인 인증번호는 [" + certificate + "]입니다"
             }
           ]
         })
 
-        console.log(a);
+        //console.log(a);
         return {
           ok: true,
-          certificate
         };
       } catch (e) {
         console.log(e);

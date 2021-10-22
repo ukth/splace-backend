@@ -1,6 +1,7 @@
 import client from "../../client";
 import searchEngine from "../../opensearch"
 import { protectedResolver } from "../../users/users.utils";
+import axios from "axios"
 
 function AtoS(arr) {
   var str = ""
@@ -14,7 +15,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categoryIds, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro, cNames, bcNames, stNames },
+      { detailAddress, splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categories, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro },
       { loggedInUser }
     ) => {
       try {
@@ -55,6 +56,7 @@ export default {
             id: splaceId
           },
           data: {
+            detailAddress,
             name,
             intro,
             noKids,
@@ -66,19 +68,23 @@ export default {
             phone,
             url,
             thumbnail,
-            ...(categoryIds != null && {
+            cNames,
+            bcNames,
+            stNames,
+            ...(categories != null && {
               categories: {
-                disconnect: previous.categories.map(category => ({
+                disconnect: ok.categories.map(category => ({
                   id: category.id
                 })),
-                connect: categoryIds.map(categoryId => ({
-                  id: categoryId
-                })),
+                connectOrCreate: categories.map(category => ({
+                  create: { name: category },
+                  where: { name: category }
+                }))
               },
             }),
             ...(bigCategoryIds != null && {
               bigCategories: {
-                disconnect: previous.bigCategories.map(bigCategory => ({
+                disconnect: ok.bigCategories.map(bigCategory => ({
                   id: bigCategory.id
                 })),
                 connect: bigCategoryIds.map(bigCategoryId => ({
@@ -88,7 +94,7 @@ export default {
             }),
             ...(specialTagIds != null && {
               specialtags: {
-                disconnect: previous.specialtags.map(specialTag => ({
+                disconnect: ok.specialtags.map(specialTag => ({
                   id: specialTag.id
                 })),
                 connect: specialTagIds.map(specialTagId => ({
@@ -96,28 +102,34 @@ export default {
                 })),
               },
             }),
-
+          },
+          include: {
+            categories: true,
+            bigCategories: true,
+            specialtags: true,
           }
         });
-
+        
         var index_name = "splace_search"
+        const cNames = a.categories.map(category => category.name)
+        const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
+        const bcIds = a.bigCategories.map(bigCategory => bigCategory.id)
+        const stNames = a.specialtags.map(specialTag => specialTag.name)
+        const stIds = a.specialtags.map(specialTag => specialTag.id)
 
         var document = {
           "doc": {
-            ...(name && { "name": name }),
-            ...(categoryIds && {
-              "categories": AtoS(cNames)
-            }),
-            ...(bigCategoryIds && {
-              "stringBC": AtoS(bigCategoryIds),
-              "bigCategories": AtoS(bcNames)
-            }),
-            ...(specialTagIds && {
-              "stringST": AtoS(specialTagIds),
-              "specialTags": AtoS(stNames)
-            }),
-            ...(intro && { "intro": intro }),
-            ...(thumbnail && { "thumbnail": thumbnail })
+            "name": a.name,
+            "categories": AtoS(cNames),
+            "stringBC": AtoS(bcIds),
+            "bigCategories": AtoS(bcNames),
+            "stringST": AtoS(stIds),
+            "specialTags": AtoS(stNames),
+            "intro": a.intro,
+            "thumbnail": a.thumbnail,
+            "nokids": a.noKids,
+            "parking": a.parking,
+            "pets": a.pets,
           }
         }
 
@@ -130,6 +142,7 @@ export default {
         })
 
         //console.log(response);
+        //console.log(response.body.result);
 
         if (response.body.result != "updated") {
           return {
@@ -137,6 +150,55 @@ export default {
             error: "ERROR4417"
           }
         }
+
+        const ids = await client.photolog.findMany({
+          where: {
+            splaceId,
+            isPrivate: false
+          },
+          select: {
+            id: true
+          }
+        })
+
+        for (var i = 0; i < ids.length; i++) {
+          const photologId = ids[i].id
+          //console.log(photologId)
+          index_name = "photolog_search"
+
+          var document = {
+            "doc": {
+              "name": a.name,
+              "categories": AtoS(cNames),
+              "stringBC": AtoS(bcIds),
+              "bigCategories": AtoS(bcNames),
+              "stringST": AtoS(stIds),
+              "specialTags": AtoS(stNames),
+              "intro": a.intro,
+              "nokids": a.noKids,
+              "parking": a.parking,
+              "pets": a.pets,
+            }
+          }
+
+          //console.log(ok.body.hits.hits[0]._id)
+
+          var response = await searchEngine.update({
+            id: photologId,
+            index: index_name,
+            body: document
+          })
+
+          //console.log(response.body.result)
+
+          if (response.body.result != "updated") {
+            return {
+              ok: false,
+              error: "ERROR4417"
+            }
+          }
+        }
+
 
         //console.log(a);
         return {
