@@ -73,8 +73,10 @@ app.get('/geocode', async (req, res) => {
     }
     //console.log(req)
     const keyword = req.query.keyword
+    const coordinate = req.query.coordinate
+    const url = coordinate != null ? "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword + "&coordinate=" +coordinate : "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword
     //console.log(keyword)
-    const geocode = await axios.get(encodeURI("https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword), headers)
+    const geocode = await axios.get(encodeURI(url), headers)
     //console.log(geocode.data)
     res.send(geocode.data)
   } catch (e) {

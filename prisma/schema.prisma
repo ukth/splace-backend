@@ -140,6 +140,7 @@ model Splace {
   lat Decimal? @db.Decimal(11,8)
   lon Decimal? @db.Decimal(11,8)
   address        String?   @db.VarChar(255)
+  detailAddress String? @db.VarChar(255)
   createdAt   DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   ownerId Int?

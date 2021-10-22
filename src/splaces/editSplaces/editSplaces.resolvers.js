@@ -1,6 +1,7 @@
 import client from "../../client";
 import searchEngine from "../../opensearch"
 import { protectedResolver } from "../../users/users.utils";
+import axios from "axios"
 
 function AtoS(arr) {
   var str = ""
@@ -14,7 +15,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categories, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro },
+      { detailAddress, splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categories, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro },
       { loggedInUser }
     ) => {
       try {
@@ -55,6 +56,7 @@ export default {
             id: splaceId
           },
           data: {
+            detailAddress,
             name,
             intro,
             noKids,

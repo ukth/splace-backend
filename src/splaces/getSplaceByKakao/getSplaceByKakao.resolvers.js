@@ -72,7 +72,7 @@ export default {
             lat: place.y,
             lon: place.x,
             kakaoId,
-            address: place.address_name,
+            address: place.road_address_name,
             activate: true,
             intro: place.category_name
           }
@@ -96,7 +96,7 @@ export default {
         const location = b.lat + ", " + b.lon
         var index_name = "splace_search"
 
-        var address_array = place.address_name.split(" ")
+        var address_array = place.road_address_name.split(" ")
         const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
         const address = address_array[0] + " " + address_2
 

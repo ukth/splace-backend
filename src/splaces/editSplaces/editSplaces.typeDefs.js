@@ -18,6 +18,7 @@ export default gql`
       thumbnail: String
       url: String
       phone: String
+      detailAdress: String
     ): defaultResult!
   }
 `;
