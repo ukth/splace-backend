@@ -8,6 +8,7 @@ export default gql`
     lon: Float!     
     location: String!
     address: String
+    detailAddress: String
     opearatingTimes: [String]
     createdAt:  String!
     updatedAt: String!
