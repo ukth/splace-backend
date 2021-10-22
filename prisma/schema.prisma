@@ -27,7 +27,8 @@ model User {
   lockedCredit  Int   @default(0)
   url          String?   @db.VarChar(255)
   phone        String?   @db.VarChar(255)
-  activate    Boolean   @default(true)  
+  activate    Boolean   @default(true)
+  preference  Int[]     
   
   followers      User[]     @relation("followRelation")
   
