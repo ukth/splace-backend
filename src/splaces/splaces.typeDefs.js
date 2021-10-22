@@ -38,6 +38,7 @@ export default gql`
     moments: [Moment]
     thumbnail: String
     raffles: [Raffle]
+    activate: Boolean!
   }
   type FixedContent {
     id: Int!

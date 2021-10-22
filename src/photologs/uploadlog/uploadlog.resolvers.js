@@ -18,6 +18,12 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        if(imageUrls.length == 0) {
+          return{
+            ok: false,
+            error: ERROR1213
+          }
+        }
         const b = await client.photolog.create({
           data: {
             author: {
@@ -92,11 +98,14 @@ export default {
             const bigCategoryIds = a.bigCategories.map(bigCategory => bigCategory.id)
             const stNames = a.specialtags.map(specialTag => specialTag.name)
             const specialTagIds = a.specialtags.map(specialTag => specialTag.id)
+            var address_array = a.address.split(" ")
+            const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
+            const address = address_array[0] + " " + address_2
 
             var document = {
               "id": b.id,
               "name": a.name,
-              "address": a.address,
+              "address": address,
               "location": location,
               "intro": a.intro,
               "thumbnail": b.imageUrls[0],

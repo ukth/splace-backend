@@ -1,4 +1,4 @@
-/*
+
 ErrorCode Rule
 
 ERROR _ _ _ _
@@ -137,6 +137,7 @@ ERROR _ _ _ _
   ERROR1211 "invalid request, cant hide itself"
   ERROR4216 "prisma issue for hide photlog"
   ERROR1212 "invalid request, cant like private photolog"
+  ERROR1213 "invalid request, image shold be > than 1"
   ERROR4217 "prisma issue for like photolog"
   ERROR5213 "only author can see private log"
   ERROR4218 "prisma issue cant see log"
@@ -200,5 +201,5 @@ ERROR _ _ _ _
   ERROR4241 "prisma issue for get photologs by splace"
   ERROR5472 "only root user can activate splace & splace already activated"
   ERROR4418 "prisma issue for activate splace"
-*/
+
 

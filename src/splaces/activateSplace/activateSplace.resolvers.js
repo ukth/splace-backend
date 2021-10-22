@@ -48,12 +48,15 @@ export default {
         }
 
         const location = a.lat + ", " + a.lon
+        var address_array = a.address.split(" ")
+        const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
+        const address = address_array[0] + " " + address_2
         var index_name = "splace_search"
 
         var document = {
-          "id" : a.id,
+          "id": a.id,
           "name": a.name,
-          "address": a.address,
+          "address": address,
           "location": location,
           "intro": a.intro,
         }
@@ -64,7 +67,7 @@ export default {
           body: document
         })
 
-        console.log(response); 
+        console.log(response);
 
         if (response.body.result != "created") {
           return {
@@ -72,6 +75,55 @@ export default {
             error: "ERROR4416"
           }
         }
+
+        const photologs = await client.photolog.findMany({
+          where: {
+            splaceId,
+            isPrivate: false
+          },
+          select: {
+            id: true,
+            imageUrls: true,
+          }
+        })
+
+        for (var i = 0; i < photologs.length; i++) {
+          const photolog = photologs[i]
+          //console.log(photologId)
+          index_name = "photolog_search"
+
+          var document = {
+            "doc": {
+              "id": photolog.id,
+              "thumbnail": photolog.imageUrls[0],
+              "location": location,
+              "address": address,
+              "name": a.name,
+              "intro": a.intro,
+              "nokids": a.noKids,
+              "parking": a.parking,
+              "pets": a.pets,
+            }
+          }
+
+          //console.log(ok.body.hits.hits[0]._id)
+
+          var response = await searchEngine.create({
+            id: photolog.id,
+            index: index_name,
+            body: document
+          })
+
+          //console.log(response.body.result)
+
+          if (response.body.result != "updated") {
+            return {
+              ok: false,
+              error: "ERROR4417"
+            }
+          }
+        }
+
 
         //console.log(a);
         return {
