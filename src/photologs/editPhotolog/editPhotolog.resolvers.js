@@ -110,8 +110,6 @@ export default {
             index: index_name,
           })
 
-          console.log(response.body.result);
-
           if (response.body.result != "deleted") {
             return {
               ok: false,
@@ -119,8 +117,6 @@ export default {
             }
           }
         }
-
-        //console.log(a);
         return {
           ok: true,
         };

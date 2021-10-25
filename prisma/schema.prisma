@@ -26,9 +26,12 @@ model User {
   credit       Int    @default(0)
   lockedCredit  Int   @default(0)
   url          String?   @db.VarChar(255)
-  phone        String?   @db.VarChar(255)
+  phone        String   @unique @db.VarChar(255)
   activate    Boolean   @default(true)
-  preference  Int[]     
+  preference  Int[]
+  noticeReaded DateTime @default(now())
+  marketingAgree Boolean @default(false)     
+
   
   followers      User[]     @relation("followRelation")
   
@@ -85,7 +88,6 @@ model User {
 
 model Photolog {
   id Int       @id @default(autoincrement())
-  title String @db.VarChar(255)
   imageUrls  String[]  @db.VarChar(255)
   photoSize  Int
   text       String?    @db.Text
@@ -124,6 +126,7 @@ model Series {
   createdAt DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   isPrivate Boolean @default(false)
+  order Int[]
   
   author      User       @relation(fields: [authorId], references: [id])
   authorId    Int
@@ -199,7 +202,7 @@ model TimeSet {
 model FixedContent {
   id Int      @id @default(autoincrement())
   title          String   @db.VarChar(255)
-  imageUrl       String?   @db.VarChar(255)
+  imageUrls       String[]   @db.VarChar(255)
   createdAt      DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   text           String?  @db.Text
@@ -462,6 +465,15 @@ model LikeLog {
   targetId Int
   requestUser User @relation("likeLogRelation", fields: [requestUserId], references: [id])
   requestUserId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notice {
+  id Int @id @default(autoincrement())
+  title String @db.VarChar(255)
+  imageUrls  String[]  @db.VarChar(255)
+  text       String[]    @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -2,6 +2,11 @@ import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
 
+function validateCategory(text) {
+  if(text.length < 1 || text.length > 30) return false
+  const exp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]*$/;
+  return exp.test(String(text).toLowerCase());
+};
 
 function AtoS(arr) {
   var str = ""
@@ -18,10 +23,18 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        if(imageUrls.length == 0) {
+        if(imageUrls.length == 0 || imageUrls.length > 8) {
           return{
             ok: false,
-            error: ERROR1213
+            error: "ERROR1213"
+          }
+        }
+        for(var i = 0; i<categories.length; i++){
+          if(!validateCategory(categories[i])) {
+            return {
+              ok: false,
+              error: "ERROR1214"
+            }
           }
         }
         const b = await client.photolog.create({

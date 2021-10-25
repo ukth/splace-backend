@@ -8,6 +8,12 @@ export default {
   Mutation: {
     sendMessage: protectedResolver(async (_, { chatroomId, text }, { loggedInUser }) => {
       try {
+        if(text.length < 1 && text.length > 1000){
+          return {
+            ok: false,
+            error: "ERROR1M18"
+          }
+        }
         const ok = await client.chatroom.findFirst({ 
           where: { 
             id: chatroomId,
@@ -18,15 +24,14 @@ export default {
             } 
           } 
         })
-        //console.log(ok)
+        
         if (!ok) {
           return {
             ok: false,
             error: "ERROR5M16"
           };
         }
-        /*const unreadMembers = await client.user.findMany({ where: { chatrooms: {some: { id: chatroomId } } } });
-        const unreadCount = unreadMembers.length */
+        
         const sendedMessage = await client.message.create({
           data: {
             text,
@@ -45,6 +50,23 @@ export default {
             author: true,
           },
         });
+
+        const updatedChatroom = await client.chatroom.update({
+          where:{
+            id: chatroomId
+          },
+          data: {
+            lastMessage: {
+              connect: {
+                id: sendedMessage.id
+              }
+            }
+          },
+          include: {
+            members: true,
+            lastMessage: true,
+          }
+        })
 
 
         const readedRecord = await client.chatroomReaded.findFirst({
@@ -75,27 +97,9 @@ export default {
             }
           },
         });
-        //console.log(updatedRecord);
 
-
-
-        const updatedChatroom = await client.chatroom.update({
-          where:{
-            id: chatroomId
-          },
-          data: {
-            lastMessage: {
-              connect: {
-                id: sendedMessage.id
-              }
-            }
-          },
-          include: {
-            members: true,
-            lastMessage: true,
-          }
-        })
-        // console.log(client);
+        
+        
         pubsub.publish(NEW_MESSAGE, { newMessage: { ...sendedMessage } });
         pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...updatedChatroom }})
         return {

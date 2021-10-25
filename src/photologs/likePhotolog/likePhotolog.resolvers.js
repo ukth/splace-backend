@@ -47,7 +47,6 @@ export default {
             }
           }
         })
-        //console.log(a);
         return {
           ok: true,
         };

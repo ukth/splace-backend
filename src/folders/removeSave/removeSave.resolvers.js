@@ -22,7 +22,6 @@ export default {
             members: true,
           } 
         })
-        //console.log(ok);
         if(!ok) {
           return {
             ok: false,

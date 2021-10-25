@@ -28,7 +28,6 @@ export default {
             id: momentsId,
           }
         });
-        //console.log(a);
         return {
           ok: true,
         };

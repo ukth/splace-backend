@@ -4,12 +4,13 @@ import redisClient from "../../redis"
 const { promisify } = require('util');
 
 function validateUsername(text) {
+  if (text.length < 1 || text.length > 30) return false
   const exp = /^[0-9a-z._]*$/;
   return exp.test(String(text).toLowerCase());
 };
 
 function validatePassword(text) {
-  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{8,}$/;
+  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{6,13}$/;
   return exp.test(String(text).toLowerCase());
 };
 
@@ -24,12 +25,19 @@ export default {
   Mutation: {
     createAccount: async (
       _,
-      { username, password, phone, certificate }
+      { username, password, phone, certificate, marketingAgree }
     ) => {
       try {
         const existingUser = await client.user.findFirst({
           where: {
-            username
+            OR: [
+              {
+                username
+              },
+              {
+                phone
+              }
+            ]
           },
         });
         if (existingUser) {
@@ -39,7 +47,7 @@ export default {
           }
         }
 
-        if(!validateUsername(username) || !validatePassword(password) || !validatePhone(phone)) {
+        if (!validateUsername(username) || !validatePassword(password) || !validatePhone(phone)) {
           return {
             ok: false,
             error: "ERROR1104"
@@ -50,7 +58,7 @@ export default {
 
         const reply = await getAsync(phone)
 
-        if(certificate!=reply){
+        if (certificate != reply) {
           return {
             ok: false,
             error: "ERROR1103"
@@ -62,7 +70,8 @@ export default {
           data: {
             username,
             password: hashedPassword,
-            phone
+            phone,
+            marketingAgree
           },
         });
         const f = await client.folder.create({
@@ -75,6 +84,51 @@ export default {
             title: "저장된 항목"
           }
         })
+
+
+        const memberIds = [a.id, 1]
+        const b = await client.chatroom.create({
+          data: {
+            title: "",
+            isPersonal: true,
+            members: {
+              connect: memberIds.map(memberId => ({
+                id: memberId
+              }))
+            }
+          },
+        });
+        for (var i = 0; i < memberIds.length; i++) {
+          const c = await client.chatroomReaded.create({
+            data: {
+              user: {
+                connect: {
+                  id: memberIds[i]
+                }
+              },
+              chatroom: {
+                connect: {
+                  id: a.id
+                }
+              }
+            }
+          })
+        }
+        const d = await client.chatroom.update({
+          where: {
+            id: a.id
+          },
+          data: {
+            title,
+          },
+          include: {
+            members: true,
+            lastMessage: true,
+          }
+        });
+
+        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...d } })
+
         //console.log(a);
         return {
           ok: true,

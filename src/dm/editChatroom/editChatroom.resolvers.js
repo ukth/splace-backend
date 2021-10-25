@@ -11,6 +11,12 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        if (title.length < 1 && title.length > 20) {
+          return {
+            ok: false,
+            error: "ERROR1M17"
+          }
+        }
         const ok = await client.chatroom.findFirst({
           where: {
             id: chatroomId,
@@ -42,7 +48,7 @@ export default {
 
         pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...a } })
 
-        //console.log(a);
+        
         return {
           ok: true,
         };

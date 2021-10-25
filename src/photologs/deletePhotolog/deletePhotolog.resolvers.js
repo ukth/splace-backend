@@ -1,5 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import searchEngine from "../../opensearch"
 
 export default {
   Mutation: {
@@ -17,8 +18,8 @@ export default {
             }
           }
         });
-        if(!a){
-          return{
+        if (!a) {
+          return {
             ok: false,
             error: "ERROR5211"
           }
@@ -28,7 +29,18 @@ export default {
             id: photologId,
           }
         });
-        //console.log(a);
+        var index_name = "photolog_search"
+        var response = await searchEngine.delete({
+          id: photologId,
+          index: index_name,
+        })
+
+        if (response.body.result != "deleted") {
+          return {
+            ok: false,
+            error: "ERROR4419"
+          }
+        }
         return {
           ok: true,
         };

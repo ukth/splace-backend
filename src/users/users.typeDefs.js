@@ -29,7 +29,9 @@ export default gql`
     buyRaffleLogs: [BuyRaffleLog]
     activate: Boolean!
     unreadChatExist: Boolean
+    unreadNoticeExist: Boolean
     preference: [Int]
+    marketingAgree: Boolean
   }
   
   type ScrapedLog {

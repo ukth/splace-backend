@@ -43,7 +43,7 @@ export default gql`
   type FixedContent {
     id: Int!
     title: String!
-    imageUrl: String
+    imageUrls: [String]
     createdAt: String!
     updatedAt: String!
     splace: Splace!
@@ -53,6 +53,7 @@ export default gql`
     id: Int!
     name: String!
     splaces: [Splace]
+    color: String
     createdAt: String!
     updatedAt: String!
   }

@@ -5,16 +5,6 @@ export default {
   Mutation: {
     hidePhotologs: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
       try {
-        /*const isFollowing = await client.user.findUnique({ where: { userId: loggedInUser.userId } })
-          .followings({
-            where: { userId: targetId }
-          })
-        if (isFollowing.length == 1) {
-          return {
-            ok: false,
-            error: "you already follow this user"
-          }
-        }*/
         const target = await client.photolog.findUnique({ where: { id: targetId } });
         if (!target) {
           return {
@@ -40,7 +30,6 @@ export default {
             }
           }
         });
-        // console.log(client);
         return {
           ok: true,
         };

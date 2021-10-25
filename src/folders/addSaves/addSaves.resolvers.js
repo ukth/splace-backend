@@ -19,8 +19,6 @@ export default {
             }
           },
         })
-
-        //console.log(ok);
         if (!ok) {
           return {
             ok: false,

@@ -6,7 +6,7 @@ export default gql`
       name: String!
       lat: Float!
       lon: Float!
-      address: String!
+      detailAddress: String
     ): defaultResult!
   }
 `;

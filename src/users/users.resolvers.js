@@ -97,6 +97,27 @@ export default {
         console.log(e)
         return null;
       }
+    },
+    unreadNoticeExist: async ({ id, noticeReaded}) => {
+      try {
+          const notice = await client.notice.findFirst({
+            where: {
+              userId: id
+            },
+            include: {
+              chatroom: true,
+            },
+            take: 1,
+            orderBy: {
+              updatedAt: "desc"
+            }
+          })
+          if(!notice) return false
+          return notice.createdAt > noticeReaded
+      } catch(e) {
+        console.log(e)
+        return null;
+      }
     }
   },
 };
