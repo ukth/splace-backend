@@ -5,6 +5,8 @@ export default gql`
     createContents (
       title: String!
       splaceId: Int!
+      text: String
+      imageUrls: [String]
     ): defaultResult!
   }
 `;

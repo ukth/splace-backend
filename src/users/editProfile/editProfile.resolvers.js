@@ -1,11 +1,16 @@
-import { createWriteStream } from "fs";
 import bcrypt from "bcrypt";
 import client from "../../client";
 import { protectedResolver } from "../users.utils";
 import dayjs from 'dayjs';
 
 function validateUsername(text) {
+  if(text.length < 1 || text.length > 30) return false
   const exp = /^[0-9a-z._]*$/;
+  return exp.test(String(text).toLowerCase());
+};
+
+function validatePassword(text) {
+  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{6,13}$/;
   return exp.test(String(text).toLowerCase());
 };
 
@@ -16,11 +21,6 @@ function validateUrl(text) {
 
 function validateEmail(text) {
   const exp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-  return exp.test(String(text).toLowerCase());
-};
-
-function validatePassword(text) {
-  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{8,}$/;
   return exp.test(String(text).toLowerCase());
 };
 
@@ -71,7 +71,7 @@ export default {
           }
         }
 
-        if((username && !validateUsername(username)) || (newPassword && !validatePassword(newPassword)) || (email && !validateEmail(email)) || (url && !validateUrl(url))){
+        if((name && name.length > 10) || (username && !validateUsername(username)) || (newPassword && !validatePassword(newPassword)) || (email && !validateEmail(email)) || (url && !validateUrl(url)) || (profileMessage && profileMessage.length > 1000)){
           return {
             ok: false,
             error: "ERROR1104"

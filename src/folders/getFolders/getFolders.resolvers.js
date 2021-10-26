@@ -26,7 +26,7 @@ export default {
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
-            updatedAt: "asc",
+            updatedAt: "desc",
           },
         })
         return {

@@ -38,11 +38,12 @@ export default gql`
     moments: [Moment]
     thumbnail: String
     raffles: [Raffle]
+    activate: Boolean!
   }
   type FixedContent {
     id: Int!
     title: String!
-    imageUrl: String
+    imageUrls: [String]
     createdAt: String!
     updatedAt: String!
     splace: Splace!
@@ -52,6 +53,7 @@ export default gql`
     id: Int!
     name: String!
     splaces: [Splace]
+    color: String
     createdAt: String!
     updatedAt: String!
   }

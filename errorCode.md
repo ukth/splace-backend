@@ -1,4 +1,4 @@
-/*
+
 ErrorCode Rule
 
 ERROR _ _ _ _
@@ -83,6 +83,7 @@ ERROR _ _ _ _
   ERROR5411 "only root user can create splace"
   ERROR4411 "prisma issue for crate splace"
   ERROR3451 "timeset exist, please use editTimeSet"
+  ERROR3411 "already owner exist"
   ERROR1451 "invalid request, timeset closetime is earlier than opentime"
   ERROR4451 "prisma issue for create Timeset"
   ERROR5412 "only root user can delete splace"
@@ -137,6 +138,8 @@ ERROR _ _ _ _
   ERROR1211 "invalid request, cant hide itself"
   ERROR4216 "prisma issue for hide photlog"
   ERROR1212 "invalid request, cant like private photolog"
+  ERROR1213 "invalid request, image shold be > than 1"
+  ERROR1214 "invalid category"
   ERROR4217 "prisma issue for like photolog"
   ERROR5213 "only author can see private log"
   ERROR4218 "prisma issue cant see log"
@@ -171,6 +174,8 @@ ERROR _ _ _ _
   ERROR1M14 "to create chatroom, please include yourself"
   ERROR1M15 "to create personal chattroom, member shold be 2"
   ERROR1M16 "to create group chat, member should be greater than 2"
+  ERROR1M17 "title length 0< x < 20
+  ERROR1M18 "messeage length 0 < x < 1000
   ERROR3M11 "personal chatroom already exist"
   ERROR4M12 "prisma issue for create chatroom"
   ERROR5M12 "only member can edit chatroom"
@@ -194,11 +199,13 @@ ERROR _ _ _ _
   ERROR1411 "kakaoId doesn't match with keyword"
   ERROR1412 "keyword not valid"
   ERROR1413 "lattitude and longitude sould be given at the same time"
+  ERROR1414 "lattitude and longitude invalid. more than 1 or 0 address"
   ERROR4416 "opensearch create falid"
   ERROR4417 "opensearch update faild"
   ERROR4419 "oepnsearch delete faild"
   ERROR4241 "prisma issue for get photologs by splace"
   ERROR5472 "only root user can activate splace & splace already activated"
+  ERROR5473 "1 hour left to edit splace"
   ERROR4418 "prisma issue for activate splace"
-*/
+
 

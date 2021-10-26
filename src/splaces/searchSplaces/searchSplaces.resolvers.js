@@ -11,7 +11,7 @@ function toSearch(arr) {
 
 export default {
   Query: {
-    searchSplaces: async (_, { type, keyword, lat, long, distance, bigCategoryIds, specialTagIds, ratingTagIds }) => {
+    searchSplaces: async (_, { lastId, type, keyword, lat, long, distance, bigCategoryIds, specialTagIds, ratingTagIds }) => {
       try {
         var index_name = type + "_search"
         var filter = new Array();
@@ -59,6 +59,8 @@ export default {
         }
 
         var query = {
+          "from": lastId,
+          "size": 20,
           "query": {
             "bool": {
               "filter": filter,

@@ -3,6 +3,7 @@ import multer from 'multer';
 import multerS3 from 'multer-s3';
 import aws from 'aws-sdk'
 import { getUser } from "./users/users.utils";
+const path = require('path');
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_AKEY,
@@ -10,7 +11,7 @@ const s3 = new aws.S3({
   region: process.env.AWS_REGION,
 });
 
-const upload = multer({
+const uploadPhoto = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'splace-proto',
@@ -24,6 +25,15 @@ const upload = multer({
         cb(null, loggedInUser.id + "_" + Date.now() + '.' + file.originalname); // 이름 설정
       }
     }
-  })
+  }),
+  limits: { fileSize: 10*1024*1024},
+  fileFilter: (req, file, cb) => {
+    console.log(path.extname(file.originalname).toLowerCase())
+    if (path.extname(file.originalname).toLowerCase() != '.png' && path.extname(file.originalname).toLowerCase() != '.jpg' && path.extname(file.originalname).toLowerCase() != '.jpeg') {
+     return cb(null, false);
+    }
+    return cb(null, true);
+   },
 }, 'NONE');
-export default upload;
+
+export default uploadPhoto;

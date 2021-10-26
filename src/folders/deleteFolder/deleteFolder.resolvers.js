@@ -19,7 +19,6 @@ export default {
             } 
           } 
         })
-        //console.log(ok);
         if(!ok) {
           return {
             ok: false,
@@ -31,7 +30,6 @@ export default {
             id: folderId
           }
         });
-        //console.log(a);
         return {
           ok: true,
         };

@@ -22,6 +22,9 @@ export default {
               {
                 authorId: loggedInUser.id,
               },
+              {
+                authorId: 1,
+              }
             ],
             NOT: [
               {
@@ -83,6 +86,12 @@ export default {
               },
               {
                 authorId: loggedInUser.id,
+                createdAt: {
+                  gt: lastCreated
+                },
+              },
+              {
+                authorId: 1,
                 createdAt: {
                   gt: lastCreated
                 },

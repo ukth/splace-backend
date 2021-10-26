@@ -7,6 +7,7 @@ export default gql`
       password: String!
       phone: String!
       certificate: String!
+      marketingAgree: Boolean!
     ): defaultResult!
   }
 `;

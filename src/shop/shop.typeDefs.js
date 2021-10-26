@@ -36,4 +36,12 @@ export default gql`
   
     buyLog: [BuyRaffleLog]
   }
+  type CreditGivenLog {
+    id: Int!
+    userId: Int!
+    credit: Int!
+    code: String   
+    createdAt: String!
+    updatedAt: String!
+  }
 `;

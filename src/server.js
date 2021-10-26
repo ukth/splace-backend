@@ -4,7 +4,8 @@ import logger from "morgan";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils";
-import upload from './multer';
+import uploadPhoto from './multerPhoto';
+import uploadVideo from './multerVideo';
 import http from "http";
 import axios from "axios";
 import depthLimit from 'graphql-depth-limit'
@@ -54,7 +55,12 @@ app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.post('/upload', upload.array('photos'), (req, res, next) => {
+app.post('/uploadphoto', uploadPhoto.array('photos', 16), (req, res, next) => {
+  console.log(req);
+  res.send(req.files);
+})
+
+app.post('/uploadvideo', uploadVideo.single('video'), (req, res, next) => {
   console.log(req);
   res.send(req.files);
 })

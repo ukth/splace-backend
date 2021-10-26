@@ -4,7 +4,7 @@ export default gql`
   type Mutation {
     uploadLog(
       title: String!
-      imageUrls: [String]
+      imageUrls: [String]!
       photoSize: Int!
       text: String
       splaceId: Int

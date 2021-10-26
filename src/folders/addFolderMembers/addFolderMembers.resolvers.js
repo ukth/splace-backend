@@ -17,7 +17,6 @@ export default {
         })
 
         const myfollowers = loggedInUser.followers.map(follower => follower.id)
-        //console.log(myfollowings);
         for(var i = 0; i<memberIds.length; i++){
           if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
             return {
@@ -27,7 +26,6 @@ export default {
           }
         }
 
-        //console.log(ok);
         if(!ok) {
           return {
             ok: false,
@@ -46,7 +44,6 @@ export default {
             }
           }
         });
-        // console.log(client);
         return {
           ok: true,
         };

@@ -2,8 +2,12 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Mutation {
-    deleteSplace(
+    getOwnerAuthority (
+      birtyDay: String!
       splaceId: Int!
+      corpNum: String!
+      name: String!
+      imageUrls: [String]
     ): defaultResult!
   }
 `;

@@ -17,8 +17,6 @@ export default {
             } 
           } 
         })
-        //console.log(pubsub);
-        //console.log(ok)
         if (!ok) {
           throw new Error("membership error");
         }

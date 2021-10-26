@@ -3,7 +3,6 @@ import { gql } from "apollo-server";
 export default gql`
   type Photolog {
     id: Int!   
-    title: String!
     imageUrls: [String]  
     photoSize: Int!
     text: String   

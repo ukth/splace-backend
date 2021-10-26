@@ -1,7 +1,12 @@
 import client from "../../client";
 import searchEngine from "../../opensearch"
 import { protectedResolver } from "../../users/users.utils";
-import axios from "axios"
+
+function validateCategory(text) {
+  if (text.length < 1 || text.length > 30) return false
+  const exp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]*$/;
+  return exp.test(String(text).toLowerCase());
+};
 
 function AtoS(arr) {
   var str = ""
@@ -19,10 +24,19 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        if (categories) {
+          for (var i = 0; i < categories.length; i++) {
+            if (!validateCategory(categories[i])) {
+              return {
+                ok: false,
+                error: "ERROR1214"
+              }
+            }
+          }
+        }
         const ok = await client.splace.findFirst({
           where: {
             id: splaceId,
-            ownerId: loggedInUser.id,
             activate: true,
           },
           include: {
@@ -49,8 +63,26 @@ export default {
             error: "ERROR5471"
           };
         }
-
-
+        if (ok.ownerId != loggedInUser.id && ok.ownerId != null) {
+          return {
+            ok: false,
+            error: "ERROR5471"
+          };
+        }
+        if (ok.ownerId == null && loggedInUser.authority != "editor") {
+          return {
+            ok: false,
+            error: "ERROR5471"
+          };
+        }
+        var day = new Date()
+        var update = new Date(ok.updatedAt)
+        if (ok.ownerId == null && day.getTime() - update.getTime() <= 3600000) {
+          return {
+            ok: false,
+            error: "ERROR5473"
+          }
+        }
         const a = await client.splace.update({
           where: {
             id: splaceId
@@ -109,7 +141,7 @@ export default {
             specialtags: true,
           }
         });
-        
+
         var index_name = "splace_search"
         const cNames = a.categories.map(category => category.name)
         const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
@@ -141,10 +173,10 @@ export default {
           body: document
         })
 
-        //console.log(response);
+        console.log(response);
         //console.log(response.body.result);
 
-        if (response.body.result != "updated") {
+        if (response.body.result != "updated" && response.body.result != "noop") {
           return {
             ok: false,
             error: "ERROR4417"
@@ -189,9 +221,9 @@ export default {
             body: document
           })
 
-          //console.log(response.body.result)
+          console.log(response)
 
-          if (response.body.result != "updated") {
+          if (response.body.result != "updated" && response.body.result != "noop") {
             return {
               ok: false,
               error: "ERROR4417"

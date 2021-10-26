@@ -5,11 +5,11 @@ export default {
   Mutation: {
     createContents: protectedResolver(async (
       _,
-      { title, splaceId },
+      { title, splaceId, text, imageUrls },
       { loggedInUser }
     ) => {
       try {
-        const previous = await client.splace.findUnique({ where: { id: splaceId } });
+        const previous = await client.splace.findFirst({ where: { id: splaceId, activate: true, } });
         if (previous.ownerId != loggedInUser.id) {
           return {
             ok: false,
@@ -23,7 +23,9 @@ export default {
               connect: {
                 id: splaceId
               }
-            }
+            },
+            text,
+            imageUrls
           },
         });
         //console.log(a);

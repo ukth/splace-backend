@@ -2,6 +2,11 @@ import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
 
+function validateCategory(text) {
+  if(text.length < 1 || text.length > 30) return false
+  const exp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]*$/;
+  return exp.test(String(text).toLowerCase());
+};
 
 function AtoS(arr) {
   var str = ""
@@ -18,6 +23,20 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        if(imageUrls.length == 0 || imageUrls.length > 8) {
+          return{
+            ok: false,
+            error: "ERROR1213"
+          }
+        }
+        for(var i = 0; i<categories.length; i++){
+          if(!validateCategory(categories[i])) {
+            return {
+              ok: false,
+              error: "ERROR1214"
+            }
+          }
+        }
         const b = await client.photolog.create({
           data: {
             author: {
@@ -92,11 +111,14 @@ export default {
             const bigCategoryIds = a.bigCategories.map(bigCategory => bigCategory.id)
             const stNames = a.specialtags.map(specialTag => specialTag.name)
             const specialTagIds = a.specialtags.map(specialTag => specialTag.id)
+            var address_array = a.address.split(" ")
+            const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
+            const address = address_array[0] + " " + address_2
 
             var document = {
               "id": b.id,
               "name": a.name,
-              "address": a.address,
+              "address": address,
               "location": location,
               "intro": a.intro,
               "thumbnail": b.imageUrls[0],

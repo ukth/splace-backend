@@ -3,22 +3,25 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    deleteSplace: protectedResolver(async (
+    quitOwner: protectedResolver(async (
       _,
       { splaceId },
       { loggedInUser }
     ) => {
       try {
-        if(loggedInUser.authority !== "root"){
+        const previous = await client.splace.findFirst({ where: { id: splaceId, activate: true, } });
+        if (previous.ownerId != loggedInUser.id) {
           return {
             ok: false,
-            error: "ERROR5412"
-          }
+            error: "ERROR5471"
+          };
         }
-        const a = await client.splace.delete({
-          where: {
-            id: splaceId
-          }
+        const a = await client.splace.update({
+          data: {
+            owner: {
+              disconnect: true,
+            }
+          },
         });
         //console.log(a);
         return {
@@ -28,9 +31,9 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "ERROR4412",
+          error: "ERROR4471",
         };
       }
     }),
-  },
+  }
 };
