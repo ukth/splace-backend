@@ -2,10 +2,11 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Mutation {
-    createContents (
-      title: String!
+    getOwnerAuthority (
+      birtyDay: String!
       splaceId: Int!
-      text: String
+      corpNum: String!
+      name: String!
       imageUrls: [String]
     ): defaultResult!
   }

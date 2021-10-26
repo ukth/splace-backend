@@ -77,7 +77,7 @@ export default {
         }
         var day = new Date()
         var update = new Date(ok.updatedAt)
-        if (day.getTime() - update.getTime() <= 3600000) {
+        if (ok.ownerId == null && day.getTime() - update.getTime() <= 3600000) {
           return {
             ok: false,
             error: "ERROR5473"

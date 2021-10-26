@@ -17,6 +17,7 @@ export default gql`
   }
   type Query {
     searchSplaces(
+      lastId: Int!
       type: String!
       keyword: String, 
       lat: Float,

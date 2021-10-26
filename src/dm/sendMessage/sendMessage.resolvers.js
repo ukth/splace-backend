@@ -22,6 +22,9 @@ export default {
                 id: loggedInUser.id
               }
             } 
+          },
+          include: {
+            members: true,
           } 
         })
         
@@ -30,6 +33,14 @@ export default {
             ok: false,
             error: "ERROR5M16"
           };
+        }
+        
+        const check = ok.members.filter(member => member.id == 1)
+        if(check.length != 0) {
+          return {
+            ok: false,
+            error: "ERROR1M12"
+          }
         }
         
         const sendedMessage = await client.message.create({

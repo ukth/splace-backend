@@ -3,28 +3,28 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    createContents: protectedResolver(async (
+    getOwnerAuthority: protectedResolver(async (
       _,
-      { title, splaceId, text, imageUrls },
+      { birthDay, splaceId, corpNum, name, imageUrls },
       { loggedInUser }
     ) => {
       try {
+        const BDay = dayjs(parseInt(birthDay))
+        birthDay = BDay.format()
         const previous = await client.splace.findFirst({ where: { id: splaceId, activate: true, } });
-        if (previous.ownerId != loggedInUser.id) {
+        if (previous.ownerId) {
           return {
             ok: false,
-            error: "ERROR5471"
+            error: "ERROR3411"
           };
         }
-        const a = await client.fixedContent.create({
+        const a = await client.ownerInfo.create({
           data: {
-            title,
-            splace: {
-              connect: {
-                id: splaceId
-              }
-            },
-            text,
+            userId: loggedInUser.id,
+            splaceId,
+            corpNum,
+            birthDay,
+            name,
             imageUrls
           },
         });

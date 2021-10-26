@@ -3,9 +3,9 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    createContents: protectedResolver(async (
+    quitOwner: protectedResolver(async (
       _,
-      { title, splaceId, text, imageUrls },
+      { splaceId },
       { loggedInUser }
     ) => {
       try {
@@ -16,16 +16,11 @@ export default {
             error: "ERROR5471"
           };
         }
-        const a = await client.fixedContent.create({
+        const a = await client.splace.update({
           data: {
-            title,
-            splace: {
-              connect: {
-                id: splaceId
-              }
-            },
-            text,
-            imageUrls
+            owner: {
+              disconnect: true,
+            }
           },
         });
         //console.log(a);

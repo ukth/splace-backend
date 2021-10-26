@@ -55,7 +55,7 @@ app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.post('/uploadphoto', uploadPhoto.array('photos', 8), (req, res, next) => {
+app.post('/uploadphoto', uploadPhoto.array('photos', 16), (req, res, next) => {
   console.log(req);
   res.send(req.files);
 })

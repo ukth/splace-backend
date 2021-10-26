@@ -83,6 +83,7 @@ ERROR _ _ _ _
   ERROR5411 "only root user can create splace"
   ERROR4411 "prisma issue for crate splace"
   ERROR3451 "timeset exist, please use editTimeSet"
+  ERROR3411 "already owner exist"
   ERROR1451 "invalid request, timeset closetime is earlier than opentime"
   ERROR4451 "prisma issue for create Timeset"
   ERROR5412 "only root user can delete splace"
