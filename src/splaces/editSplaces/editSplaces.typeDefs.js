@@ -13,7 +13,7 @@ export default gql`
       specialTagIds: [Int]
       parking: Boolean
       pets: Boolean
-      kids: Boolean
+      noKids: Boolean
       intro: String
       thumbnail: String
       url: String

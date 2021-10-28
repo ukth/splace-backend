@@ -45,6 +45,7 @@ export default gql`
     title: String!
     imageUrls: [String]
     createdAt: String!
+    photoSize: Int!
     updatedAt: String!
     splace: Splace!
     text: String

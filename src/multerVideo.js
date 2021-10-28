@@ -14,7 +14,7 @@ const s3 = new aws.S3({
 const uploadVideo = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'splace-proto',
+    bucket: 'splace-video',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: async (req, file, cb) => {

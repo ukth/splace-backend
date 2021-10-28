@@ -6,6 +6,7 @@ export default gql`
       title: String
       text: String
       fixedContentId: Int!
+      splaceId: Int!
     ): defaultResult!
   }
 `;
