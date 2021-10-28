@@ -51,7 +51,11 @@ export default {
             specialtags: true,
             splace: true,
             author: true,
-            series: true,
+            seriesElements: {
+              include: {
+                series: true
+              }
+            },
             likedUser: true,
           },
           take: 3,
@@ -118,7 +122,11 @@ export default {
           },
           include: {
             author: true,
-            photologs: true,
+            seriesElements: {
+              include: {
+                photolog: true
+              }
+            }
           },
           ...(lastSeriesId && { cursor: { id: lastSeriesId } }),
           skip: lastSeriesId ? 1 : 0,

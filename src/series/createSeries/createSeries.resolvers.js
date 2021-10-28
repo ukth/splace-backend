@@ -9,6 +9,12 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        if(title.length<1 && title.length<31){
+          return {
+            ok: false,
+            error: "ERROR1311"
+          }
+        }
         const a = await client.series.create({
           data: {
             title,

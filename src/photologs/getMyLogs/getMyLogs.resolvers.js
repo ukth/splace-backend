@@ -15,7 +15,11 @@ export default {
             bigCategories: true,
             splace: true,
             author: true,
-            series: true,
+            seriesElements: {
+              include: {
+                sereis: true
+              }
+            },
             likedUser: true,
             specialtags: true,
           },

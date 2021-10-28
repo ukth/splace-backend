@@ -7,6 +7,7 @@ export default gql`
       splaceId: Int!
       text: String
       imageUrls: [String]
+      photoSize: Int!
     ): defaultResult!
   }
 `;

@@ -5,7 +5,7 @@ export default {
   Mutation: {
     editContents: protectedResolver(async (
       _,
-      { title, imageUrl, text, splaceId, fixedContentId },
+      { title, text, fixedContentId },
       { loggedInUser }
     ) => {
       try {
@@ -20,7 +20,6 @@ export default {
           where: { id: fixedContentId },
           data: {
             title,
-            imageUrl,
             text,
           },
         });

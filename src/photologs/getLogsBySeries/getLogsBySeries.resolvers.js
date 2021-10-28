@@ -6,31 +6,9 @@ export default {
   Query: {
     getLogsBySeries: protectedResolver(async (_, { seriesId, lastId }, { loggedInUser }) => {
       try {
-        const logs = await client.series.findFirst({ 
-          where: { 
-            id: seriesId,
-            isPrivate: false,
-            NOT: [
-              {
-                author: {
-                  blockingUser: {
-                    some: {
-                      id: loggedInUser.id
-                    }
-                  }
-                },
-              },
-              {
-                hiddenUsers: {
-                  some: {
-                    id: loggedInUser.id
-                  }
-                }
-              },
-            ] 
-          } 
-        }).photologs({
+        const ok = await client.series.findFirst({
           where: {
+            id: seriesId,
             NOT: [
               {
                 author: {
@@ -49,25 +27,46 @@ export default {
                 }
               },
             ]
+          }
+        })
+        if (ok.isPrivate && ok.authorId != loggedInUser.id) {
+          return {
+            ok: false,
+            error: "ERROR####"
+          }
+        }
+
+        const seriesElements = await client.seriesElement.findMany({
+          where: {
+            seriesId,
+            ...(loggedInUser.id != ok.authorId && { photolog: { isPrivate: false } })
           },
           include: {
-            splace: true,
-            categories: true,
-            bigCategories: true,
-            specialtags: true,
-            author: true,
-            series: true,
+            photolog: {
+              include: {
+                splace: true,
+                categories: true,
+                bigCategories: true,
+                specialtags: true,
+                author: true,
+                seriesElements: {
+                  include: {
+                    series: true
+                  }
+                },
+              }
+            },
           },
-          take: 5,
+          take: 10,
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
-            createdAt: "asc",
-          },
+            order: "asc"
+          }
         })
         return {
           ok: true,
-          logs: logs
+          seriesElements
         };
       } catch (e) {
         console.log(e)

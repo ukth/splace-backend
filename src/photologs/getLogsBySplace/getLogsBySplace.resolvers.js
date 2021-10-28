@@ -43,7 +43,11 @@ export default {
               bigCategories: true,
               specialtags: true,
               author: true,
-              series: true,
+              seriesElements: {
+                include: {
+                  series: true
+                }
+              },
             },
             take: 5,
             ...(lastId && { cursor: { id: lastId } }),
@@ -83,7 +87,11 @@ export default {
               bigCategories: true,
               specialtags: true,
               author: true,
-              series: true,
+              seriesElements: {
+                include: {
+                  series: true,
+                }
+              }
             },
             take: 5,
             ...(lastId && { cursor: { id: lastId } }),

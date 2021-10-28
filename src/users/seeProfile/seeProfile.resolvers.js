@@ -15,6 +15,7 @@ export default {
             url: true,
             joinedAt: true,
             updatedAt: true,
+            authority: true,
           }
         })
         if(!profile){

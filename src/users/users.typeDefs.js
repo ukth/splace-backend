@@ -12,7 +12,8 @@ export default gql`
     folders: [Folder]
     birthDay: String
     joinedAt:       String!
-    updatedAt:      String!  
+    updatedAt:      String!
+    authority: String!  
     followers:      [User]     
     followings:     [User]     
     photologs:      [Photolog]

@@ -89,7 +89,7 @@ model User {
 model Photolog {
   id Int       @id @default(autoincrement())
   imageUrls  String[]  @db.VarChar(255)
-  photoSize  Int
+  photoSize  Int  @default(0)
   text       String?    @db.Text
   createdAt  DateTime  @default(now())
   updatedAt      DateTime   @updatedAt
@@ -101,7 +101,7 @@ model Photolog {
   splace     Splace?    @relation(fields: [splaceId], references: [id])
   splaceId   Int?
   
-  series     Series[]    @relation("seriesRelation")
+  seriesElements     SeriesElement[]
   
   categories   Category[]
 
@@ -126,16 +126,28 @@ model Series {
   createdAt DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   isPrivate Boolean @default(false)
-  order Int[]
   
   author      User       @relation(fields: [authorId], references: [id])
   authorId    Int
+
+  seriesElements SeriesElement[]
   
   scrap ScrapedSeries[]
 
-  photologs Photolog[]   @relation("seriesRelation")
-
   hiddenUsers  User[]   @relation("hiddenSeriesRelation")
+}
+
+model SeriesElement {
+  id    Int      @id @default(autoincrement())
+  order Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  photolog    Photolog   @relation(fields: [photologId], references: [id])
+  photologId  Int
+  
+  series Series @relation(fields: [seriesId], references: [id])
+  seriesId Int  
 }
 
 model Splace {
@@ -203,6 +215,7 @@ model FixedContent {
   id Int      @id @default(autoincrement())
   title          String   @db.VarChar(255)
   imageUrls       String[]   @db.VarChar(255)
+  photoSize Int @default(0)
   createdAt      DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   text           String?  @db.Text
@@ -484,7 +497,7 @@ model OwnerInfo {
   splaceId Int 
   name String @db.VarChar(255)
   corpNum String @db.VarChar(255)
-  birthday DateTime
+  birthDay DateTime
   imageUrls String[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -495,6 +508,15 @@ model CreditGivenLog {
   userId Int
   credit Int
   code String @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model SplaceRating {
+  id Int @id @default(autoincrement())
+  userId Int
+  splaceId Int
+  rating Int
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
 }

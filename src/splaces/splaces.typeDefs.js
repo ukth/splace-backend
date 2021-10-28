@@ -69,4 +69,12 @@ export default gql`
     createdAt: String!
     updatedAt: String!
   }
+  type SplaceRating {
+    id: Int!
+    userId: Int!
+    splaceId: Int!
+    rating: Int!
+    createdAt: String!
+    updatedAt: String!
+  }
 `;

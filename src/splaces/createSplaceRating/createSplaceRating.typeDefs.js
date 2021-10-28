@@ -2,12 +2,9 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Mutation {
-    getOwnerAuthority (
-      birthDay: String!
+    createSplaceRating (
       splaceId: Int!
-      corpNum: String!
-      name: String!
-      imageUrls: [String]
+      rating: Int!
     ): defaultResult!
   }
 `;

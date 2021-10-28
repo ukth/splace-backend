@@ -12,7 +12,7 @@ export default gql`
     isILiked: Boolean
     author: User!
     splace: Splace  
-    series: [Series]
+    seriesElements: [SeriesElement]
     categories: [Category]
     bigCategories: [BigCategory]
     specialtags: [Specialtag]

@@ -80,7 +80,7 @@ app.get('/geocode', async (req, res) => {
     //console.log(req)
     const keyword = req.query.keyword
     const coordinate = req.query.coordinate
-    const url = coordinate != null ? "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword + "&coordinate=" +coordinate : "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword
+    const url = coordinate != null ? "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword + "&coordinate=" + coordinate : "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword
     //console.log(keyword)
     const geocode = await axios.get(encodeURI(url), headers)
     //console.log(geocode.data)
@@ -107,6 +107,28 @@ app.get('/reversegeocode', async (req, res) => {
     const reverseGeocode = await axios.get(encodeURI("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr&output=json&coords=" + lon + "," + lat), headers);
     //console.log(reverseGeocode.data)
     res.send(reverseGeocode.data)
+  } catch (e) {
+    console.log(e)
+    return null;
+  }
+})
+
+app.get('/keyword', async (req, res) => {
+  try {
+    const auth = process.env.KAKAO_AUTH
+    const keyword = req.query.keyword
+    const x = req.query.x
+    const y = req.query.y
+
+    const headers = {
+      "headers": {
+        "Authorization": auth
+      }
+    }
+    var url = (x != null && y != null) ? "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword + "&x=" + x + "&y=" + y: "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword
+    var places = await axios.get(encodeURI(url), headers)
+    //console.log(reverseGeocode.data)
+    res.send(places.data)
   } catch (e) {
     console.log(e)
     return null;

@@ -19,7 +19,7 @@ export default {
   Mutation: {
     uploadLog: protectedResolver(async (
       _,
-      { title, imageUrls, photoSize, text, splaceId, isPrivate, categories, bigCategoryIds, specialTagIds, seriesIds },
+      { imageUrls, photoSize, text, splaceId, isPrivate, categories, bigCategoryIds, specialTagIds, seriesIds },
       { loggedInUser }
     ) => {
       try {
@@ -27,6 +27,18 @@ export default {
           return{
             ok: false,
             error: "ERROR1213"
+          }
+        }
+        if(categories.length > 10){
+          return{
+            ok: false,
+            error: "ERROR1215"
+          }
+        }
+        if(seriesIds.length > 10){
+          return {
+            ok: false,
+            error: "ERROR1216"
           }
         }
         for(var i = 0; i<categories.length; i++){
@@ -37,6 +49,7 @@ export default {
             }
           }
         }
+
         const b = await client.photolog.create({
           data: {
             author: {
@@ -44,7 +57,6 @@ export default {
                 id: loggedInUser.id
               }
             },
-            title,
             imageUrls,
             text,
             isPrivate,
@@ -55,13 +67,6 @@ export default {
                   id: splaceId
                 }
               },
-            }),
-            ...(seriesIds != null && {
-              series: {
-                connect: seriesIds.map(seriesId => ({
-                  id: seriesId
-                }))
-              }
             }),
             ...(categories != null && {
               categories: {
@@ -87,6 +92,45 @@ export default {
             }),
           },
         });
+
+        for(var i = 0; i<seriesIds.length; i++){
+          const series = await client.series.findFirst({
+            where: {
+              id: seriesIds[i]
+            },
+            include: {
+              seriesElements: true
+            }
+          })
+          if(series.seriesElements.length > 98){
+            return {
+              ok: false,
+              error: "ERROR####"
+            }
+          }
+        }
+
+        for(var i = 0; i<seriesIds.length; i++){
+          const series = await client.series.findFirst({
+            where: {
+              id: seriesIds[i]
+            },
+            include: {
+              seriesElements: true
+            }
+          })
+          const element = await client.seriesElement.create({
+            data: {
+              order: series.seriesElements.length+1,
+              photolog: {
+                id: b.id
+              },
+              sereis: {
+                id: series.id
+              }
+            }
+          })
+        }
 
 
         if (splaceId) {
