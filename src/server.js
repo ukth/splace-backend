@@ -127,7 +127,9 @@ const PORT = process.env.PORT;
     { server: httpServer, path: '/graphql' },
   );
 
-  /*plugins: [{
+  var server = new ApolloServer({
+    schema,
+    plugins: [{
       async serverWillStart() {
         return {
           async drainServer() {
@@ -135,10 +137,7 @@ const PORT = process.env.PORT;
           }
         };
       }
-    }],*/
-  
-  var server = new ApolloServer({
-    schema,
+    }],
     context: async (ctx) => {
       if (ctx.req) {
         return {

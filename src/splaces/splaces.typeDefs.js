@@ -39,6 +39,7 @@ export default gql`
     thumbnail: String
     raffles: [Raffle]
     activate: Boolean!
+    isSaved: Boolean!
   }
   type FixedContent {
     id: Int!

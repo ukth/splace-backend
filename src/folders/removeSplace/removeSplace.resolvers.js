@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    removeSave: protectedResolver(async (
+    removeSplace: protectedResolver(async (
       _,
       { splaceId },
       { loggedInUser }

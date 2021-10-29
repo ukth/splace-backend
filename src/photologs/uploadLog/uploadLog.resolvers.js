@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
 
 function validateCategory(text) {
-  if(text.length < 1 || text.length > 30) return false
+  if (text.length < 1 || text.length > 30) return false
   const exp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]*$/;
   return exp.test(String(text).toLowerCase());
 };
@@ -19,33 +19,38 @@ export default {
   Mutation: {
     uploadLog: protectedResolver(async (
       _,
-      { imageUrls, photoSize, text, splaceId, isPrivate, categories, bigCategoryIds, specialTagIds, seriesIds },
+      { imageUrls, photoSize, text, splaceId, isPrivate, categories, bigCategoryIds, seriesIds },
       { loggedInUser }
     ) => {
       try {
-        if(imageUrls.length == 0 || imageUrls.length > 8) {
-          return{
+        if (imageUrls.length == 0 || imageUrls.length > 8) {
+          return {
             ok: false,
             error: "ERROR1213"
           }
         }
-        if(categories.length > 10){
-          return{
-            ok: false,
-            error: "ERROR1215"
-          }
-        }
-        if(seriesIds.length > 10){
-          return {
-            ok: false,
-            error: "ERROR1216"
-          }
-        }
-        for(var i = 0; i<categories.length; i++){
-          if(!validateCategory(categories[i])) {
+
+        if (seriesIds) {
+          if (seriesIds.length > 10) {
             return {
               ok: false,
-              error: "ERROR1214"
+              error: "ERROR1216"
+            }
+          }
+        }
+        if (categories) {
+          if (categories.length > 10) {
+            return {
+              ok: false,
+              error: "ERROR1215"
+            }
+          }
+          for (var i = 0; i < categories.length; i++) {
+            if (!validateCategory(categories[i])) {
+              return {
+                ok: false,
+                error: "ERROR1214"
+              }
             }
           }
         }
@@ -83,55 +88,49 @@ export default {
                 })),
               },
             }),
-            ...(specialTagIds != null && {
-              specialtags: {
-                connect: specialTagIds.map(specialTagId => ({
-                  id: specialTagId
-                })),
-              },
-            }),
           },
         });
 
-        for(var i = 0; i<seriesIds.length; i++){
-          const series = await client.series.findFirst({
-            where: {
-              id: seriesIds[i]
-            },
-            include: {
-              seriesElements: true
-            }
-          })
-          if(series.seriesElements.length > 98){
-            return {
-              ok: false,
-              error: "ERROR####"
-            }
-          }
-        }
-
-        for(var i = 0; i<seriesIds.length; i++){
-          const series = await client.series.findFirst({
-            where: {
-              id: seriesIds[i]
-            },
-            include: {
-              seriesElements: true
-            }
-          })
-          const element = await client.seriesElement.create({
-            data: {
-              order: series.seriesElements.length+1,
-              photolog: {
-                id: b.id
+        if (seriesIds) {
+          for (var i = 0; i < seriesIds.length; i++) {
+            const series = await client.series.findFirst({
+              where: {
+                id: seriesIds[i]
               },
-              sereis: {
-                id: series.id
+              include: {
+                seriesElements: true
+              }
+            })
+            if (series.seriesElements.length > 98) {
+              return {
+                ok: false,
+                error: "ERROR####"
               }
             }
-          })
-        }
+          }
 
+          for (var i = 0; i < seriesIds.length; i++) {
+            const series = await client.series.findFirst({
+              where: {
+                id: seriesIds[i]
+              },
+              include: {
+                seriesElements: true
+              }
+            })
+            const element = await client.seriesElement.create({
+              data: {
+                order: series.seriesElements.length + 1,
+                photolog: {
+                  id: b.id
+                },
+                sereis: {
+                  id: series.id
+                }
+              }
+            })
+          }
+        }
 
         if (splaceId) {
           const a = await client.splace.findFirst({
@@ -142,7 +141,6 @@ export default {
             include: {
               categories: true,
               bigCategories: true,
-              specialtags: true,
             }
           })
 
@@ -153,8 +151,6 @@ export default {
             const cNames = a.categories.map(category => category.name)
             const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
             const bigCategoryIds = a.bigCategories.map(bigCategory => bigCategory.id)
-            const stNames = a.specialtags.map(specialTag => specialTag.name)
-            const specialTagIds = a.specialtags.map(specialTag => specialTag.id)
             var address_array = a.address.split(" ")
             const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
             const address = address_array[0] + " " + address_2
@@ -172,8 +168,6 @@ export default {
               "categories": AtoS(cNames),
               "stringBC": AtoS(bigCategoryIds),
               "bigCategories": AtoS(bcNames),
-              "stringST": AtoS(specialTagIds),
-              "specialTags": AtoS(stNames)
             }
 
             var response = await searchEngine.create({

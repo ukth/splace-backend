@@ -15,6 +15,23 @@ export default {
         return null;
       }
     },
+    isSaved: async ({ id }, _, { loggedInUser }) => {
+      try {
+        const save = await client.save.findFirst({
+          where: {
+            splace: {
+              id
+            },
+            savedUser: {
+              id: loggedInUser.id
+            }
+          }
+        })
+        return Boolean(save)
+      } catch {
+        return false
+      }
+    },
     /*isMine: ({ authorId }, _, { loggedInUser }) => {
       if (!loggedInUser) {
         return false;
