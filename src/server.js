@@ -108,9 +108,37 @@ const PORT = process.env.PORT;
   const httpServer = http.createServer(app);
 
   const schema = makeExecutableSchema({ typeDefs, resolvers })
-  
+
+
+  const subscriptionServer = SubscriptionServer.create(
+    {
+      schema,
+      execute,
+      subscribe,
+      onConnect: async ({ token }) => {
+        if (!token) {
+          throw new Error("please login to listen.");
+        }
+        const loggedInUser = await getUser(token);
+        return {
+          loggedInUser,
+        };
+      },
+    },
+    { server: httpServer, path: '/graphql' },
+  );
+
   var server = new ApolloServer({
     schema,
+    plugins: [{
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            subscriptionServer.close();
+          }
+        };
+      }
+    }],
     context: async (ctx) => {
       if (ctx.req) {
         return {
@@ -125,37 +153,11 @@ const PORT = process.env.PORT;
         }
       }
     },
-    subscriptions: {
-      onConnect: async ({ token }) => {
-        if (!token) {
-          throw new Error("please login to listen.");
-        }
-        const loggedInUser = await getUser(token);
-        return {
-          loggedInUser,
-        };
-      },
-    },
     formatError: (err) => {
       console.log(err);
     },
     validationRules: [depthLimit(8)]
   });
-
-  const subscriptionServer = SubscriptionServer.create(
-    { schema, execute, subscribe },
-    { server: httpServer, path: server.graphqlPath }
-  );
-
-  server.plugins =  [{
-    async serverWillStart() {
-      return {
-        async drainServer() {
-          subscriptionServer.close();
-        }
-      };
-    }
-  }]
 
   await server.start()
   server.applyMiddleware({ app });
