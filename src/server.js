@@ -114,11 +114,11 @@ const PORT = process.env.PORT;
       schema,
       execute,
       subscribe,
-      onConnect: async (connectionParams, webSocket) => {
-        if (!connectionParams.token) {
+      onConnect: async ({ token }) => {
+        if (!token) {
           throw new Error("please login to listen.");
         }
-        const loggedInUser = await getUser(connectionParams.token);
+        const loggedInUser = await getUser(token);
         return {
           loggedInUser,
         };
