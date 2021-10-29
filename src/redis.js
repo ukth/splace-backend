@@ -17,7 +17,7 @@ var redisClient = new Redis.Cluster(nodes, {
   },
   redisOptions: {
     tls: true,
-    password.
+    password
 	},
   clusterRetryStrategy: (times) => {
     const ms = Math.min(100 * times, 2000);
