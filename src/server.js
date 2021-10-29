@@ -18,7 +18,7 @@ const PORT = process.env.PORT;
   const app = express();
   var helmet = require('helmet')
 
-  //app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') ? undefined : false }))
+  app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') ? undefined : false }))
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
 
@@ -108,8 +108,6 @@ const PORT = process.env.PORT;
   const httpServer = http.createServer(app);
 
   const schema = makeExecutableSchema({ typeDefs, resolvers })
-
-  console.log(schema)
 
   const subscriptionServer = SubscriptionServer.create(
     {
