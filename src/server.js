@@ -109,6 +109,7 @@ const PORT = process.env.PORT;
 
   const schema = makeExecutableSchema({ typeDefs, resolvers })
 
+  console.log(schema)
 
   const subscriptionServer = SubscriptionServer.create(
     {
