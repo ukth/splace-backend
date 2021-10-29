@@ -47,6 +47,7 @@
     "graphql-rate-limit": "^3.3.0",
     "graphql-redis-subscriptions": "^2.4.0",
     "graphql-scalars": "^1.12.0",
+    "graphql-subscriptions": "^1.2.1",
     "helmet": "^4.6.0",
     "iamport": "^0.3.4",
     "ioredis": "^4.28.0",
