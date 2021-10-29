@@ -14,40 +14,6 @@ import depthLimit from 'graphql-depth-limit'
 
 const PORT = process.env.PORT;
 
-const apollo = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: async (ctx) => {
-    if (ctx.req) {
-      return {
-        loggedInUser: await getUser(ctx.req.headers.token),
-      };
-    } else {
-      const {
-        connection: { context },
-      } = ctx;
-      return {
-        loggedInUser: context.loggedInUser,
-      }
-    }
-  },
-  subscriptions: {
-    onConnect: async ({ token }) => {
-      if (!token) {
-        throw new Error("please login to listen.");
-      }
-      const loggedInUser = await getUser(token);
-      return {
-        loggedInUser,
-      };
-    },
-  },
-  formatError: (err) => {
-    console.log(err);
-  },
-  validationRules: [depthLimit(8)]
-});
-
 const app = express();
 var helmet = require('helmet')
 
@@ -137,7 +103,45 @@ app.get('/keyword', async (req, res) => {
 
 
 app.use(logger("tiny"));
-apollo.applyMiddleware({ app });
+async function startServer() {
+  const apollo = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: async (ctx) => {
+      if (ctx.req) {
+        return {
+          loggedInUser: await getUser(ctx.req.headers.token),
+        };
+      } else {
+        const {
+          connection: { context },
+        } = ctx;
+        return {
+          loggedInUser: context.loggedInUser,
+        }
+      }
+    },
+    subscriptions: {
+      onConnect: async ({ token }) => {
+        if (!token) {
+          throw new Error("please login to listen.");
+        }
+        const loggedInUser = await getUser(token);
+        return {
+          loggedInUser,
+        };
+      },
+    },
+    formatError: (err) => {
+      console.log(err);
+    },
+    validationRules: [depthLimit(8)]
+  });
+  await apollo.start()
+  apollo.applyMiddleware({ app });
+}
+
+startServer();
 app.use("/static", express.static("uploads"));
 
 const httpServer = http.createServer(app);

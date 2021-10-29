@@ -1,6 +1,5 @@
-var Redis = require("ioredis")
+var Redis = require("ioredis");
 require("dotenv").config();
-
 
 const host =  process.env.REDIS_URL
 const port =  process.env.REDIS_PORT
