@@ -4,7 +4,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getFolders: protectedResolver(async (_, __, { loggedInUser }) => {
+    getRecentFolders: protectedResolver(async (_, __, { loggedInUser }) => {
       try {
         const folders = await client.folder.findMany({
           where: {

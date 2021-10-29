@@ -1,10 +1,15 @@
-var redis = require("redis")
+var Redis = require("ioredis")
 require("dotenv").config();
 
 
 const host =  process.env.REDIS_URL
 const port =  process.env.REDIS_PORT
 
-var redisClient = redis.createClient(port, host)
+var nodes = [{
+  host,
+  port
+}]
 
-export default redisClient = redis.createClient(port, host)
+var redisClient = new Redis.Cluster(nodes)
+
+export default redisClient
