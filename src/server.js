@@ -115,7 +115,7 @@ const PORT = process.env.PORT;
       execute,
       subscribe,
       onConnect: async (connectionParams, webSocket) => {
-        if (!token) {
+        if (!connectionParams.token) {
           throw new Error("please login to listen.");
         }
         const loggedInUser = await getUser(connectionParams.token);
