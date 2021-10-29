@@ -9,11 +9,11 @@ import uploadVideo from './multerVideo';
 import http from "http";
 import axios from "axios";
 import depthLimit from 'graphql-depth-limit'
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+const PORT = process.env.PORT;
 
-
-async function startServer() {
-  const PORT = process.env.PORT;
-
+(async function () {
   const app = express();
   var helmet = require('helmet')
 
@@ -101,12 +101,29 @@ async function startServer() {
     }
   })
 
-
   app.use(logger("tiny"));
+  app.use("/static", express.static("uploads"));
 
-  const apollo = new ApolloServer({
-    typeDefs,
-    resolvers,
+  const httpServer = http.createServer(app);
+
+  const schema = makeExecutableSchema({ typeDefs, resolvers })
+
+  const subscriptionServer = SubscriptionServer.create(
+    { schema, execute, subscribe },
+    { server: httpServer, path: server.graphqlPath }
+  );
+
+  const server = new ApolloServer({
+    schema,
+    plugins: [{
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            subscriptionServer.close();
+          }
+        };
+      }
+    }],
     context: async (ctx) => {
       if (ctx.req) {
         return {
@@ -137,17 +154,12 @@ async function startServer() {
     },
     validationRules: [depthLimit(8)]
   });
-  await apollo.start()
-  apollo.applyMiddleware({ app });
 
-  app.use("/static", express.static("uploads"));
-
-  const httpServer = http.createServer(app);
-  apollo.installSubscriptionHandlers(httpServer);
+  await server.start()
+  server.applyMiddleware({ app });
 
   httpServer.listen({ port: PORT }, () => {
     console.log(`🚀Server is running on http://localhost:${PORT}/ ✅`);
   });
-}
 
-startServer();
+})();

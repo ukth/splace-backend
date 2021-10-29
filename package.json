@@ -28,6 +28,7 @@
     "@babel/cli": "^7.15.7",
     "@graphql-tools/load-files": "^6.5.2",
     "@graphql-tools/merge": "^8.2.1",
+    "@graphql-tools/schema": "^8.3.1",
     "@opensearch-project/opensearch": "^1.0.0",
     "@prisma/client": "^3.3.0",
     "apollo-server": "^3.4.0",
@@ -54,7 +55,8 @@
     "multer": "^1.4.3",
     "multer-s3": "^2.10.0",
     "pg": "^8.7.1",
-    "snyk": "^1.747.0"
+    "snyk": "^1.747.0",
+    "subscriptions-transport-ws": "^0.9.19"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
