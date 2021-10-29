@@ -2,6 +2,7 @@ require("dotenv").config();
 import express from "express";
 import logger from "morgan";
 import { ApolloServer } from "apollo-server-express";
+import { execute, subscribe } from "graphql";
 import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils";
 import uploadPhoto from './multerPhoto';
@@ -107,23 +108,9 @@ const PORT = process.env.PORT;
   const httpServer = http.createServer(app);
 
   const schema = makeExecutableSchema({ typeDefs, resolvers })
-
-  const subscriptionServer = SubscriptionServer.create(
-    { schema, execute, subscribe },
-    { server: httpServer, path: server.graphqlPath }
-  );
-
-  const server = new ApolloServer({
+  
+  var server = new ApolloServer({
     schema,
-    plugins: [{
-      async serverWillStart() {
-        return {
-          async drainServer() {
-            subscriptionServer.close();
-          }
-        };
-      }
-    }],
     context: async (ctx) => {
       if (ctx.req) {
         return {
@@ -154,6 +141,21 @@ const PORT = process.env.PORT;
     },
     validationRules: [depthLimit(8)]
   });
+
+  const subscriptionServer = SubscriptionServer.create(
+    { schema, execute, subscribe },
+    { server: httpServer, path: server.graphqlPath }
+  );
+
+  server.plugins =  [{
+    async serverWillStart() {
+      return {
+        async drainServer() {
+          subscriptionServer.close();
+        }
+      };
+    }
+  }]
 
   await server.start()
   server.applyMiddleware({ app });
