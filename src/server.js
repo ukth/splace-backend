@@ -11,99 +11,99 @@ import axios from "axios";
 import depthLimit from 'graphql-depth-limit'
 
 
-
-const PORT = process.env.PORT;
-
-const app = express();
-var helmet = require('helmet')
-
-app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') ? undefined : false }))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
-app.post('/uploadphoto', uploadPhoto.array('photos', 16), (req, res, next) => {
-  console.log(req);
-  res.send(req.files);
-})
-
-app.post('/uploadvideo', uploadVideo.single('video'), (req, res, next) => {
-  console.log(req);
-  res.send(req.files);
-})
-
-app.use('/healthcheck', require('express-healthcheck')());
-
-app.get('/geocode', async (req, res) => {
-  try {
-    const ID = process.env.NCP_API_ID
-    const KEY = process.env.NCP_API_KEY
-    const headers = {
-      "headers": {
-        "X-NCP-APIGW-API-KEY-ID": ID,
-        "X-NCP-APIGW-API-KEY": KEY,
-      }
-    }
-    //console.log(req)
-    const keyword = req.query.keyword
-    const coordinate = req.query.coordinate
-    const url = coordinate != null ? "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword + "&coordinate=" + coordinate : "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword
-    //console.log(keyword)
-    const geocode = await axios.get(encodeURI(url), headers)
-    //console.log(geocode.data)
-    res.send(geocode.data)
-  } catch (e) {
-    console.log(e)
-    return null;
-  }
-})
-
-app.get('/reversegeocode', async (req, res) => {
-  try {
-    const ID = process.env.NCP_API_ID
-    const KEY = process.env.NCP_API_KEY
-    const headers = {
-      "headers": {
-        "X-NCP-APIGW-API-KEY-ID": ID,
-        "X-NCP-APIGW-API-KEY": KEY,
-      }
-    }
-    const lat = req.query.lat
-    const lon = req.query.lon
-    //console.log(lat, lon);
-    const reverseGeocode = await axios.get(encodeURI("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr&output=json&coords=" + lon + "," + lat), headers);
-    //console.log(reverseGeocode.data)
-    res.send(reverseGeocode.data)
-  } catch (e) {
-    console.log(e)
-    return null;
-  }
-})
-
-app.get('/keyword', async (req, res) => {
-  try {
-    const auth = process.env.KAKAO_AUTH
-    const keyword = req.query.keyword
-    const x = req.query.x
-    const y = req.query.y
-
-    const headers = {
-      "headers": {
-        "Authorization": auth
-      }
-    }
-    var url = (x != null && y != null) ? "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword + "&x=" + x + "&y=" + y: "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword
-    var places = await axios.get(encodeURI(url), headers)
-    //console.log(reverseGeocode.data)
-    res.send(places.data)
-  } catch (e) {
-    console.log(e)
-    return null;
-  }
-})
-
-
-app.use(logger("tiny"));
 async function startServer() {
+  const PORT = process.env.PORT;
+
+  const app = express();
+  var helmet = require('helmet')
+
+  app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') ? undefined : false }))
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
+
+  app.post('/uploadphoto', uploadPhoto.array('photos', 16), (req, res, next) => {
+    console.log(req);
+    res.send(req.files);
+  })
+
+  app.post('/uploadvideo', uploadVideo.single('video'), (req, res, next) => {
+    console.log(req);
+    res.send(req.files);
+  })
+
+  app.use('/healthcheck', require('express-healthcheck')());
+
+  app.get('/geocode', async (req, res) => {
+    try {
+      const ID = process.env.NCP_API_ID
+      const KEY = process.env.NCP_API_KEY
+      const headers = {
+        "headers": {
+          "X-NCP-APIGW-API-KEY-ID": ID,
+          "X-NCP-APIGW-API-KEY": KEY,
+        }
+      }
+      //console.log(req)
+      const keyword = req.query.keyword
+      const coordinate = req.query.coordinate
+      const url = coordinate != null ? "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword + "&coordinate=" + coordinate : "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword
+      //console.log(keyword)
+      const geocode = await axios.get(encodeURI(url), headers)
+      //console.log(geocode.data)
+      res.send(geocode.data)
+    } catch (e) {
+      console.log(e)
+      return null;
+    }
+  })
+
+  app.get('/reversegeocode', async (req, res) => {
+    try {
+      const ID = process.env.NCP_API_ID
+      const KEY = process.env.NCP_API_KEY
+      const headers = {
+        "headers": {
+          "X-NCP-APIGW-API-KEY-ID": ID,
+          "X-NCP-APIGW-API-KEY": KEY,
+        }
+      }
+      const lat = req.query.lat
+      const lon = req.query.lon
+      //console.log(lat, lon);
+      const reverseGeocode = await axios.get(encodeURI("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr&output=json&coords=" + lon + "," + lat), headers);
+      //console.log(reverseGeocode.data)
+      res.send(reverseGeocode.data)
+    } catch (e) {
+      console.log(e)
+      return null;
+    }
+  })
+
+  app.get('/keyword', async (req, res) => {
+    try {
+      const auth = process.env.KAKAO_AUTH
+      const keyword = req.query.keyword
+      const x = req.query.x
+      const y = req.query.y
+
+      const headers = {
+        "headers": {
+          "Authorization": auth
+        }
+      }
+      var url = (x != null && y != null) ? "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword + "&x=" + x + "&y=" + y : "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword
+      var places = await axios.get(encodeURI(url), headers)
+      //console.log(reverseGeocode.data)
+      res.send(places.data)
+    } catch (e) {
+      console.log(e)
+      return null;
+    }
+  })
+
+
+  app.use(logger("tiny"));
+
   const apollo = new ApolloServer({
     typeDefs,
     resolvers,
@@ -139,14 +139,15 @@ async function startServer() {
   });
   await apollo.start()
   apollo.applyMiddleware({ app });
+
+  app.use("/static", express.static("uploads"));
+
+  const httpServer = http.createServer(app);
+  apollo.installSubscriptionHandlers(httpServer);
+
+  httpServer.listen({ port: PORT }, () => {
+    console.log(`🚀Server is running on http://localhost:${PORT}/ ✅`);
+  });
 }
 
 startServer();
-app.use("/static", express.static("uploads"));
-
-const httpServer = http.createServer(app);
-apollo.installSubscriptionHandlers(httpServer);
-
-httpServer.listen({ port: PORT }, () => {
-  console.log(`🚀Server is running on http://localhost:${PORT}/ ✅`);
-});
