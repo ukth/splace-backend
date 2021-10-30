@@ -2,7 +2,6 @@ require("dotenv").config();
 import express from "express";
 import logger from "morgan";
 import { ApolloServer } from "apollo-server-express";
-import { execute, subscribe } from "graphql";
 import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils";
 import uploadPhoto from './multerPhoto';
@@ -10,7 +9,8 @@ import uploadVideo from './multerVideo';
 import http from "http";
 import axios from "axios";
 import depthLimit from 'graphql-depth-limit'
-import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 const PORT = process.env.PORT;
 
@@ -111,15 +111,6 @@ const PORT = process.env.PORT;
 
   var server = new ApolloServer({
     schema,
-    plugins: [{
-      async serverWillStart() {
-        return {
-          async drainServer() {
-            subscriptionServer.close();
-          }
-        };
-      }
-    }],
     context: async (ctx) => {
       if (ctx.req) {
         return {
@@ -140,11 +131,17 @@ const PORT = process.env.PORT;
     validationRules: [depthLimit(8)]
   });
 
-  const subscriptionServer = SubscriptionServer.create(
+  await server.start()
+  server.applyMiddleware({ app });
+
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: server.graphqlPath
+  });
+
+  useServer(
     {
       schema,
-      execute,
-      subscribe,
       onConnect: async ({ token }) => {
         if (!token) {
           throw new Error("please login to listen.");
@@ -155,14 +152,11 @@ const PORT = process.env.PORT;
         };
       },
     },
-    { server: httpServer, path: server.graphqlPath },
-  );
-
-  await server.start()
-  server.applyMiddleware({ app });
+    wsServer,
+  )
 
   httpServer.listen({ port: PORT }, () => {
-    console.log(`🚀Server is running on http://localhost:${PORT}/ ✅`);
+    console.log(`Server is running on http://localhost:${PORT}/`);
   });
 
 })();

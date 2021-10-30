@@ -47,6 +47,7 @@
     "graphql-rate-limit": "^3.3.0",
     "graphql-redis-subscriptions": "^2.4.0",
     "graphql-scalars": "^1.12.0",
+    "graphql-ws": "^5.5.5",
     "helmet": "^4.6.0",
     "iamport": "^0.3.4",
     "ioredis": "^4.28.0",
@@ -56,7 +57,7 @@
     "multer-s3": "^2.10.0",
     "pg": "^8.7.1",
     "snyk": "^1.747.0",
-    "subscriptions-transport-ws": "^0.9.19"
+    "ws": "^8.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
