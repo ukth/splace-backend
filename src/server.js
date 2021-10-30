@@ -147,7 +147,7 @@ const PORT = process.env.PORT;
       subscribe,
       onConnect: async (connectionParams, webSocket) => {
         console.log(connectionParams)
-        console.log(webSocket.upgradeReq.session)
+        console.log(webSocket.upgradeReq)
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM1NTcwMzMwNzU0LCJlYXQiOjE2NDA3NTQzMzA3NTR9.T7-7Ot13Nna3t27-VNGlpGDLaHXZ1bzEZjiqO1Vd2rA"
         if (!token) {
           throw new Error("please login to listen.");
