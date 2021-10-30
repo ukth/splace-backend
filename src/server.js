@@ -62,7 +62,7 @@ app.post('/uploadphoto', uploadPhoto.array('photos', 16), (req, res, next) => {
 
 app.post('/uploadvideo', uploadVideo.single('video'), (req, res, next) => {
   console.log(req);
-  res.send(req.files);
+  res.send(req.file);
 })
 
 app.use('/healthcheck', require('express-healthcheck')());
