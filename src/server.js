@@ -118,6 +118,7 @@ const PORT = process.env.PORT;
         console.log(connectionParams)
         //console.log(webSocket)
         //console.log(context)
+        token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM1NTcwMzMwNzU0LCJlYXQiOjE2NDA3NTQzMzA3NTR9.T7-7Ot13Nna3t27-VNGlpGDLaHXZ1bzEZjiqO1Vd2rA"
         if (!token) {
           throw new Error("please login to listen.");
         }
