@@ -4,7 +4,7 @@ export default gql`
   type getSplaceByKakaoResult {
     ok: Boolean!
     error: String
-    splaceId: Int
+    splace: Splace
   }
   type Mutation {
     getSplaceByKakao(

@@ -17,13 +17,17 @@ export default {
         const a = await client.splace.findFirst({
           where: {
             kakaoId
+          },
+          include: {
+            bigCategories: true,
+            ratingtags: true,
           }
         });
 
         if (a) {
           return {
             ok: true,
-            splaceId: a.id
+            splace: a
           }
         }
 
@@ -63,7 +67,7 @@ export default {
         const place = places[0];
 
         //console.log(place)
-
+        const kakao_address = (place.road_address_name != "") ? place.road_address_name : place.address_name
       
         const b = await client.splace.create({
           data: {
@@ -72,9 +76,13 @@ export default {
             lat: place.y,
             lon: place.x,
             kakaoId,
-            address: place.road_address_name,
+            address: kakao_address,
             activate: true,
             intro: place.category_name
+          },
+          include: {
+            bigCategories: true,
+            ratingtags: true
           }
         })
 
@@ -96,7 +104,7 @@ export default {
         const location = b.lat + ", " + b.lon
         var index_name = "splace_search"
 
-        var address_array = place.road_address_name.split(" ")
+        var address_array = b.address.split(" ")
         const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
         const address = address_array[0] + " " + address_2
 
@@ -126,7 +134,7 @@ export default {
         //console.log(a);
         return {
           ok: true,
-          splaceId: b.id
+          splace: b
         };
       } catch (e) {
         console.log(e);

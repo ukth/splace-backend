@@ -104,7 +104,7 @@ app.get('/reversegeocode', async (req, res) => {
     const lat = req.query.lat
     const lon = req.query.lon
     //console.log(lat, lon);
-    const reverseGeocode = await axios.get(encodeURI("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr&output=json&coords=" + lon + "," + lat), headers);
+    const reverseGeocode = await axios.get(encodeURI("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?orders=roadaddr,addr,legalcode&output=json&coords=" + lon + "," + lat), headers);
     //console.log(reverseGeocode.data)
     res.send(reverseGeocode.data)
   } catch (e) {
