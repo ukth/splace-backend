@@ -40,3 +40,6 @@ ko.vec
 
 #zip
 *.zip
+
+#ebextenstion
+.platform/
