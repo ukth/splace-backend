@@ -10,7 +10,6 @@ export default gql`
       menuUrls: [String]
       categories: [String]
       bigCategoryIds: [Int]
-      specialTagIds: [Int]
       parking: Boolean
       pets: Boolean
       noKids: Boolean

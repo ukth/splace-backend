@@ -17,7 +17,6 @@ export default {
           include: {
             categories: true,
             bigCategories: true,
-            specialtags: true,
           },
           take: 5,
           ...(lastId && { cursor: { id: lastId } }),

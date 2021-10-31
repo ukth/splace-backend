@@ -7,8 +7,8 @@ export default {
     suggestTags: protectedResolver(async (_, __, { loggedInUser }) => {
       try {
 
-        const ratingtagIds = []
-        const bigCategoryIds = []
+        const ratingtagIds = [1,2,3,4]
+        const bigCategoryIds = [1,2,3,4,5,6,7,8,9,10,11,12]
 
         const ratingtags = await client.ratingtag.findMany({
           where: {

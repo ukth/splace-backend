@@ -16,7 +16,6 @@ export default {
             ratingtags: true,
             categories: true,
             bigCategories: true,
-            specialtags: true,
             fixedContents: true,
             owner: true
           },

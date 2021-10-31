@@ -41,7 +41,6 @@ export default {
               splace: true,
               categories: true,
               bigCategories: true,
-              specialtags: true,
               author: true,
               seriesElements: {
                 include: {
@@ -85,7 +84,6 @@ export default {
               splace: true,
               categories: true,
               bigCategories: true,
-              specialtags: true,
               author: true,
               seriesElements: {
                 include: {

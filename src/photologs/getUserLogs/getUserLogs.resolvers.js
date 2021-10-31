@@ -22,7 +22,6 @@ export default {
               }
             },
             likedUser: true,
-            specialtags: true,
           },
           take: 5,
           ...(lastId && { cursor: { id: lastId } }),

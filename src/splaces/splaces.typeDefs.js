@@ -34,7 +34,6 @@ export default gql`
     intro: String
     url: String
     phone: String
-    specialtags: [Specialtag]
     moments: [Moment]
     thumbnail: String
     raffles: [Raffle]

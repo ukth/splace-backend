@@ -48,7 +48,6 @@ export default {
           include: {
             categories: true,
             bigCategories: true,
-            specialtags: true,
             splace: true,
             author: true,
             seriesElements: {

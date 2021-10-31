@@ -15,7 +15,6 @@ export default gql`
     seriesElements: [SeriesElement]
     categories: [Category]
     bigCategories: [BigCategory]
-    specialtags: [Specialtag]
     likedUser: [User]
     scrap: [ScrapedLog]
     isPrivate: Boolean!
