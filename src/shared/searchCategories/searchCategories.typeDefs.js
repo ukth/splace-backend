@@ -4,7 +4,6 @@ export default gql`
   type searchCategoriesResult {
     ok: Boolean!
     error: String
-    specialtags: [Specialtag]
     categories: [Category]
     bigcategories: [BigCategory]
   }

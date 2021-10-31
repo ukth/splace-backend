@@ -7,18 +7,6 @@ export default {
   Query: {
     searchCategories: protectedResolver(async (_, { keyword, lastHashId }, { loggedInUser }) => {
       try {
-        const specialtags = await client.specialtag.findMany({
-          where: {
-            name: {
-              startsWith: keyword
-            }
-          },
-          select: {
-            id: true,
-            name: true,
-            color: true
-          },
-        })
         const categories = await client.category.findMany({
           where: {
             name: {
@@ -44,7 +32,6 @@ export default {
         })
         return {
           ok: true,
-          specialtags,
           bigCategories,
           categories,
         };
