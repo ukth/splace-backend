@@ -3,21 +3,20 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    removeSplace: protectedResolver(async (
+    createSplaceRating: protectedResolver(async (
       _,
-      { splaceId },
+      { splaceId, rating },
       { loggedInUser }
     ) => {
-      try { 
-        const a = await client.save.deleteMany({
-          where: {
+      try {
+        const a = await client.splaceRating.create({
+          data: {
             splaceId,
-            savedUser: {
-              id: loggedInUser.id
-            }
-          }
+            userId: loggedInUser.id,
+            rating,
+          },
         });
-        
+        //console.log(a);
         return {
           ok: true,
         };
@@ -25,7 +24,7 @@ export default {
         console.log(e);
         return {
           ok: false,
-          error: "ERROR4B83",
+          error: "ERROR4471",
         };
       }
     }),

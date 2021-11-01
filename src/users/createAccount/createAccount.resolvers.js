@@ -97,7 +97,7 @@ export default {
               }))
             }
           },
-        });
+        })
         for (var i = 0; i < memberIds.length; i++) {
           const c = await client.chatroomReaded.create({
             data: {
@@ -119,15 +119,13 @@ export default {
             id: a.id
           },
           data: {
-            title,
+            title: "",
           },
           include: {
             members: true,
             lastMessage: true,
           }
         });
-
-        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...d } })
 
         //console.log(a);
         return {

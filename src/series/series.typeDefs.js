@@ -8,8 +8,18 @@ export default gql`
     updatedAt: String!
     isPrivate: Boolean!
     author: User!
-    photologs: [Photolog]
+    seriesElements: [SeriesElement]
     isScraped: Boolean!
     scrap: [ScrapedSeries]
+  }
+  type SeriesElement {
+    id: Int!
+    order: Int!
+    createdAt: String!
+    updatedAt: String!
+    photolog: Photolog!
+    photologId: Int!
+    series: Series!
+    seriesId: Int!
   }
 `;

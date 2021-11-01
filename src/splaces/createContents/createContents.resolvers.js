@@ -5,7 +5,7 @@ export default {
   Mutation: {
     createContents: protectedResolver(async (
       _,
-      { title, splaceId, text, imageUrls },
+      { title, splaceId, text, imageUrls, photoSize },
       { loggedInUser }
     ) => {
       try {
@@ -25,6 +25,7 @@ export default {
               }
             },
             text,
+            photoSize,
             imageUrls
           },
         });

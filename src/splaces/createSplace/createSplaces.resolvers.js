@@ -47,6 +47,7 @@ export default {
         });
         return {
           ok: true,
+          splaceId: a.id
         };
       } catch (e) {
         console.log(e);

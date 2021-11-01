@@ -4,7 +4,7 @@ export default gql`
   type getLogsBySeriesResult {
     ok: Boolean!
     error: String
-    logs: [Photolog]
+    seriesElements: [SeriesElement]
   }
   type Query {
     getLogsBySeries(seriesId: Int!, lastId: Int): getLogsBySeriesResult!

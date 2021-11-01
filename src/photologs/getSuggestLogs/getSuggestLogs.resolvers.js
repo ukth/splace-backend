@@ -37,10 +37,13 @@ export default {
           include: {
             categories: true,
             bigCategories: true,
-            specialtags: true,
             splace: true,
             author: true,
-            series: true,
+            seriesElements: {
+              include: {
+                sereis: true
+              }
+            },
             likedUser: true,
           },
           take: 200,

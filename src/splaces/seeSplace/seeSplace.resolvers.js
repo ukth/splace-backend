@@ -16,12 +16,11 @@ export default {
             ratingtags: true,
             categories: true,
             bigCategories: true,
-            bigCategories: true,
             fixedContents: true,
             owner: true
           },
         })
-        //console.log(splace)
+        console.log(splace)
         return {
           ok: true,
           splace

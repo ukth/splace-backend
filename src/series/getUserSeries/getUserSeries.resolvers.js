@@ -20,7 +20,11 @@ export default {
             createdAt: "desc",
           },
           include: {
-            photologs: true,
+            seriesElements: {
+              include: {
+                photolog: true,
+              }
+            },
             author: true
           }
         })

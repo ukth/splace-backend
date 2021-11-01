@@ -24,7 +24,6 @@ export default gql`
       long: Float, 
       distance: Int, 
       bigCategoryIds: [Int],
-      specialTagIds: [Int],
       ratingTagIds: [Int]): searchSplacesResult!
   }
 `;

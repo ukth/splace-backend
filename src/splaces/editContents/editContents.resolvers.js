@@ -5,10 +5,11 @@ export default {
   Mutation: {
     editContents: protectedResolver(async (
       _,
-      { title, imageUrl, text, splaceId, fixedContentId },
+      { title, text, fixedContentId, splaceId },
       { loggedInUser }
     ) => {
       try {
+        console.log(splaceId)
         const previous = await client.splace.findUnique({ where: { id: splaceId } });
         if (previous.ownerId != loggedInUser.id) {
           return {
@@ -20,7 +21,6 @@ export default {
           where: { id: fixedContentId },
           data: {
             title,
-            imageUrl,
             text,
           },
         });

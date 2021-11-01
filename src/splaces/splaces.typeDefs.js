@@ -34,17 +34,18 @@ export default gql`
     intro: String
     url: String
     phone: String
-    specialtags: [Specialtag]
     moments: [Moment]
     thumbnail: String
     raffles: [Raffle]
     activate: Boolean!
+    isSaved: Boolean!
   }
   type FixedContent {
     id: Int!
     title: String!
     imageUrls: [String]
     createdAt: String!
+    photoSize: Int!
     updatedAt: String!
     splace: Splace!
     text: String
@@ -66,6 +67,14 @@ export default gql`
     day: Int!
     splace: Splace!
     splaceId: Int!
+    createdAt: String!
+    updatedAt: String!
+  }
+  type SplaceRating {
+    id: Int!
+    userId: Int!
+    splaceId: Int!
+    rating: Int!
     createdAt: String!
     updatedAt: String!
   }

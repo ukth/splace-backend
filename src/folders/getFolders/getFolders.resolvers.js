@@ -4,8 +4,9 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getFolders: protectedResolver(async (_, { lastId }, { loggedInUser }) => {
+    getFolders: protectedResolver(async (_, { lastId }, { loggedInUser, orderBy }) => {
       try {
+        const order = (orderBy == "updatedAt") ? { updatedAt: "desc" } : { title: "desc" } 
         const folders = await client.folder.findMany({
           where: {
             members: {
@@ -25,9 +26,7 @@ export default {
           take: 10,
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
-          orderBy: {
-            updatedAt: "desc",
-          },
+          orderBy: order
         })
         return {
           ok: true,

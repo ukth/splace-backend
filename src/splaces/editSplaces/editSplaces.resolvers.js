@@ -20,7 +20,7 @@ export default {
   Mutation: {
     editSplaces: protectedResolver(async (
       _,
-      { detailAddress, splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categories, bigCategoryIds, specialTagIds, noKids, parking, pets, phone, url, intro },
+      { detailAddress, splaceId, name, thumbnail, itemName, itemPrice, menuUrls, categories, bigCategoryIds, noKids, parking, pets, phone, url, intro },
       { loggedInUser }
     ) => {
       try {
@@ -50,11 +50,6 @@ export default {
                 id: true
               }
             },
-            specialtags: {
-              select: {
-                id: true
-              }
-            }
           }
         });
         if (!ok) {
@@ -124,21 +119,10 @@ export default {
                 })),
               },
             }),
-            ...(specialTagIds != null && {
-              specialtags: {
-                disconnect: ok.specialtags.map(specialTag => ({
-                  id: specialTag.id
-                })),
-                connect: specialTagIds.map(specialTagId => ({
-                  id: specialTagId
-                })),
-              },
-            }),
           },
           include: {
             categories: true,
             bigCategories: true,
-            specialtags: true,
           }
         });
 
@@ -146,17 +130,12 @@ export default {
         const cNames = a.categories.map(category => category.name)
         const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
         const bcIds = a.bigCategories.map(bigCategory => bigCategory.id)
-        const stNames = a.specialtags.map(specialTag => specialTag.name)
-        const stIds = a.specialtags.map(specialTag => specialTag.id)
-
         var document = {
           "doc": {
             "name": a.name,
             "categories": AtoS(cNames),
             "stringBC": AtoS(bcIds),
             "bigCategories": AtoS(bcNames),
-            "stringST": AtoS(stIds),
-            "specialTags": AtoS(stNames),
             "intro": a.intro,
             "thumbnail": a.thumbnail,
             "nokids": a.noKids,
@@ -204,8 +183,6 @@ export default {
               "categories": AtoS(cNames),
               "stringBC": AtoS(bcIds),
               "bigCategories": AtoS(bcNames),
-              "stringST": AtoS(stIds),
-              "specialTags": AtoS(stNames),
               "intro": a.intro,
               "nokids": a.noKids,
               "parking": a.parking,
