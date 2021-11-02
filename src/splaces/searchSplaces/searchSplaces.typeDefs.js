@@ -21,11 +21,11 @@ export default gql`
       type: String!
       keyword: String!, 
       lat: Float,
-      long: Float, 
+      lon: Float, 
       distance: Int, 
       bigCategoryIds: [Int],
-      ratingTagIds: [Int]
-      noKids: Boolean
+      ratingtagIds: [Int],
+      exceptNoKids: Boolean
       parking: Boolean
       pets: Boolean
       ): searchSplacesResult!

@@ -11,7 +11,7 @@ function toSearch(arr) {
 
 export default {
   Query: {
-    searchSplaces: async (_, { lastId, type, keyword, lat, long, distance, bigCategoryIds, ratingTagIds, noKids, parking, pets }) => {
+    searchSplaces: async (_, { ratingtagIds, lastId, type, keyword, lat, lon, distance, bigCategoryIds, exceptNoKids, parking, pets }) => {
       try {
         var index_name = type + "_search"
         var filter = new Array();
@@ -22,21 +22,22 @@ export default {
             }
           })
         }
-        if (ratingTagIds) {
+
+        if (ratingtagIds) {
           filter.push({
             "terms": {
-              "stringRT": toSearch(ratingTagIds)
+              "stringRT": toSearch(ratingtagIds)
             }
           })
         }
 
-        if (lat && long && distance) {
+        if (lat && lon && distance) {
           filter.push({
             "geo_distance": {
               "distance": distance,
               "location": {
                 "lat": lat,
-                "lon": long
+                "lon": lon
               }
             }
           })
@@ -51,10 +52,10 @@ export default {
           })
         }
 
-        if (noKids) {
+        if (exceptNoKids) {
           filter.push({
             "match": {
-              "noKids": true
+              "noKids": false
             }
           })
         }
@@ -85,6 +86,12 @@ export default {
                 {
                   "match_all": {}
                 }
+              ],
+              "should": [
+                { "match_phrase" : { "ratingtags": "Hot"} },
+                { "match_phrase" : { "ratingtags": "Superhot"} },
+                { "match_phrase" : { "ratingtags": "Tasty"} },
+                { "match_phrase" : { "ratingtags": "Supertasty"} }
               ]
             }
           }

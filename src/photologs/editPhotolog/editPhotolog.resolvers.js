@@ -52,6 +52,7 @@ export default {
             include: {
               categories: true,
               bigCategories: true,
+              ratingtags: true,
             }
           })
 
@@ -62,6 +63,8 @@ export default {
             const cNames = a.categories.map(category => category.name)
             const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
             const bigCategoryIds = a.bigCategories.map(bigCategory => bigCategory.id)
+            const rtNames = a.ratingtags.map(ratingtag => ratingtag.name)
+            const rtIds = a.ratingtags.map(ratingtag => ratingtag.id)
             var address_array = a.address.split(" ")
             const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
             const address = address_array[0] + " " + address_2
@@ -79,6 +82,8 @@ export default {
               "categories": AtoS(cNames),
               "stringBC": AtoS(bigCategoryIds),
               "bigCategories": AtoS(bcNames),
+              "ratingtags" : AtoS(rtNames),
+              "stringRT" : AtoS(rtIds)
             }
 
             var response = await searchEngine.create({

@@ -125,9 +125,6 @@ export default {
             phone,
             url,
             thumbnail,
-            cNames,
-            bcNames,
-            stNames,
             ...(categories != null && {
               categories: {
                 disconnect: ok.categories.map(category => ({
@@ -182,7 +179,7 @@ export default {
           body: document
         })
 
-        console.log(response);
+        //console.log(response);
         //console.log(response.body.result);
 
         if (response.body.result != "updated" && response.body.result != "noop") {

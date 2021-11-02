@@ -25,6 +25,16 @@ export default {
             error: "ERROR5B13"
           };
         }
+        const c = await client.editFolderLog.deleteMany({
+          where: {
+            targetId: folderId
+          }
+        })
+        const b = await client.save.deleteMany({
+          where: {
+            folderId
+          }
+        })
         const a = await client.folder.delete({
           where: {
             id: folderId

@@ -36,12 +36,6 @@ export default {
             targetId: photologId
           }
         })
-        
-        const b = await client.photolog.delete({
-          where: {
-            id: photologId,
-          }
-        })
 
         if (!a.isPrivate) {
           var index_name = "photolog_search"
@@ -57,6 +51,12 @@ export default {
             }
           }
         }
+
+        const b = await client.photolog.delete({
+          where: {
+            id: photologId,
+          }
+        })
         return {
           ok: true,
         };
