@@ -456,8 +456,8 @@ model EditFolderLog {
 
 model LikeLog {
   id Int @id @default(autoincrement())
-  target Photolog @relation("likedLogRelation", fields: [targetId], references: [id])
-  targetId Int
+  target Photolog? @relation("likedLogRelation", fields: [targetId], references: [id])
+  targetId Int?
   requestUser User @relation("likeLogRelation", fields: [requestUserId], references: [id])
   requestUserId Int
   createdAt DateTime @default(now())
