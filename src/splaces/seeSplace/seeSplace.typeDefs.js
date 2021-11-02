@@ -6,7 +6,7 @@ export default gql`
     error: String
     splace: Splace
   }
-  type Query {
+  type Mutation {
     seeSplace(splaceId: Int!): seeSplaceResult!
   }
 `;

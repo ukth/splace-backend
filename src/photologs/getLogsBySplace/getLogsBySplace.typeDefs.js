@@ -6,7 +6,7 @@ export default gql`
     error: String
     logs: [Photolog]
   }
-  type Query {
+  type Mutation {
     getLogsBySplace(splaceId: Int!, orderBy: String!, lastId: Int): getLogsBySplaceResult!
   }
 `;

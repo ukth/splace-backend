@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 
 export default {
-  Query: {
+  Mutation: {
     seeSplace: protectedResolver(async (_, { splaceId }, { loggedInUser }) => {
       try {
         const splace = await client.splace.findFirst({
@@ -20,7 +20,13 @@ export default {
             owner: true
           },
         })
-        console.log(splace)
+        const logging= await client.seeSplaceLog.create({
+          data: {
+            userId: loggedInUser.id,
+            splaceId: splaceId
+          }
+        })
+        //console.log(splace)
         return {
           ok: true,
           splace

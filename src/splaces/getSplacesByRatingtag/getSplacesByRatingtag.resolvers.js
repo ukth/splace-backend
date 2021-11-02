@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 
 export default {
-  Query: {
+  Mutation: {
     getSplacesByRatingtag: protectedResolver(async (_, { tagId, lastId }, { loggedInUser }) => {
       try {
         const logs = await client.splace.findMany({
@@ -27,6 +27,15 @@ export default {
             }
           },
         })
+
+        const logging = await client.seeCategoryLog.create({
+          data: {
+            userId: loggedInUser.id,
+            categoryId: tagId,
+            categoryType: 0
+          }
+        })
+
         return {
           ok: true,
           logs: logs

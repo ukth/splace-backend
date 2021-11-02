@@ -6,7 +6,7 @@ export default gql`
     error: String
     seriesElements: [SeriesElement]
   }
-  type Query {
+  type Mutation {
     getLogsBySeries(seriesId: Int!, lastId: Int): getLogsBySeriesResult!
   }
 `;

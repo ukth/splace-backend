@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 
 export default {
-  Query: {
+  Mutation: {
     seePhotolog: protectedResolver(async (_, { photologId }, { loggedInUser }) => {
       try {
         const log = await client.photolog.findUnique({
@@ -30,6 +30,13 @@ export default {
             error: "ERROR5213"
           }
         }
+
+        const logging = await client.seePhotologLog.create({
+          data: {
+            userId: loggedInUser.id,
+            photologId
+          }
+        })
 
         return {
           ok: true,

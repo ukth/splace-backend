@@ -6,7 +6,7 @@ export default gql`
     error: String
     logs: [Photolog]
   }
-  type Query {
+  type Mutation {
     getLogsByBigCategory(tagId: Int!, lastId: Int): getLogsByBigCategoryResult!
   }
 `;

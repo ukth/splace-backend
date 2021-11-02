@@ -14,7 +14,12 @@ export default {
           targetId: loggedInUser.id,
           createdAt: {
             gte: weekAgo
-          }
+          },
+          NOT: [
+            {
+              requestUserId: loggedInUser.id
+            }
+          ]
         },
         include: {
           target: true,
@@ -25,10 +30,15 @@ export default {
         where: {
           target: {
             authorId: loggedInUser.id,
-            createdAt: {
-              gte: weekAgo
+          },
+          createdAt: {
+            gte: weekAgo
+          },
+          NOT: [
+            {
+              requestUserId: loggedInUser.id
             }
-          }
+          ]
         },
         include: {
           target: true,
@@ -46,7 +56,12 @@ export default {
           },
           createdAt: {
             gte: weekAgo
-          }
+          },
+          NOT: [
+            {
+              requestUserId: loggedInUser.id
+            }
+          ]
         },
         include: {
           target: true,

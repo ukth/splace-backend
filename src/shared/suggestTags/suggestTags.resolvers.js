@@ -22,12 +22,6 @@ export default {
             color: true
           },
         })
-        console.log(bigCategoryIds)
-        console.log({
-          OR: bigCategoryIds.map(bigCategoryId => ({
-              id: bigCategoryId
-            }))
-        })
         const bigCategories = await client.bigCategory.findMany({
           where: {
             OR: bigCategoryIds.map(bigCategoryId => ({

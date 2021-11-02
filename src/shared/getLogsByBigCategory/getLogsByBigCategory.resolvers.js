@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 
 export default {
-  Query: {
+  Mutation: {
     getLogsByBigCategory: protectedResolver(async (_, { tagId, lastId }, { loggedInUser }) => {
       try {
         const logs = await client.photolog.findMany({
@@ -47,6 +47,13 @@ export default {
           orderBy: {
             createdAt: "desc"
           },
+        })
+        const logging = await client.seeCategoryLog.create({
+          data: {
+            userId: loggedInUser.id,
+            categoryId: tagId,
+            categoryType: 1
+          }
         })
         return {
           ok: true,

@@ -1,10 +1,9 @@
-import { hash } from "bcrypt";
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 
 
 export default {
-  Query: {
+  Mutation: {
     searchCategories: protectedResolver(async (_, { keyword, lastHashId }, { loggedInUser }) => {
       try {
         const categories = await client.category.findMany({
@@ -31,6 +30,12 @@ export default {
             id: true,
             name: true
           },
+        })
+        const logging = await client.searchLog.create({
+          data: {
+            userId: loggedInUser.id,
+            keyword: keyword
+          }
         })
         return {
           ok: true,

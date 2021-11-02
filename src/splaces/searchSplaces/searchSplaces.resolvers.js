@@ -10,7 +10,7 @@ function toSearch(arr) {
 }
 
 export default {
-  Query: {
+  Mutation: {
     searchSplaces: async (_, { lastId, type, keyword, lat, long, distance, bigCategoryIds, ratingTagIds, noKids, parking, pets }) => {
       try {
         var index_name = type + "_search"
@@ -51,26 +51,26 @@ export default {
           })
         }
 
-        if(noKids) {
+        if (noKids) {
           filter.push({
-            "match" : {
-              "noKids" : true
+            "match": {
+              "noKids": true
             }
           })
         }
 
-        if(pets) {
+        if (pets) {
           filter.push({
-            "match" : {
-              "pets" : true
+            "match": {
+              "pets": true
             }
           })
         }
 
-        if(parking) {
+        if (parking) {
           filter.push({
-            "match" : {
-              "parking" : true
+            "match": {
+              "parking": true
             }
           })
         }
@@ -99,6 +99,15 @@ export default {
 
         //console.log(response)
         const searchedSplaces = response.body.hits.hits.map(result => result._source);
+
+        if (keyword.length != 0) {
+          const logging = await client.searchLog.create({
+            data: {
+              userId: loggedInUser.id,
+              keyword: keyword
+            }
+          })
+        }
 
         //console.log(searchedSplaces)
         return {
