@@ -24,11 +24,25 @@ export default {
             error: "ERROR5211"
           }
         }
+        
+        const c = await client.seriesElement.deleteMany({
+          where: {
+            photologId
+          }
+        })
+        
+        const d = await client.likeLog.deleteMany({
+          where: {
+            targetId: photologId
+          }
+        })
+        
         const b = await client.photolog.delete({
           where: {
             id: photologId,
           }
         })
+
         if (!a.isPrivate) {
           var index_name = "photolog_search"
           var response = await searchEngine.delete({

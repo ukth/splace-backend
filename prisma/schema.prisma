@@ -140,8 +140,8 @@ model SeriesElement {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
-  photolog    Photolog?   @relation(fields: [photologId], references: [id])
-  photologId  Int?
+  photolog    Photolog   @relation(fields: [photologId], references: [id])
+  photologId  Int
   
   series Series @relation(fields: [seriesId], references: [id])
   seriesId Int  
@@ -456,8 +456,8 @@ model EditFolderLog {
 
 model LikeLog {
   id Int @id @default(autoincrement())
-  target Photolog? @relation("likedLogRelation", fields: [targetId], references: [id])
-  targetId Int?
+  target Photolog @relation("likedLogRelation", fields: [targetId], references: [id])
+  targetId Int
   requestUser User @relation("likeLogRelation", fields: [requestUserId], references: [id])
   requestUserId Int
   createdAt DateTime @default(now())
