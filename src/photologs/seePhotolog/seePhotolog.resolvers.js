@@ -17,7 +17,7 @@ export default {
             author: true,
             seriesElements: {
               include: {
-                sereis: true
+                series: true
               }
             },
             likedUser: true,

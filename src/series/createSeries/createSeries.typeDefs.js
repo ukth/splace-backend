@@ -5,6 +5,7 @@ export default gql`
     createSeries(
       title: String!
       isPrivate: Boolean!
+      photologIds: [Int]!
     ): defaultResult!
   }
 `;

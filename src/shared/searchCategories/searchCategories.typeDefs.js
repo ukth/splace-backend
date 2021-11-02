@@ -8,6 +8,6 @@ export default gql`
     bigcategories: [BigCategory]
   }
   type Query {
-    searchCategories(keyword: String, lastSpecialId: Int, lastHashId: Int): searchCategoriesResult!
+    searchCategories(keyword: String, lastHashId: Int): searchCategoriesResult!
   }
 `;

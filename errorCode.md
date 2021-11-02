@@ -35,6 +35,7 @@ ERROR _ _ _ _
   moment O
   report P
   
+  ERROR1O11 "moment text < 200"
   ERROR1111 "self block request"
   ERROR2111 "user for block X exist"
   ERROR4111 "prisma issue for blockUser"
@@ -155,6 +156,7 @@ ERROR _ _ _ _
   ERROR5O11 "only author can delete moment"
   ERROR4O13 "prisma issue can't delete moments"
   ERROR1B11 "invalid request. only my followings can be member"
+  ERROR1B12 "folder num < 99
   ERROR5B11 "only member can add memeber"
   ERROR4B11 "prisma issue for add folder member"
   ERROR5B82 "only member can add saves to folder"
@@ -204,6 +206,8 @@ ERROR _ _ _ _
   ERROR1412 "keyword not valid"
   ERROR1413 "lattitude and longitude sould be given at the same time"
   ERROR1414 "lattitude and longitude invalid. more than 1 or 0 address"
+  ERROR1415 "name < 30"
+  ERROR1416 "intro < 500"
   ERROR4416 "opensearch create falid"
   ERROR4417 "opensearch update faild"
   ERROR4419 "oepnsearch delete faild"

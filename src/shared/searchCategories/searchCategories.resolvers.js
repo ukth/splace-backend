@@ -17,7 +17,9 @@ export default {
             id: true,
             name: true
           },
-          take: 40,
+          take: 20,
+          ...(lastHashId && { cursor: { id: lastHashId } }),
+          skip: lastHashId ? 1 : 0,
         })
         const bigCategories = await client.bigCategory.findMany({
           where: {

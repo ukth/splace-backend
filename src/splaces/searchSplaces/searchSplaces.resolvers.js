@@ -11,7 +11,7 @@ function toSearch(arr) {
 
 export default {
   Query: {
-    searchSplaces: async (_, { lastId, type, keyword, lat, long, distance, bigCategoryIds, ratingTagIds }) => {
+    searchSplaces: async (_, { lastId, type, keyword, lat, long, distance, bigCategoryIds, ratingTagIds, noKids, parking, pets }) => {
       try {
         var index_name = type + "_search"
         var filter = new Array();
@@ -47,6 +47,30 @@ export default {
             "multi_match": {
               "fields": ["*"],
               "query": keyword
+            }
+          })
+        }
+
+        if(noKids) {
+          filter.push({
+            "match" : {
+              "noKids" : true
+            }
+          })
+        }
+
+        if(pets) {
+          filter.push({
+            "match" : {
+              "pets" : true
+            }
+          })
+        }
+
+        if(parking) {
+          filter.push({
+            "match" : {
+              "parking" : true
             }
           })
         }

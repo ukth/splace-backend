@@ -8,6 +8,16 @@ function validateCategory(text) {
   return exp.test(String(text).toLowerCase());
 };
 
+function validateUrl(text) {
+  const exp = /^[0-9a-z_\-.&?=:\/]*$/;
+  return exp.test(String(text).toLowerCase());
+};
+
+function validatePhone(text) {
+  const exp = /^01([0|1|6|7|8|9])?([0-9]{7,8})$/;
+  return exp.test(String(text).toLowerCase());
+};
+
 function AtoS(arr) {
   var str = ""
   for (var i = 0; i < arr.length; i++) {
@@ -24,6 +34,26 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        if(phone && !validatePhone(phone)){
+          return {
+            ok: false,
+            error: "ERROR1102"
+          }
+        }
+        if(url && !validateUrl(url)){
+          return {
+            ok: false,
+            error: "ERROR1104"
+          }
+        }
+        if(intro) {
+          if(intro.length > 500) {
+            return {
+              ok: false,
+              error: "ERROR1416"
+            }
+          }
+        }
         if (categories) {
           for (var i = 0; i < categories.length; i++) {
             if (!validateCategory(categories[i])) {

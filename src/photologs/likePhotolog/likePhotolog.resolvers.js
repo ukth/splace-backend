@@ -15,7 +15,7 @@ export default {
             id: photologId
           },
         })
-        if(b.isPrivate){
+        if(b.isPrivate && b.authorId != loggedInUser.id){
           return {
             ok: false,
             error: "ERROR1212"

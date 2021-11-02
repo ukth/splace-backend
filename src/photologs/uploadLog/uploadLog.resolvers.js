@@ -30,30 +30,30 @@ export default {
           }
         }
 
-        if (seriesIds) {
-          if (seriesIds.length > 10) {
+
+        if (seriesIds.length > 10) {
+          return {
+            ok: false,
+            error: "ERROR1216"
+          }
+        }
+
+
+        if (categories.length > 10 || bigCategoryIds.length > 3) {
+          return {
+            ok: false,
+            error: "ERROR1215"
+          }
+        }
+        for (var i = 0; i < categories.length; i++) {
+          if (!validateCategory(categories[i])) {
             return {
               ok: false,
-              error: "ERROR1216"
+              error: "ERROR1214"
             }
           }
         }
-        if (categories) {
-          if (categories.length > 10) {
-            return {
-              ok: false,
-              error: "ERROR1215"
-            }
-          }
-          for (var i = 0; i < categories.length; i++) {
-            if (!validateCategory(categories[i])) {
-              return {
-                ok: false,
-                error: "ERROR1214"
-              }
-            }
-          }
-        }
+
 
         const b = await client.photolog.create({
           data: {
@@ -91,46 +91,51 @@ export default {
           },
         });
 
-        if (seriesIds) {
-          for (var i = 0; i < seriesIds.length; i++) {
-            const series = await client.series.findFirst({
-              where: {
-                id: seriesIds[i]
-              },
-              include: {
-                seriesElements: true
-              }
-            })
-            if (series.seriesElements.length > 98) {
-              return {
-                ok: false,
-                error: "ERROR####"
-              }
+
+        for (var i = 0; i < seriesIds.length; i++) {
+          const series = await client.series.findFirst({
+            where: {
+              id: seriesIds[i],
+              authorId: loggedInUser.id
+            },
+            include: {
+              seriesElements: true
+            }
+          })
+          if (!series || series.seriesElements.length > 98) {
+            return {
+              ok: false,
+              error: "ERROR####"
             }
           }
+        }
 
-          for (var i = 0; i < seriesIds.length; i++) {
-            const series = await client.series.findFirst({
-              where: {
-                id: seriesIds[i]
-              },
-              include: {
-                seriesElements: true
-              }
-            })
-            const element = await client.seriesElement.create({
-              data: {
-                order: series.seriesElements.length + 1,
-                photolog: {
+        for (var i = 0; i < seriesIds.length; i++) {
+          const target = await client.series.findFirst({
+            where: {
+              id: seriesIds[i],
+            },
+            include: {
+              seriesElements: true
+            }
+          })
+          const element = await client.seriesElement.create({
+            data: {
+              order: target.seriesElements.length + 1,
+              photolog: {
+                connect: {
                   id: b.id
-                },
-                sereis: {
-                  id: series.id
+                }
+              },
+              series: {
+                connect: {
+                  id: target.id
                 }
               }
-            })
-          }
+            }
+          })
         }
+
 
         if (splaceId) {
           const a = await client.splace.findFirst({

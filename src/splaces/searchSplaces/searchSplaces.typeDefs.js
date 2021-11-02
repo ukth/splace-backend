@@ -24,6 +24,10 @@ export default gql`
       long: Float, 
       distance: Int, 
       bigCategoryIds: [Int],
-      ratingTagIds: [Int]): searchSplacesResult!
+      ratingTagIds: [Int]
+      noKids: Boolean
+      parking: Boolean
+      pets: Boolean
+      ): searchSplacesResult!
   }
 `;
