@@ -6,7 +6,7 @@ export default gql`
     error: String
     splaces: [Splace]
   }
-  type Mutation {
+  type Query {
     getSplacesByRatingtag(tagId: Int!, lastId: Int): getSplacesByRatingtagResult!
   }
 `;

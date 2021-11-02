@@ -6,7 +6,7 @@ export default gql`
     error: String
     log: Photolog
   }  
-  type Mutation {
+  type Query {
     seePhotolog(photologId: Int): seePhotologResult!
   }
 `;

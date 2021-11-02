@@ -10,7 +10,7 @@ function toSearch(arr) {
 }
 
 export default {
-  Mutation: {
+  Query: {
     searchSplaces: async (_, { lastId, type, keyword, lat, long, distance, bigCategoryIds, ratingTagIds, noKids, parking, pets }) => {
       try {
         var index_name = type + "_search"
@@ -76,8 +76,8 @@ export default {
         }
 
         var query = {
-          "from": lastId,
-          "size": 20,
+          "from": lastId ? lastId : 0,
+          "size": 10,
           "query": {
             "bool": {
               "filter": filter,
@@ -99,15 +99,6 @@ export default {
 
         //console.log(response)
         const searchedSplaces = response.body.hits.hits.map(result => result._source);
-
-        if (keyword.length != 0) {
-          const logging = await client.searchLog.create({
-            data: {
-              userId: loggedInUser.id,
-              keyword: keyword
-            }
-          })
-        }
 
         //console.log(searchedSplaces)
         return {

@@ -15,9 +15,9 @@ export default gql`
     error: String
     searchedSplaces: [searchedSplace]
   }
-  type Mutation {
+  type Query {
     searchSplaces(
-      lastId: Int!
+      lastId: Int
       type: String!
       keyword: String!, 
       lat: Float,

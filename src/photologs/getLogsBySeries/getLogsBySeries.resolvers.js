@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 
 export default {
-  Mutation: {
+  Query: {
     getLogsBySeries: protectedResolver(async (_, { seriesId, lastId }, { loggedInUser }) => {
       try {
         const ok = await client.series.findFirst({
@@ -61,12 +61,6 @@ export default {
           skip: lastId ? 1 : 0,
           orderBy: {
             order: "asc"
-          }
-        })
-        const logging = await client.seeSeriesLog.create({
-          data: {
-            userId: loggedInUser.id,
-            seriesId
           }
         })
         return {

@@ -6,7 +6,7 @@ export default gql`
     error: String
     series: Series
   }
-  type Mutation {
+  type Query {
     seeSeries(seriesId: Int!): seeSeriesResult!
   }
 `;

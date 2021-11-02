@@ -3,7 +3,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 
 export default {
-  Mutation: {
+  Query: {
     getLogsBySplace: protectedResolver(async (_, { splaceId, orderBy, lastId }, { loggedInUser }) => {
       try {
         if(orderBy !== "time" && orderBy !== "like"){
@@ -101,13 +101,6 @@ export default {
             },
           })
         }
-
-        const logging= await client.seeSplaceLog.create({
-          data: {
-            userId: loggedInUser.id,
-            splaceId: splaceId
-          }
-        })
         return {
           ok: true,
           logs: logs

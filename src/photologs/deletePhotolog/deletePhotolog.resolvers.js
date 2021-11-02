@@ -28,17 +28,19 @@ export default {
           where: {
             id: photologId,
           }
-        });
-        var index_name = "photolog_search"
-        var response = await searchEngine.delete({
-          id: photologId,
-          index: index_name,
         })
+        if (!a.isPrivate) {
+          var index_name = "photolog_search"
+          var response = await searchEngine.delete({
+            id: photologId,
+            index: index_name,
+          })
 
-        if (response.body.result != "deleted") {
-          return {
-            ok: false,
-            error: "ERROR4419"
+          if (response.body.result != "deleted") {
+            return {
+              ok: false,
+              error: "ERROR4419"
+            }
           }
         }
         return {

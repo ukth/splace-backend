@@ -7,7 +7,7 @@ export default gql`
     categories: [Category]
     bigcategories: [BigCategory]
   }
-  type Mutation {
+  type Query {
     searchCategories(keyword: String!, lastHashId: Int): searchCategoriesResult!
   }
 `;

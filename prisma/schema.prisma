@@ -140,8 +140,8 @@ model SeriesElement {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
-  photolog    Photolog   @relation(fields: [photologId], references: [id])
-  photologId  Int
+  photolog    Photolog?   @relation(fields: [photologId], references: [id])
+  photologId  Int?
   
   series Series @relation(fields: [seriesId], references: [id])
   seriesId Int  
