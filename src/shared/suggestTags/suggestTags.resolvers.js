@@ -24,7 +24,14 @@ export default {
             color: true
           },
         })
-        console.log(ratingtags)
+        
+        console.log({
+          OR: [
+            bigCategoryIds.map(bigCategoryId => {
+              id: bigCategoryId
+            })
+          ]
+        })
         const bigCategories = await client.bigCategory.findMany({
           where: {
             OR: [
