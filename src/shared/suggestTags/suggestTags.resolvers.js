@@ -12,11 +12,9 @@ export default {
 
         const ratingtags = await client.ratingtag.findMany({
           where: {
-            OR: [
-              ratingtagIds.map(ratingtagId => {
+            OR: ratingtagIds.map(ratingtagId => {
                 id: ratingtagId
               })
-            ]
           },
           select: {
             id: true,
@@ -26,19 +24,15 @@ export default {
         })
         console.log(bigCategoryIds)
         console.log({
-          OR: [
-            bigCategoryIds.map(bigCategoryId => {
+          OR: bigCategoryIds.map(bigCategoryId => {
               id: bigCategoryId
             })
-          ]
         })
         const bigCategories = await client.bigCategory.findMany({
           where: {
-            OR: [
-              bigCategoryIds.map(bigCategoryId => {
+            OR: bigCategoryIds.map(bigCategoryId => {
                 id: bigCategoryId
               })
-            ]
           },
           select: {
             id: true,
