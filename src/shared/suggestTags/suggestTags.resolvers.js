@@ -24,7 +24,7 @@ export default {
             color: true
           },
         })
-        
+        console.log(bigCategoryIds)
         console.log({
           OR: [
             bigCategoryIds.map(bigCategoryId => {
