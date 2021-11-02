@@ -11,6 +11,7 @@ export default gql`
       categories: [String]!
       bigCategoryIds: [Int]!
       isPrivate: Boolean!
+      splaceThumbnail: String
     ): defaultResult!
   }
 `;

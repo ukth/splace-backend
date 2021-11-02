@@ -11,6 +11,12 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        if(name > 30) {
+          return {
+            ok: false,
+            error: "ERROR1415"
+          }
+        }
         const ID = process.env.NCP_API_ID
         const KEY = process.env.NCP_API_KEY
         const headers = {
@@ -47,7 +53,7 @@ export default {
         });
         return {
           ok: true,
-          splaceId: a.id
+          splace: a
         };
       } catch (e) {
         console.log(e);

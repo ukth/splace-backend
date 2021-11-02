@@ -23,6 +23,11 @@ export default {
             error: "ERROR5312"
           }
         }
+        const c = await client.seriesElement.deleteMany({
+          where: {
+            seriesId
+          }
+        })
         const b = await client.series.delete({
           where:{
             id: seriesId

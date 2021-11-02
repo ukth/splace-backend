@@ -4,7 +4,7 @@ export default gql`
   type createSplaceResult{
     ok: Boolean!
     error: String
-    splaceId: Int
+    splace: Splace
   }
   type Mutation {
     createSplaces(

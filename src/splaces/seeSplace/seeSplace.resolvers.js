@@ -20,7 +20,7 @@ export default {
             owner: true
           },
         })
-        console.log(splace)
+        //console.log(splace)
         return {
           ok: true,
           splace

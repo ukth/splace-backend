@@ -11,17 +11,15 @@ export default {
             id: photologId
           },
           include: {
+            splace: true,
             categories: true,
             bigCategories: true,
-            splace: true,
             author: true,
             seriesElements: {
               include: {
-                sereis: true
+                series: true
               }
             },
-            likedUser: true,
-            specialtags: true,
           },
         })
         if(log.isPrivate && log.authorId !== loggedInUser.id){
@@ -30,7 +28,6 @@ export default {
             error: "ERROR5213"
           }
         }
-
         return {
           ok: true,
           log

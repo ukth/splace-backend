@@ -17,8 +17,8 @@ export default gql`
     order: Int!
     createdAt: String!
     updatedAt: String!
-    photolog: Photolog!
-    photologId: Int!
+    photolog: Photolog
+    photologId: Int
     series: Series!
     seriesId: Int!
   }

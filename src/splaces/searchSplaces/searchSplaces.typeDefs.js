@@ -17,13 +17,17 @@ export default gql`
   }
   type Query {
     searchSplaces(
-      lastId: Int!
+      lastId: Int
       type: String!
-      keyword: String, 
+      keyword: String!, 
       lat: Float,
-      long: Float, 
+      lon: Float, 
       distance: Int, 
       bigCategoryIds: [Int],
-      ratingTagIds: [Int]): searchSplacesResult!
+      ratingtagIds: [Int],
+      exceptNoKids: Boolean
+      parking: Boolean
+      pets: Boolean
+      ): searchSplacesResult!
   }
 `;

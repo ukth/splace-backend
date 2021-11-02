@@ -14,6 +14,7 @@ export default {
             author: true
           },
         })
+       
         return {
           ok: true,
           series

@@ -5,7 +5,7 @@ export default gql`
     uploadMoment(
       splaceId: Int
       videoUrl: String!
-      text: String
+      text: String!
       title: String!
     ): defaultResult!
   }

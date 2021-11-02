@@ -1,10 +1,9 @@
-import { Connect } from "aws-sdk";
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Mutation: {
-    editSeriesOrder: protectedResolver(async (_, { photologIds, seriesId }, { loggedInUser }) => {
+    editSeries: protectedResolver(async (_, { title, photologIds, seriesId }, { loggedInUser }) => {
       try {
         const ok = await client.series.findFirst({
           where: {
@@ -30,6 +29,22 @@ export default {
             error: "ERROR1313"
           }
         }
+
+        if(title.length<1 && title.length<31){
+          return {
+            ok: false,
+            error: "ERROR1311"
+          }
+        }
+
+        const b = await client.series.update({
+          where:{
+            id: seriesId
+          },
+          data: {
+            title
+          }
+        })
 
         const deleteAll = await client.seriesElement.deleteMany({
           where: {

@@ -9,6 +9,12 @@ export default {
       { loggedInUser }
     ) => {
       try {
+        if(text.length > 200) {
+          return {
+            ok: false,
+            error: "ERROR1O11"
+          }
+        }
         const a = await client.moment.create({
           data: {
             title,

@@ -502,3 +502,44 @@ model SplaceRating {
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
 }
+
+model SearchLog {
+  id Int @id @default(autoincrement())
+  userId Int
+  keyword String @db.Text
+  createdAt DateTime @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model SeeSplaceLog {
+  id Int @id @default(autoincrement())
+  userId Int
+  splaceId Int
+  createdAt DateTime @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model SeePhotologLog {
+  id Int @id @default(autoincrement())
+  userId Int
+  photologId Int
+  createdAt DateTime @default(now())
+  updatedAt      DateTime   @updatedAt  
+}
+
+model SeeSeriesLog {
+  id Int @id @default(autoincrement())
+  userId Int
+  seriesId Int
+  createdAt DateTime @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model SeeCategoryLog {
+  id Int @id @default(autoincrement())
+  userId Int
+  categoryId Int
+  categoryType Int
+  createdAt DateTime @default(now())
+  updatedAt      DateTime   @updatedAt
+}

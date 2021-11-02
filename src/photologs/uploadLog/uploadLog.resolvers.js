@@ -19,7 +19,7 @@ export default {
   Mutation: {
     uploadLog: protectedResolver(async (
       _,
-      { imageUrls, photoSize, text, splaceId, isPrivate, categories, bigCategoryIds, seriesIds },
+      { imageUrls, photoSize, text, splaceId, isPrivate, categories, bigCategoryIds, seriesIds, splaceThumbnail },
       { loggedInUser }
     ) => {
       try {
@@ -30,30 +30,30 @@ export default {
           }
         }
 
-        if (seriesIds) {
-          if (seriesIds.length > 10) {
+
+        if (seriesIds.length > 10) {
+          return {
+            ok: false,
+            error: "ERROR1216"
+          }
+        }
+
+
+        if (categories.length > 10 || bigCategoryIds.length > 3) {
+          return {
+            ok: false,
+            error: "ERROR1215"
+          }
+        }
+        for (var i = 0; i < categories.length; i++) {
+          if (!validateCategory(categories[i])) {
             return {
               ok: false,
-              error: "ERROR1216"
+              error: "ERROR1214"
             }
           }
         }
-        if (categories) {
-          if (categories.length > 10) {
-            return {
-              ok: false,
-              error: "ERROR1215"
-            }
-          }
-          for (var i = 0; i < categories.length; i++) {
-            if (!validateCategory(categories[i])) {
-              return {
-                ok: false,
-                error: "ERROR1214"
-              }
-            }
-          }
-        }
+
 
         const b = await client.photolog.create({
           data: {
@@ -91,46 +91,51 @@ export default {
           },
         });
 
-        if (seriesIds) {
-          for (var i = 0; i < seriesIds.length; i++) {
-            const series = await client.series.findFirst({
-              where: {
-                id: seriesIds[i]
-              },
-              include: {
-                seriesElements: true
-              }
-            })
-            if (series.seriesElements.length > 98) {
-              return {
-                ok: false,
-                error: "ERROR####"
-              }
+
+        for (var i = 0; i < seriesIds.length; i++) {
+          const series = await client.series.findFirst({
+            where: {
+              id: seriesIds[i],
+              authorId: loggedInUser.id
+            },
+            include: {
+              seriesElements: true
+            }
+          })
+          if (!series || series.seriesElements.length > 98) {
+            return {
+              ok: false,
+              error: "ERROR####"
             }
           }
+        }
 
-          for (var i = 0; i < seriesIds.length; i++) {
-            const series = await client.series.findFirst({
-              where: {
-                id: seriesIds[i]
-              },
-              include: {
-                seriesElements: true
-              }
-            })
-            const element = await client.seriesElement.create({
-              data: {
-                order: series.seriesElements.length + 1,
-                photolog: {
+        for (var i = 0; i < seriesIds.length; i++) {
+          const target = await client.series.findFirst({
+            where: {
+              id: seriesIds[i],
+            },
+            include: {
+              seriesElements: true
+            }
+          })
+          const element = await client.seriesElement.create({
+            data: {
+              order: target.seriesElements.length + 1,
+              photolog: {
+                connect: {
                   id: b.id
-                },
-                sereis: {
-                  id: series.id
+                }
+              },
+              series: {
+                connect: {
+                  id: target.id
                 }
               }
-            })
-          }
+            }
+          })
         }
+
 
         if (splaceId) {
           const a = await client.splace.findFirst({
@@ -141,8 +146,43 @@ export default {
             include: {
               categories: true,
               bigCategories: true,
+              ratingtags: true,
             }
           })
+
+          if (a.thumbnail == null && a.activate) {
+            if (splaceThumbnail != null) {
+              const thumbnail = await client.splace.update({
+                where: {
+                  id: splaceId
+                },
+                data: {
+                  thumbnail: splaceThumbnail
+                }
+              })
+
+              var index_name = "splace_search"
+              var document = {
+                "doc": {
+                  "thumbnail": splaceThumbnail,
+                }
+              }
+
+              var response = await searchEngine.update({
+                id: splaceId,
+                index: index_name,
+                body: document
+              })
+
+              if (response.body.result != "updated" && response.body.result != "noop") {
+                return {
+                  ok: false,
+                  error: "ERROR4417"
+                }
+              }
+
+            }
+          }
 
           if (a && b.isPrivate == false) {
 
@@ -151,6 +191,8 @@ export default {
             const cNames = a.categories.map(category => category.name)
             const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
             const bigCategoryIds = a.bigCategories.map(bigCategory => bigCategory.id)
+            const rtNames = a.ratingtags.map(ratingtag => ratingtag.name)
+            const rtIds = a.ratingtags.map(ratingtag => ratingtag.id)
             var address_array = a.address.split(" ")
             const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
             const address = address_array[0] + " " + address_2
@@ -158,7 +200,7 @@ export default {
             var document = {
               "id": b.id,
               "name": a.name,
-              "address": address,
+              "address": a.address,
               "location": location,
               "intro": a.intro,
               "thumbnail": b.imageUrls[0],
@@ -168,6 +210,8 @@ export default {
               "categories": AtoS(cNames),
               "stringBC": AtoS(bigCategoryIds),
               "bigCategories": AtoS(bcNames),
+              "ratingtags" : AtoS(rtNames),
+              "stringRT" : AtoS(rtIds)
             }
 
             var response = await searchEngine.create({

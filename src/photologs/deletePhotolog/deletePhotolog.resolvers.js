@@ -24,23 +24,39 @@ export default {
             error: "ERROR5211"
           }
         }
+        
+        const c = await client.seriesElement.deleteMany({
+          where: {
+            photologId
+          }
+        })
+        
+        const d = await client.likeLog.deleteMany({
+          where: {
+            targetId: photologId
+          }
+        })
+
+        if (!a.isPrivate) {
+          var index_name = "photolog_search"
+          var response = await searchEngine.delete({
+            id: photologId,
+            index: index_name,
+          })
+
+          if (response.body.result != "deleted") {
+            return {
+              ok: false,
+              error: "ERROR4419"
+            }
+          }
+        }
+
         const b = await client.photolog.delete({
           where: {
             id: photologId,
           }
-        });
-        var index_name = "photolog_search"
-        var response = await searchEngine.delete({
-          id: photologId,
-          index: index_name,
         })
-
-        if (response.body.result != "deleted") {
-          return {
-            ok: false,
-            error: "ERROR4419"
-          }
-        }
         return {
           ok: true,
         };
