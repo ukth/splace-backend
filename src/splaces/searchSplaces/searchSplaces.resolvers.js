@@ -106,11 +106,10 @@ export default {
 
         //console.log(response)
         const searchedSplaces = response.body.hits.hits.map(result => result._source);
-        console.log(searchedSplaces)
-        console.log(searchedSplaces.length)
-        for(var i; i< searchedSplaces.length; i++){
+        
+        for(var i=0; i< searchedSplaces.length; i++){
+          
           console.log(i)
-
           const saved = await client.save.findFirst({
             where: {
               savedUser: {
