@@ -11,7 +11,7 @@ function toSearch(arr) {
 
 export default {
   Query: {
-    searchSplaces: async (_, { ratingtagIds, lastId, type, keyword, lat, lon, distance, bigCategoryIds, exceptNoKids, parking, pets }) => {
+    searchSplaces: async (_, { ratingtagIds, lastId, type, keyword, lat, lon, distance, bigCategoryIds, exceptNoKids, parking, pets }, { loggedInUser }) => {
       try {
         var index_name = type + "_search"
         var filter = new Array();
@@ -46,7 +46,7 @@ export default {
         if (keyword) {
           filter.push({
             "multi_match": {
-              "fields": ["*"],
+              "fields": ["name", "bigCategories", "categories", "intro", "address"],
               "query": keyword
             }
           })
@@ -106,7 +106,24 @@ export default {
 
         //console.log(response)
         const searchedSplaces = response.body.hits.hits.map(result => result._source);
+        console.log(searchedSplaces)
+        console.log(searchedSplaces.length)
+        for(var i; i< searchedSplaces.length; i++){
+          console.log(i)
 
+          const saved = await client.save.findFirst({
+            where: {
+              savedUser: {
+                id: loggedInUser.id
+              },
+              splaceId: parseInt(searchedSplaces[i].id)
+            }
+          })
+          
+          console.log(saved)
+
+          searchedSplaces[i].isSaved = saved != null ? true: false;
+        }
         //console.log(searchedSplaces)
         return {
           ok: true,

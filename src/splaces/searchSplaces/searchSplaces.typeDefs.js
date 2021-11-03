@@ -8,7 +8,8 @@ export default gql`
     stringBC: String
     location: String!
     name : String!
-    thumbnail: String
+    thumbnail: String,
+    isSaved: Boolean!
   }
   type searchSplacesResult {
     ok: Boolean!
