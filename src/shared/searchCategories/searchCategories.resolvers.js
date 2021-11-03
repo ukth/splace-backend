@@ -4,7 +4,7 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    searchCategories: protectedResolver(async (_, { keyword, lastHashId }, { loggedInUser }) => {
+    searchCategories: protectedResolver(async (_, { keyword, lastId }, { loggedInUser }) => {
       try {
         const categories = await client.category.findMany({
           where: {
@@ -17,8 +17,8 @@ export default {
             name: true
           },
           take: 20,
-          ...(lastHashId && { cursor: { id: lastHashId } }),
-          skip: lastHashId ? 1 : 0,
+          ...(lastId && { cursor: { id: lastId } }),
+          skip: lastId ? 1 : 0,
         })
         const bigCategories = await client.bigCategory.findMany({
           where: {

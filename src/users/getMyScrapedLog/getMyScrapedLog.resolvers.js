@@ -7,11 +7,20 @@ export default {
   Query: {
     getMyScrapedLog: protectedResolver(async (_, {}, { loggedInUser }) => {
       try{
-      const logs = await client.scrapedLog.findMany({
+      const scraps = await client.scrapedLog.findMany({
         where: {
           savedUserId: loggedInUser.id
+        },
+        include: {
+          photolog: {
+            include: {
+              author: true
+            }
+          }
         }
       })
+      
+      const logs = scraps.map(scrap => scrap.photolog)
 
       return {
         ok: true,

@@ -6,7 +6,8 @@ export default gql`
     text: String
     author: User!  
     title: String!
-    videoUrl: String   
+    videoUrl: String
+    thumbnail: String   
     createdAt: String! 
     updatedAt: String!
     splace: Splace  

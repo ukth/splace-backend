@@ -11,7 +11,7 @@ export default {
       try {
         const ok = await client.scrapedSeries.findFirst({
           where:{
-            id: scrapedSeriesId,
+            seriesId: scrapedSeriesId,
             savedUser: {
               id: loggedInUser.id
             }
@@ -26,7 +26,7 @@ export default {
         }
         const a = await client.scrapedSeries.delete({
           where:{
-           id: scrapedSeriesId 
+           id: ok.id
           },
         });
         //console.log(a);

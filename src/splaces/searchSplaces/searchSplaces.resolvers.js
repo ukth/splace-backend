@@ -88,10 +88,10 @@ export default {
                 }
               ],
               "should": [
-                { "match_phrase" : { "ratingtags": "Hot"} },
-                { "match_phrase" : { "ratingtags": "Superhot"} },
-                { "match_phrase" : { "ratingtags": "Tasty"} },
-                { "match_phrase" : { "ratingtags": "Supertasty"} }
+                { "match" : { "ratingtags": { "boost" : 0.7, "query" : "Hot" } } },
+                { "match" : { "ratingtags": { "boost": 5, "query" : "Superhot"} } },
+                { "match" : { "ratingtags": { "boost" : 0.3, "query": "Tasty"} } },
+                { "match" : { "ratingtags": { "boost": 0.85, "query" : "Supertasty"} } }
               ]
             }
           }
@@ -108,8 +108,6 @@ export default {
         const searchedSplaces = response.body.hits.hits.map(result => result._source);
         
         for(var i=0; i< searchedSplaces.length; i++){
-          
-          console.log(i)
           const saved = await client.save.findFirst({
             where: {
               savedUser: {
@@ -118,9 +116,6 @@ export default {
               splaceId: parseInt(searchedSplaces[i].id)
             }
           })
-          
-          console.log(saved)
-
           searchedSplaces[i].isSaved = saved != null ? true: false;
         }
         //console.log(searchedSplaces)

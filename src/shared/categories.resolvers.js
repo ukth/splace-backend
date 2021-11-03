@@ -23,7 +23,7 @@ export default {
       try {
         const num = await client.photolog.count({
           where: {
-            hashtags: {
+            categories: {
               some: {
                 id
               },

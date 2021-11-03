@@ -5,9 +5,9 @@ export default gql`
     ok: Boolean!
     error: String
     categories: [Category]
-    bigcategories: [BigCategory]
+    bigCategories: [BigCategory]
   }
   type Query {
-    searchCategories(keyword: String!, lastHashId: Int): searchCategoriesResult!
+    searchCategories(keyword: String!, lastId: Int): searchCategoriesResult!
   }
 `;
