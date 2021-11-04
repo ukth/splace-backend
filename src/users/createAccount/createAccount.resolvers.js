@@ -1,7 +1,9 @@
 import bcrypt from "bcrypt";
 import client from "../../client";
 import redisClient from "../../redis"
+import jwt from "jsonwebtoken";
 const { promisify } = require('util');
+require("dotenv").config();
 
 function validateUsername(text) {
   if (text.length < 1 || text.length > 30) return false
@@ -25,7 +27,7 @@ export default {
   Mutation: {
     createAccount: async (
       _,
-      { username, password, phone, certificate, marketingAgree }
+      { username, password, phone, token, marketingAgree }
     ) => {
       try {
         const existingUser = await client.user.findFirst({
@@ -53,12 +55,9 @@ export default {
             error: "ERROR1104"
           }
         }
+        const { phoneOk } = await jwt.verify(token, process.env.SECRET_KEY);
 
-        const getAsync = promisify(redisClient.get).bind(redisClient);
-
-        const reply = await getAsync(phone)
-
-        if (certificate != reply) {
+        if (phoneOk != phone) {
           return {
             ok: false,
             error: "ERROR1103"

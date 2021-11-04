@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import client from "../client";
+require("dotenv").config();
 
 export const getUser = async (token) => {
   try {

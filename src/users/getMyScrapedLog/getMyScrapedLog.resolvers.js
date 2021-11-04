@@ -14,7 +14,15 @@ export default {
         include: {
           photolog: {
             include: {
-              author: true
+              splace: true,
+              categories: true,
+              bigCategories: true,
+              author: true,
+              seriesElements: {
+                include: {
+                  series: true
+                }
+              },
             }
           }
         }

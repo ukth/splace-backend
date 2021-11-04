@@ -57,6 +57,7 @@ ERROR _ _ _ _
   ERROR1102 "invalid phone number"
   ERROR1103 "invalid certificate"
   ERROR1104 "invalid user infomation"
+  ERROR1105 "user X exist or invalid token"
   ERROR4106 "prisma issue for login"
   ERROR3121 "already scraped log"
   ERROR4122 "prisma issue for scrap photolog"

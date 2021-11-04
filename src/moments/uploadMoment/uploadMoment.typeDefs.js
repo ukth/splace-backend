@@ -7,6 +7,7 @@ export default gql`
       videoUrl: String!
       text: String!
       title: String!
+      thumbnail: String!
     ): defaultResult!
   }
 `;

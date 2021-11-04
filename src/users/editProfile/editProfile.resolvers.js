@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import client from "../../client";
 import { protectedResolver } from "../users.utils";
 import dayjs from 'dayjs';
@@ -6,11 +5,6 @@ import dayjs from 'dayjs';
 function validateUsername(text) {
   if(text.length < 1 || text.length > 30) return false
   const exp = /^[0-9a-z._]*$/;
-  return exp.test(String(text).toLowerCase());
-};
-
-function validatePassword(text) {
-  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{6,13}$/;
   return exp.test(String(text).toLowerCase());
 };
 
@@ -28,7 +22,7 @@ export default {
   Mutation: {
     editProfile: protectedResolver(async (
       _,
-      { name, username, birthDay, email, password: newPassword, profileMessage, profileImageUrl, url },
+      { name, username, birthDay, email, profileMessage, profileImageUrl, url },
       { loggedInUser }
     ) => {
       try {
@@ -78,10 +72,6 @@ export default {
           }
         }
 
-        let hashedPassword = null;
-        if (newPassword) {
-          hashedPassword = await bcrypt.hash(newPassword, 10);
-        }
         const updatedUser = await client.user.update({
           where: {
             id: loggedInUser.id,
@@ -93,10 +83,10 @@ export default {
             profileMessage,
             url,
             ...(birthDay && { birthDay: birthDay }),
-            ...(hashedPassword && { password: hashedPassword }),
             ...(profileImageUrl && { profileImageUrl: profileImageUrl }),
           },
         });
+        
         return {
           ok: true,
         };

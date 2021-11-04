@@ -16,7 +16,19 @@ export default {
             include: {
               seriesElements: {
                 include: {
-                  photolog: true
+                  photolog: {
+                    include: {
+                      splace: true,
+                      categories: true,
+                      bigCategories: true,
+                      author: true,
+                      seriesElements: {
+                        include: {
+                          series: true
+                        }
+                      },
+                    }
+                  }
                 },
                 orderBy: {
                   order: "asc"
