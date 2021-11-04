@@ -12,7 +12,7 @@ function validateUsername(text) {
 };
 
 function validatePassword(text) {
-  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{6,13}$/;
+  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{8,15}$/;
   return exp.test(String(text).toLowerCase());
 };
 
@@ -126,9 +126,14 @@ export default {
           }
         });
 
-        //console.log(a);
+        const now = new Date();
+        const duration = 5184000000;
+        const newToken = await jwt.sign({ id: a.id, iat: now.getTime(), eat: now.getTime() + duration}, process.env.SECRET_KEY);
+
+
         return {
           ok: true,
+          token: newToken
         };
       } catch (e) {
         console.log(e);

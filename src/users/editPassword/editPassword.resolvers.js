@@ -5,7 +5,7 @@ require("dotenv").config();
 
 
 function validatePassword(text) {
-  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{6,13}$/;
+  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{8,15}$/;
   return exp.test(String(text).toLowerCase());
 };
 

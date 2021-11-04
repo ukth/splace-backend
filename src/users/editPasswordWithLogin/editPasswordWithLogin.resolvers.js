@@ -6,7 +6,7 @@ require("dotenv").config();
 
 
 function validatePassword(text) {
-  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{6,13}$/;
+  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{8,15}$/;
   return exp.test(String(text).toLowerCase());
 };
 
@@ -25,10 +25,9 @@ export default {
           }
         }
 
-        console.log(loggedInUser.password)
-        const hashedPassword = await bcrypt.hash(password,10)
-        console.log(hashedPassword)
-        if(loggedInUser.password!=hashedPassword){
+        const hashedPassword = await bcrypt.hash(password,10)        
+        const passwordOk = await bcrypt.compare(password, loggedInUser.password)
+        if(!passwordOk){
           return {
             ok: false,
             error: "ERROR1###"
