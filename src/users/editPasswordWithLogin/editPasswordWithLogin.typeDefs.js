@@ -2,9 +2,9 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Mutation {
-    createCertificate(
-      phone: String!,
-      isRegister: Boolean!
+    editPasswordWithLogin(
+      newPassword: String!
+      password: String!
     ): defaultResult!
   }
 `;

@@ -11,7 +11,7 @@ function toSearch(arr) {
 
 export default {
   Query: {
-    searchSplaces: async (_, { ratingtagIds, lastId, type, keyword, lat, lon, distance, bigCategoryIds, exceptNoKids, parking, pets }) => {
+    searchSplaces: async (_, { ratingtagIds, lastId, type, keyword, lat, lon, distance, bigCategoryIds, exceptNoKids, parking, pets }, { loggedInUser }) => {
       try {
         var index_name = type + "_search"
         var filter = new Array();
@@ -46,7 +46,7 @@ export default {
         if (keyword) {
           filter.push({
             "multi_match": {
-              "fields": ["*"],
+              "fields": ["name", "bigCategories", "categories", "intro", "address"],
               "query": keyword
             }
           })
@@ -88,10 +88,10 @@ export default {
                 }
               ],
               "should": [
-                { "match_phrase" : { "ratingtags": "Hot"} },
-                { "match_phrase" : { "ratingtags": "Superhot"} },
-                { "match_phrase" : { "ratingtags": "Tasty"} },
-                { "match_phrase" : { "ratingtags": "Supertasty"} }
+                { "match" : { "ratingtags": { "boost" : 0.7, "query" : "Hot" } } },
+                { "match" : { "ratingtags": { "boost": 5, "query" : "Superhot"} } },
+                { "match" : { "ratingtags": { "boost" : 0.3, "query": "Tasty"} } },
+                { "match" : { "ratingtags": { "boost": 0.85, "query" : "Supertasty"} } }
               ]
             }
           }
@@ -106,7 +106,18 @@ export default {
 
         //console.log(response)
         const searchedSplaces = response.body.hits.hits.map(result => result._source);
-
+        
+        for(var i=0; i< searchedSplaces.length; i++){
+          const saved = await client.save.findFirst({
+            where: {
+              savedUser: {
+                id: loggedInUser.id
+              },
+              splaceId: parseInt(searchedSplaces[i].id)
+            }
+          })
+          searchedSplaces[i].isSaved = saved != null ? true: false;
+        }
         //console.log(searchedSplaces)
         return {
           ok: true,

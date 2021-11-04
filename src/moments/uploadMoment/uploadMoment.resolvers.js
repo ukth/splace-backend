@@ -5,7 +5,7 @@ export default {
   Mutation: {
     uploadMoment: protectedResolver(async (
       _,
-      { text, splaceId, videoUrl, title },
+      { text, splaceId, videoUrl, title, thumbnail },
       { loggedInUser }
     ) => {
       try {
@@ -24,6 +24,7 @@ export default {
               }
             },
             videoUrl,
+            thumbnail,
             text,
             ...(splaceId != null && {
               splace: {

@@ -23,7 +23,7 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        if (imageUrls.length == 0 || imageUrls.length > 8) {
+        if (imageUrls.length == 0 || imageUrls.length > 16) {
           return {
             ok: false,
             error: "ERROR1213"

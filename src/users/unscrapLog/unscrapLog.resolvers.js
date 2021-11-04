@@ -11,7 +11,7 @@ export default {
       try {
         const ok = await client.scrapedLog.findFirst({
           where:{
-            id: scrapedLogId,
+            photologId: scrapedLogId,
             savedUser: {
               id: loggedInUser.id
             }
@@ -26,7 +26,7 @@ export default {
         }
         const a = await client.scrapedLog.delete({
           where:{
-           id: scrapedLogId 
+           id: ok.id
           },
         });
         //console.log(a);

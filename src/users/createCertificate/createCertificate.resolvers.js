@@ -12,7 +12,7 @@ export default {
   Mutation: {
     createCertificate: async (
       _,
-      { phone }
+      { phone, isRegister }
     ) => {
       try {
         const existingUser = await client.user.findFirst({
@@ -20,7 +20,7 @@ export default {
             phone
           },
         });
-        if (existingUser) {
+        if (existingUser && isRegister) {
           return {
             ok: false,
             error: "ERROR3103"
@@ -47,7 +47,7 @@ export default {
           redisClient.del(phone);
         }
 
-        redisClient.set(phone, certificate);
+        redisClient.set(phone, certificate,'EX',180);
 
         //console.log(redisClient.exists(phone))
 

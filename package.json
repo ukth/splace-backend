@@ -26,6 +26,7 @@
   "homepage": "https://github.com/lee1june61/splace_proto#readme",
   "dependencies": {
     "@babel/cli": "^7.15.7",
+    "@babel/runtime": "^7.16.0",
     "@graphql-tools/load-files": "^6.5.2",
     "@graphql-tools/merge": "^8.2.1",
     "@graphql-tools/schema": "^8.3.1",
@@ -44,7 +45,6 @@
     "express-healthcheck": "^0.1.0",
     "graphql": "^15.7.2",
     "graphql-depth-limit": "^1.1.0",
-    "graphql-rate-limit": "^3.3.0",
     "graphql-redis-subscriptions": "^2.4.0",
     "graphql-scalars": "^1.12.0",
     "helmet": "^4.6.0",
