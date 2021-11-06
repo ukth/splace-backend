@@ -3,13 +3,14 @@ import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
 import axios from "axios"
 import { buildSchema } from "graphql";
+import { CostExplorer } from "aws-sdk";
 require("dotenv").config();
 
 export default {
   Mutation: {
     getSplaceByKakao: protectedResolver(async (
       _,
-      { kakaoId, keyword },
+      { kakaoId, keyword, x, y },
       { loggedInUser }
     ) => {
       try {
@@ -39,7 +40,13 @@ export default {
             "Authorization": auth
           }
         }
-        var places = await axios.get(encodeURI("https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword), headers)
+
+        console.log(keyword)
+        console.log(x)
+        console.log(y)
+
+        var url = (x != null && y != null) ? "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword + "&x=" + x + "&y=" + y: "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword
+        var places = await axios.get(encodeURI(url), headers)
 
         if (places.statusText != 'OK') {
           return {
@@ -55,7 +62,10 @@ export default {
           }
         }
 
+
         places = places.data.documents.filter(kakao => kakao.id == kakaoId)
+
+        console.log(places)
 
         if (places.length == 0) {
           return {

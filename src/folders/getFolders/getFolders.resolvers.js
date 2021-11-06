@@ -4,9 +4,22 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getFolders: protectedResolver(async (_, { lastId }, { loggedInUser, orderBy }) => {
+    getFolders: protectedResolver(async (_, { lastId, orderBy }, { loggedInUser }) => {
       try {
-        const order = (orderBy == "updatedAt") ? { updatedAt: "desc" } : { title: "desc" } 
+        let order = null;
+        if(orderBy == "updatedAt") { 
+          order = { updatedAt: "desc" } 
+        } else if(orderBy == "name") { 
+          order = { title: "desc" } 
+        } else if(orderBy == "createdAt") { 
+          order = { createdAt: "desc" } 
+        } else {
+          return {
+            ok: false,
+            error: "ERROR1###"
+          }
+        }
+
         const folders = await client.folder.findMany({
           where: {
             members: {

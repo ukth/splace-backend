@@ -150,8 +150,8 @@ export default {
             }
           })
 
-          if (a.thumbnail == null && a.activate) {
-            if (splaceThumbnail != null) {
+          if (a) {
+            if (splaceThumbnail != null && a.thumbnail == null) {
               const thumbnail = await client.splace.update({
                 where: {
                   id: splaceId

@@ -17,6 +17,18 @@ export default {
             error: "ERROR1M14"
           }
         }
+        if (memberIds.includes(1)) {
+          return {
+            ok: false,
+            error: "ERROR1###"
+          }
+        }
+        if (isPersonal) {
+          return {
+            ok: false,
+            error: "ERROR1###"
+          }
+        }
         if (title.length < 1 && title.length > 20) {
           return {
             ok: false,
@@ -114,6 +126,7 @@ export default {
           include: {
             members: true,
             lastMessage: true,
+            chatroomReaded: true,
           }
         });
 

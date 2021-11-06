@@ -65,7 +65,7 @@ export default {
           }
         }
 
-        if((name && name.length > 10) || (username && !validateUsername(username)) || (newPassword && !validatePassword(newPassword)) || (email && !validateEmail(email)) || (url && !validateUrl(url)) || (profileMessage && profileMessage.length > 1000)){
+        if((name && name.length > 10) || (username && !validateUsername(username)) || (email && !validateEmail(email)) || (url && !validateUrl(url)) || (profileMessage && profileMessage.length > 1000)){
           return {
             ok: false,
             error: "ERROR1104"

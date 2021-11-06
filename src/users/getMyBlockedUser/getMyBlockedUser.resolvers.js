@@ -23,6 +23,7 @@ export default {
             name: true,
             joinedAt: true,
             updatedAt: true,
+            activate: true
           }
         })
         return {

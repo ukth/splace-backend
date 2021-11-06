@@ -107,7 +107,7 @@ export default {
               },
               chatroom: {
                 connect: {
-                  id: a.id
+                  id: b.id
                 }
               }
             }
@@ -115,7 +115,7 @@ export default {
         }
         const d = await client.chatroom.update({
           where: {
-            id: a.id
+            id: b.id
           },
           data: {
             title: "",
@@ -133,7 +133,8 @@ export default {
 
         return {
           ok: true,
-          token: newToken
+          token: newToken,
+          userId: a.id
         };
       } catch (e) {
         console.log(e);
