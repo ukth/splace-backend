@@ -100,14 +100,14 @@ export default {
             error: "ERROR5471"
           };
         }
-        var day = new Date()
+        /*var day = new Date()
         var update = new Date(ok.updatedAt)
         if (ok.ownerId == null && day.getTime() - update.getTime() <= 3600000) {
           return {
             ok: false,
             error: "ERROR5473"
           }
-        }
+        }*/
         const a = await client.splace.update({
           where: {
             id: splaceId

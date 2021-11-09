@@ -16,7 +16,11 @@ export default {
             ratingtags: true,
             categories: true,
             bigCategories: true,
-            fixedContents: true,
+            fixedContents: {
+              orderBy: {
+                createdAt: "desc"
+              }
+            },
             owner: true
           },
         })

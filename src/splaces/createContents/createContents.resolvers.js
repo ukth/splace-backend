@@ -9,8 +9,28 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const previous = await client.splace.findFirst({ where: { id: splaceId, activate: true, } });
-        if (previous.ownerId != loggedInUser.id) {
+        const ok = await client.splace.findFirst({
+          where: {
+            id: splaceId,
+            owner: {
+              id: loggedInUser.id
+            },
+            activate: true,
+          },
+          include: {
+            categories: {
+              select: {
+                id: true
+              }
+            },
+            bigCategories: {
+              select: {
+                id: true
+              }
+            },
+          }
+        });
+        if (!ok) {
           return {
             ok: false,
             error: "ERROR5471"

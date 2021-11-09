@@ -61,7 +61,6 @@ export default {
         const ok = await client.splace.findFirst({
           where: {
             id: splaceId,
-            ownerId: loggedInUser.id,
             activate: true,
           }
         })
@@ -71,6 +70,26 @@ export default {
             error: "ERROR5471"
           }
         }
+        if (ok.ownerId != loggedInUser.id && ok.ownerId != null) {
+          return {
+            ok: false,
+            error: "ERROR5471"
+          };
+        }
+        if (ok.ownerId == null && loggedInUser.authority != "editor") {
+          return {
+            ok: false,
+            error: "ERROR5471"
+          };
+        }
+        /*var day = new Date()
+        var update = new Date(ok.updatedAt)
+        if (ok.ownerId == null && day.getTime() - update.getTime() <= 3600000) {
+          return {
+            ok: false,
+            error: "ERROR5473"
+          }
+        }*/
         const week = [sun, mon, tue, wed, thr, fri, sat]
 
         for (var i = 0; i < 7; i++) {

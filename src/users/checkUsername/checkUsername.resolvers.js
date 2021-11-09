@@ -5,7 +5,7 @@ export default {
       try {
         const profile = await client.user.findFirst({
           where: {
-            username,
+            username: username.toLowerCase(),
           }
         })
         if(profile){

@@ -14,7 +14,6 @@ export default {
         })
         return {
           ok: true,
-          logs: logs
         };
       } catch (e) {
         console.log(e)

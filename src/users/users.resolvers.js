@@ -47,17 +47,38 @@ export default {
         if (!loggedInUser) {
           return false;
         }
-        const exists = await client.user.count({
+        const exists = await client.user.findFirst({
           where: {
-            id: loggedInUser.id,
-            followings: {
+            id,
+            followers: {
               some: {
-                id,
+                id: loggedInUser.id,
               },
             },
           },
         });
-        return Boolean(exists);
+        return exists != null;
+      } catch (e) {
+        console.log(e);
+        return false;
+      }
+    },
+    isBlocked: async ({ id }, _, { loggedInUser }) => {
+      try {
+        if (!loggedInUser) {
+          return false;
+        }
+        const exists = await client.user.findFirst({
+          where: {
+            id,
+            blockingUser: {
+              some: {
+                id: loggedInUser.id,
+              },
+            },
+          },
+        });
+        return exists != null;
       } catch (e) {
         console.log(e);
         return false;

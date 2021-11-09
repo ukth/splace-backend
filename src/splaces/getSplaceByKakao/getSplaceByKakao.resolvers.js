@@ -82,7 +82,7 @@ export default {
         const b = await client.splace.create({
           data: {
             name: place.place_name,
-            phone: place.phone,
+            phone: place.phone.replace(/-/gi, ""),
             lat: place.y,
             lon: place.x,
             kakaoId,

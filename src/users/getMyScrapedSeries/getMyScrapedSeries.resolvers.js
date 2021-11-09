@@ -14,6 +14,7 @@ export default {
         include:{
           series: {
             include: {
+              author: true,
               seriesElements: {
                 include: {
                   photolog: {

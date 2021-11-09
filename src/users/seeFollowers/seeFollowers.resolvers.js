@@ -1,8 +1,9 @@
 import client from "../../client";
+import { protectedResolver } from "../users.utils";
 
 export default {
   Query: {
-    seeFollowers: async (_, { userId, keyword, lastId }) => {
+    seeFollowers: protectedResolver(async (_, { userId, keyword, lastId }, { loggedInUser }) => {
       try {
         const ok = await client.user.findUnique({
           where: { id: userId },
@@ -38,6 +39,6 @@ export default {
           error: "ERROR4114"
         }
       }
-    },
+    })
   },
 };
