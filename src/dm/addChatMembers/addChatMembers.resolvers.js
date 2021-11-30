@@ -20,7 +20,7 @@ export default {
             members: true
           }
         })
-        console.log(ok)
+        //console.log(ok)
         if (!ok) {
           return {
             ok: false,

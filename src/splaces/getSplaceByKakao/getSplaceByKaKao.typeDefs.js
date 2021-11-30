@@ -10,6 +10,8 @@ export default gql`
     getSplaceByKakao(
       kakaoId: Int!
       keyword: String!
+      x: Float
+      y: Float
     ): getSplaceByKakaoResult!
   }
 `;

@@ -1,6 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
+require("dotenv").config();
 
 function validateCategory(text) {
   if (text.length < 1 || text.length > 30) return false
@@ -150,8 +151,8 @@ export default {
             }
           })
 
-          if (a.thumbnail == null && a.activate) {
-            if (splaceThumbnail != null) {
+          if (a) {
+            if (splaceThumbnail != null && a.thumbnail == null) {
               const thumbnail = await client.splace.update({
                 where: {
                   id: splaceId
@@ -161,7 +162,7 @@ export default {
                 }
               })
 
-              var index_name = "splace_search"
+              var index_name = "splace_search"+process.env.SEARCH_VERSION
               var document = {
                 "doc": {
                   "thumbnail": splaceThumbnail,
@@ -187,7 +188,7 @@ export default {
           if (a && b.isPrivate == false) {
 
             const location = a.lat + ", " + a.lon
-            var index_name = "photolog_search"
+            var index_name = "photolog_search"+process.env.SEARCH_VERSION
             const cNames = a.categories.map(category => category.name)
             const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
             const bigCategoryIds = a.bigCategories.map(bigCategory => bigCategory.id)

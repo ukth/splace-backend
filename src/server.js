@@ -56,12 +56,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.post('/uploadphoto', uploadPhoto.array('photos', 16), (req, res, next) => {
-  console.log(req);
+  //console.log(req);
   res.send(req.files);
 })
 
 app.post('/uploadvideo', uploadVideo.single('video'), (req, res, next) => {
-  console.log(req);
+  //console.log(req);
   res.send(req.file);
 })
 

@@ -22,6 +22,7 @@ export default gql`
     totalFollowers: Int!
     isMe: Boolean!
     isFollowing: Boolean!
+    isBlocked: Boolean!
     totalLogsNumber: Int!
     phone: String
     url: String

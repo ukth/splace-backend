@@ -1,6 +1,7 @@
 import client from "../../client";
 import searchEngine from "../../opensearch"
 import { protectedResolver } from "../../users/users.utils";
+require("dotenv").config()
 
 function validateCategory(text) {
   if (text.length < 1 || text.length > 30) return false
@@ -100,14 +101,14 @@ export default {
             error: "ERROR5471"
           };
         }
-        var day = new Date()
+        /*var day = new Date()
         var update = new Date(ok.updatedAt)
         if (ok.ownerId == null && day.getTime() - update.getTime() <= 3600000) {
           return {
             ok: false,
             error: "ERROR5473"
           }
-        }
+        }*/
         const a = await client.splace.update({
           where: {
             id: splaceId
@@ -153,7 +154,7 @@ export default {
           }
         });
 
-        var index_name = "splace_search"
+        var index_name = "splace_search"+process.env.SEARCH_VERSION
         const cNames = a.categories.map(category => category.name)
         const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
         const bcIds = a.bigCategories.map(bigCategory => bigCategory.id)
@@ -202,7 +203,7 @@ export default {
         for (var i = 0; i < ids.length; i++) {
           const photologId = ids[i].id
           //console.log(photologId)
-          index_name = "photolog_search"
+          index_name = "photolog_search"+process.env.SEARCH_VERSION
 
           var document = {
             "doc": {
@@ -225,7 +226,7 @@ export default {
             body: document
           })
 
-          console.log(response)
+          //console.log(response)
 
           if (response.body.result != "updated" && response.body.result != "noop") {
             return {

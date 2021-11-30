@@ -8,12 +8,10 @@ export default {
       try {
         const series = await client.series.findMany({
           where: {
-            author: {
-              id: userId,
-            },
-            isPrivate: false,
+            ...(userId === loggedInUser.id && { authorId: userId }),
+            ...(userId !== loggedInUser.id && { authorId: userId, isPrivate: false })
           },
-          take: 10,
+          take: 20,
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           orderBy: {
@@ -23,7 +21,10 @@ export default {
             seriesElements: {
               include: {
                 photolog: true,
-              }
+              },
+              orderBy: {
+                order: "desc"
+              },
             },
             author: true
           }

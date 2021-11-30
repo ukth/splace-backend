@@ -3,13 +3,14 @@ import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
 import axios from "axios"
 import { buildSchema } from "graphql";
+import { CostExplorer } from "aws-sdk";
 require("dotenv").config();
 
 export default {
   Mutation: {
     getSplaceByKakao: protectedResolver(async (
       _,
-      { kakaoId, keyword },
+      { kakaoId, keyword, x, y },
       { loggedInUser }
     ) => {
       try {
@@ -39,7 +40,10 @@ export default {
             "Authorization": auth
           }
         }
-        var places = await axios.get(encodeURI("https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword), headers)
+
+        
+        var url = (x != null && y != null) ? "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword + "&x=" + x + "&y=" + y: "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword
+        var places = await axios.get(encodeURI(url), headers)
 
         if (places.statusText != 'OK') {
           return {
@@ -55,7 +59,10 @@ export default {
           }
         }
 
+
         places = places.data.documents.filter(kakao => kakao.id == kakaoId)
+
+        console.log(places)
 
         if (places.length == 0) {
           return {
@@ -72,7 +79,7 @@ export default {
         const b = await client.splace.create({
           data: {
             name: place.place_name,
-            phone: place.phone,
+            phone: place.phone.replace(/-/gi, ""),
             lat: place.y,
             lon: place.x,
             kakaoId,
@@ -102,7 +109,7 @@ export default {
         }
 
         const location = b.lat + ", " + b.lon
-        var index_name = "splace_search"
+        var index_name = "splace_search"+process.env.SEARCH_VERSION
 
         var address_array = b.address.split(" ")
         const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
@@ -122,7 +129,7 @@ export default {
           body: document
         })
 
-        console.log(response); 
+        //console.log(response); 
 
         if (response.body.result != "created") {
           return {

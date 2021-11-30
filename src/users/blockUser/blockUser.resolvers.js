@@ -15,13 +15,18 @@ export default {
             error: "you already follow this user"
           }
         }*/
-        if (targetId === loggedInUser.id) {
+        if (targetId === loggedInUser.id || targetId == 1) {
           return {
             ok: false,
             error: "ERROR1111"
           }
         }
-        const target = await client.user.findUnique({ where: { id: targetId } });
+        const target = await client.user.findFirst({ 
+          where: { 
+            id: targetId,
+            activate: true 
+          } 
+        });
         if (!target) {
           return {
             ok: false,

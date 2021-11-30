@@ -21,8 +21,11 @@ export default {
             username: true,
             profileImageUrl: true,
             name: true,
+            followings: true,
             joinedAt: true,
             updatedAt: true,
+            activate: true,
+            authority: true,
           }
         })
         return {

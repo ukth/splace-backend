@@ -1,5 +1,6 @@
 import client from "../../client";
 import searchEngine from "../../opensearch";
+import { protectedResolver } from "../../users/users.utils";
 
 function toSearch(arr) {
   var narr = new Array();
@@ -11,7 +12,7 @@ function toSearch(arr) {
 
 export default {
   Mutation: {
-    logSearchSplaces: async (_, { keyword }) => {
+    logSearchSplaces: protectedResolver(async (_, { keyword }, { loggedInUser }) => {
       try {
         if (keyword.length != 0) {
           const logging = await client.searchLog.create({
@@ -32,6 +33,6 @@ export default {
           error: "ERROR4401"
         }
       }
-    }
+    })
   },
 };

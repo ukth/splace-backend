@@ -9,14 +9,22 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        console.log(splaceId)
-        const previous = await client.splace.findUnique({ where: { id: splaceId } });
-        if (previous.ownerId != loggedInUser.id) {
+        const ok = await client.splace.findFirst({
+          where: {
+            id: splaceId,
+            owner: {
+              id: loggedInUser.id
+            },
+            activate: true,
+          },
+        });
+        if (!ok) {
           return {
             ok: false,
             error: "ERROR5471"
           };
         }
+        
         const a = await client.fixedContent.update({
           where: { id: fixedContentId },
           data: {

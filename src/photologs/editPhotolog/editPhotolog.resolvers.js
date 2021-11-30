@@ -1,6 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
+require("dotenv").config()
 
 function AtoS(arr) {
   var str = ""
@@ -58,7 +59,7 @@ export default {
 
           if (a && b.isPrivate == false) {
             const location = a.lat + ", " + a.lon
-            var index_name = "photolog_search"
+            var index_name = "photolog_search"+process.env.SEARCH_VERSION
 
             const cNames = a.categories.map(category => category.name)
             const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
@@ -104,7 +105,7 @@ export default {
         if (b.splaceId && (ok.isPrivate == false && b.isPrivate == true)) {
 
 
-          var index_name = "photolog_search"
+          var index_name = "photolog_search"+process.env.SEARCH_VERSION
           var response = await searchEngine.delete({
             id: photologId,
             index: index_name,

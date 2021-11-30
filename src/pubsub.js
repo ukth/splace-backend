@@ -13,7 +13,7 @@ var nodes = [{
 
 var cluster = new Redis.Cluster(nodes, {
   dnsLookup: (address, callback) => {
-    console.log('====[dnsLookup]====');
+    //console.log('====[dnsLookup]====');
     return callback(null, address);
   },
   redisOptions: {

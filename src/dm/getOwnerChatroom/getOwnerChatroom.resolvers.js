@@ -6,12 +6,21 @@ import pubsub from "../../pubsub";
 
 export default {
   Mutation: {
-    getPersonalChatroom: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
+    getOwnerChatroom: protectedResolver(async (_, { splaceId }, { loggedInUser }) => {
       try {
-        if(targetId == loggedInUser.id) {
+        const owner = await client.user.findFirst({
+          where: {
+            mySplaces: {
+              some: {
+              id: splaceId
+              }
+            }
+          }
+        })
+        if(!owner) {
           return {
             ok: false,
-            error: "1M##"
+            error: "ERROR1M##"
           }
         }
         const room = await client.chatroom.findFirst({
@@ -27,7 +36,7 @@ export default {
               {
                 members: {
                   some: {
-                    id: targetId
+                    id: owner.id
                   }
                 }
               }
@@ -52,7 +61,7 @@ export default {
                     id: loggedInUser.id
                   },
                   {
-                    id: targetId
+                    id: owner.id
                   }
                 ]
               }
@@ -63,7 +72,7 @@ export default {
               lastMessage: true
             }
           })
-          const memberIds = [loggedInUser.id, targetId]
+          const memberIds = [loggedInUser.id, owner.id]
           for (var i = 0; i < memberIds.length; i++) {
             const b = await client.chatroomReaded.create({
               data: {
@@ -97,7 +106,7 @@ export default {
           pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...c } })
           return {
             ok: true,
-            chatroom: c
+            chatroom: c 
           }
         }
         return {
