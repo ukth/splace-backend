@@ -162,7 +162,7 @@ export default {
                 }
               })
 
-              var index_name = "splace_search"+process.env.SEARCH_VERSION
+              var index_name = "splace_search"+"_" + process.env.SEARCH_VERSION
               var document = {
                 "doc": {
                   "thumbnail": splaceThumbnail,
@@ -188,7 +188,7 @@ export default {
           if (a && b.isPrivate == false) {
 
             const location = a.lat + ", " + a.lon
-            var index_name = "photolog_search"+process.env.SEARCH_VERSION
+            var index_name = "photolog_search"+"_" + process.env.SEARCH_VERSION
             const cNames = a.categories.map(category => category.name)
             const bcNames = a.bigCategories.map(bigCategory => bigCategory.name)
             const bigCategoryIds = a.bigCategories.map(bigCategory => bigCategory.id)

@@ -14,7 +14,7 @@ export default {
   Query: {
     searchSplaces: async (_, { ratingtagIds, lastId, type, keyword, lat, lon, distance, bigCategoryIds, exceptNoKids, parking, pets }, { loggedInUser }) => {
       try {
-        var index_name = type + "_search" + process.env.SEARCH_VERSION
+        var index_name = type + "_search" + "_" + process.env.SEARCH_VERSION
         var filter = new Array();
         var should = [
           { "match" : { "ratingtags": { "boost" : 0.14, "query" : "Hot" } } },

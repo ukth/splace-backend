@@ -109,7 +109,7 @@ export default {
         }
 
         const location = b.lat + ", " + b.lon
-        var index_name = "splace_search"+process.env.SEARCH_VERSION
+        var index_name = "splace_search"+"_" + process.env.SEARCH_VERSION
 
         var address_array = b.address.split(" ")
         const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
