@@ -45,7 +45,7 @@ export default {
             }
           })
           if (splace.activate) {
-            var index_name = "photolog_search"+process.env.SEARCH_VERSION
+            var index_name = "photolog_search"+"_" + process.env.SEARCH_VERSION
             var response = await searchEngine.delete({
               id: photologId,
               index: index_name,
