@@ -1,6 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
+require("dotenv").config()
 
 export default {
   Mutation: {
@@ -44,7 +45,7 @@ export default {
             }
           })
           if (splace.activate) {
-            var index_name = "photolog_search"
+            var index_name = "photolog_search"+process.env.SEARCH_VERSION
             var response = await searchEngine.delete({
               id: photologId,
               index: index_name,

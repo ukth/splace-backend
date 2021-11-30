@@ -21,7 +21,10 @@ export default {
             seriesElements: {
               include: {
                 photolog: true,
-              }
+              },
+              orderBy: {
+                order: "desc"
+              },
             },
             author: true
           }

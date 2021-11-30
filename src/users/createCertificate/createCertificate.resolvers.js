@@ -41,8 +41,6 @@ export default {
         }
         //redis
 
-        certificate = "123456"
-
         //console.log(certificate)
 
         if(redisClient.exists(phone)){

@@ -28,7 +28,7 @@ const uploadVideo = multer({
   }),
   limits: { fileSize: 200*1024*1024},
   fileFilter: (req, file, cb) => {
-    console.log(path.extname(file.originalname).toLowerCase())
+    //console.log(path.extname(file.originalname).toLowerCase())
     if (path.extname(file.originalname).toLowerCase() !== '.avi' && path.extname(file.originalname).toLowerCase() !== '.mp4' && path.extname(file.originalname).toLowerCase() !== '.mov' && path.extname(file.originalname).toLowerCase() !== '.wmv') {
      return cb(null, false);
     }

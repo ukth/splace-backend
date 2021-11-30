@@ -60,7 +60,7 @@ export default {
         }
         
         fisherYatesShuffle(logs)
-        const recommended = logs.slice(0,logs.length > 32? 31: logs.length-1)
+        const recommended = logs.slice(0,logs.length > 31? 30: logs.length-1)
         return {
           ok: true,
           logs: recommended,

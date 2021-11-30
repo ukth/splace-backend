@@ -4,28 +4,16 @@ import { protectedResolver } from "../../users/users.utils";
 
 export default {
   Query: {
-    getFeed: protectedResolver(async (_, { lastLogId, lastSeriesId }, { loggedInUser }) => {
+    getEditorFeed: protectedResolver(async (_, { lastLogId, lastSeriesId }, { loggedInUser }) => {
       try {
         const logs = await client.photolog.findMany({
           where: {
-            OR: [
-              {
-                author: {
-                  followers: {
-                    some: {
-                      id: loggedInUser.id,
-                    },
-                  },
-                },
-                isPrivate: false
-              },
-              {
-                authorId: loggedInUser.id,
-              },
-              {
-                authorId: 1,
+            author: {
+              authority: {
+                equals: 'editor'
               }
-            ],
+            },
+            isPrivate: false,
             NOT: [
               {
                 author: {
@@ -57,14 +45,14 @@ export default {
             },
             likedUser: true,
           },
-          take: 10,
+          take: 3,
           ...(lastLogId && { cursor: { id: lastLogId } }),
           skip: lastLogId ? 1 : 0,
           orderBy: {
             createdAt: "desc",
           },
         })
-        if(logs.length === 0){
+        if (logs.length === 0) {
           return {
             ok: false,
             error: "ERROR2211"
@@ -73,33 +61,15 @@ export default {
         const lastCreated = logs[logs.length - 1].createdAt;
         const series = await client.series.findMany({
           where: {
-            OR: [
-              {
-                author: {
-                  followers: {
-                    some: {
-                      id: loggedInUser.id,
-                    },
-                  },
-                },
-                createdAt: {
-                  gt: lastCreated
-                },
-                isPrivate: false
-              },
-              {
-                authorId: loggedInUser.id,
-                createdAt: {
-                  gt: lastCreated
-                },
-              },
-              {
-                authorId: 1,
-                createdAt: {
-                  gt: lastCreated
-                },
-              },
-            ],
+            author: {
+              authority: {
+                equals: 'editor'
+              }
+            },
+            isPrivate: false,
+            createdAt: {
+              gt: lastCreated
+            },
             NOT: [
               {
                 author: {

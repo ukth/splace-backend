@@ -41,10 +41,7 @@ export default {
           }
         }
 
-        console.log(keyword)
-        console.log(x)
-        console.log(y)
-
+        
         var url = (x != null && y != null) ? "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword + "&x=" + x + "&y=" + y: "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword
         var places = await axios.get(encodeURI(url), headers)
 
@@ -112,7 +109,7 @@ export default {
         }
 
         const location = b.lat + ", " + b.lon
-        var index_name = "splace_search"
+        var index_name = "splace_search"+process.env.SEARCH_VERSION
 
         var address_array = b.address.split(" ")
         const address_2 = address_array[1].length > 2 ? address_array[1].substring(0, address_array[1].length - 1) : address_array[1]
@@ -132,7 +129,7 @@ export default {
           body: document
         })
 
-        console.log(response); 
+        //console.log(response); 
 
         if (response.body.result != "created") {
           return {

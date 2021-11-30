@@ -40,10 +40,6 @@ export default {
           }
         })
 
-        console.log(1)
-        console.log(buyRaffleLog)
-        console.log(2)
-
         if (buyRaffleLog) {
           return {
             ok: false,

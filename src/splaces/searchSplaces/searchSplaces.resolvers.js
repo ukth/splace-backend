@@ -1,5 +1,6 @@
 import client from "../../client";
 import searchEngine from "../../opensearch";
+require("dotenv").config();
 
 function toSearch(arr) {
   var narr = new Array();
@@ -13,8 +14,15 @@ export default {
   Query: {
     searchSplaces: async (_, { ratingtagIds, lastId, type, keyword, lat, lon, distance, bigCategoryIds, exceptNoKids, parking, pets }, { loggedInUser }) => {
       try {
-        var index_name = type + "_search"
+        var index_name = type + "_search" + process.env.SEARCH_VERSION
         var filter = new Array();
+        var should = [
+          { "match" : { "ratingtags": { "boost" : 0.14, "query" : "Hot" } } },
+          { "match" : { "ratingtags": { "boost": 1, "query" : "Superhot"} } },
+          { "match" : { "ratingtags": { "boost" : 0.06, "query": "Tasty"} } },
+          { "match" : { "ratingtags": { "boost": 0.16, "query" : "Supertasty"} } }
+        ]
+
         if (bigCategoryIds) {
           filter.push({
             "terms": {
@@ -44,10 +52,17 @@ export default {
         }
 
         if (keyword) {
-          filter.push({
+          should.push({
             "multi_match": {
               "fields": ["name", "bigCategories", "categories", "intro", "address"],
               "query": keyword
+            }
+          })
+          should.push({
+            "prefix": {
+              "name": {
+                "value": keyword
+              }
             }
           })
         }
@@ -84,15 +99,12 @@ export default {
               "filter": filter,
               "must": [
                 {
-                  "match_all": {}
+                  "exists": {
+                    "field": "thumbnail"
+                  }
                 }
               ],
-              "should": [
-                { "match" : { "ratingtags": { "boost" : 0.7, "query" : "Hot" } } },
-                { "match" : { "ratingtags": { "boost": 5, "query" : "Superhot"} } },
-                { "match" : { "ratingtags": { "boost" : 0.3, "query": "Tasty"} } },
-                { "match" : { "ratingtags": { "boost": 0.85, "query" : "Supertasty"} } }
-              ]
+              "should": should
             }
           }
         }

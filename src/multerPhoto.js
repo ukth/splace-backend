@@ -28,7 +28,7 @@ const uploadPhoto = multer({
   }),
   limits: { fileSize: 160*1024*1024},
   fileFilter: (req, file, cb) => {
-    console.log(path.extname(file.originalname).toLowerCase())
+    //console.log(path.extname(file.originalname).toLowerCase())
     if (path.extname(file.originalname).toLowerCase() != '.png' && path.extname(file.originalname).toLowerCase() != '.jpg' && path.extname(file.originalname).toLowerCase() != '.jpeg') {
      return cb(null, false);
     }

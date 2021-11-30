@@ -33,6 +33,10 @@ export default {
             saves: {
               include: {
                 splace: true,
+              },
+              take: 1,
+              orderBy: {
+                createdAt: "desc"
               }
             },
           },

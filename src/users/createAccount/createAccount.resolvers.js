@@ -8,17 +8,17 @@ require("dotenv").config();
 function validateUsername(text) {
   if (text.length < 1 || text.length > 30) return false
   const exp = /^[0-9a-z._]*$/;
-  return exp.test(String(text).toLowerCase());
+  return exp.test(String(text));
 };
 
 function validatePassword(text) {
   const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{8,15}$/;
-  return exp.test(String(text).toLowerCase());
+  return exp.test(String(text));
 };
 
 function validatePhone(text) {
   const exp = /^01([0|1|6|7|8|9])?([0-9]{7,8})$/;
-  return exp.test(String(text).toLowerCase());
+  return exp.test(String(text));
 };
 
 
