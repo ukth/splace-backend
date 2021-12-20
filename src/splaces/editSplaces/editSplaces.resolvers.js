@@ -2,30 +2,8 @@ import client from "../../client";
 import searchEngine from "../../opensearch"
 import { protectedResolver } from "../../users/users.utils";
 require("dotenv").config()
+import { validateSplacePhone, validateCategory, validateUrl, AtoS } from "../../re"
 
-function validateCategory(text) {
-  if (text.length < 1 || text.length > 30) return false
-  const exp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]*$/;
-  return exp.test(String(text).toLowerCase());
-};
-
-function validateUrl(text) {
-  const exp = /^[0-9a-z_\-.&?=:\/]*$/;
-  return exp.test(String(text).toLowerCase());
-};
-
-function validatePhone(text) {
-  const exp = /^01([0|1|6|7|8|9])?([0-9]{7,8})$/;
-  return exp.test(String(text).toLowerCase());
-};
-
-function AtoS(arr) {
-  var str = ""
-  for (var i = 0; i < arr.length; i++) {
-    str = str + arr[i] + ' '
-  }
-  return str
-}
 
 export default {
   Mutation: {
@@ -35,7 +13,7 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        if(phone && !validatePhone(phone)){
+        if(phone && !validateSplacePhone(phone)){
           return {
             ok: false,
             error: "ERROR1102"

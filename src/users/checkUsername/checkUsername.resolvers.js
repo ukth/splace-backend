@@ -1,10 +1,6 @@
 import client from "../../client";
+import { validateUsername } from "../../re";
 
-function validateUsername(text) {
-  if (text.length < 1 || text.length > 30) return false
-  const exp = /^[0-9a-z._]*$/;
-  return exp.test(String(text));
-};
 export default {
   Query: {
     checkUsername: async (_, { username }) => {

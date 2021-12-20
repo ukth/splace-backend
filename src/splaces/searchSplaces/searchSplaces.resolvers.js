@@ -94,6 +94,7 @@ export default {
         var query = {
           "from": lastId ? lastId : 0,
           "size": 10,
+          "min_score": 1.1,
           "query": {
             "bool": {
               "filter": filter,

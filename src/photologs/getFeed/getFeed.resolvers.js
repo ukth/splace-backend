@@ -24,6 +24,15 @@ export default {
               },
               {
                 authorId: 1,
+              },
+              {
+                authorId: 4,
+              },
+              {
+                authorId: 5,
+              },
+              {
+                authorId: 65,
               }
             ],
             NOT: [

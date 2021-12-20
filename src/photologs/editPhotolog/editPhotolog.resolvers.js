@@ -2,14 +2,7 @@ import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
 require("dotenv").config()
-
-function AtoS(arr) {
-  var str = ""
-  for (var i = 0; i < arr.length; i++) {
-    str = str + arr[i] + ' '
-  }
-  return str
-}
+import { AtoS } from "../../re";
 
 export default {
   Mutation: {

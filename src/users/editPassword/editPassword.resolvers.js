@@ -2,12 +2,7 @@ import bcrypt from "bcrypt";
 import client from "../../client";
 import jwt from "jsonwebtoken";
 require("dotenv").config();
-
-
-function validatePassword(text) {
-  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{8,15}$/;
-  return exp.test(String(text));
-};
+import { validatePassword } from "../../re";
 
 export default {
   Mutation: {
