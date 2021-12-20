@@ -36,7 +36,7 @@ export default {
         }
         
         const check = ok.members.filter(member => member.id == 1)
-        if(check.length != 0) {
+        if(check.length != 0 && loggedInUser.id != 1) {
           return {
             ok: false,
             error: "ERROR1M12"
