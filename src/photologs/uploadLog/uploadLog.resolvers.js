@@ -2,20 +2,8 @@ import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
 require("dotenv").config();
+import { AtoS, validateCategory } from "../../re";
 
-function validateCategory(text) {
-  if (text.length < 1 || text.length > 30) return false
-  const exp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]*$/;
-  return exp.test(String(text).toLowerCase());
-};
-
-function AtoS(arr) {
-  var str = ""
-  for (var i = 0; i < arr.length; i++) {
-    str = str + arr[i] + ' '
-  }
-  return str
-}
 export default {
   Mutation: {
     uploadLog: protectedResolver(async (

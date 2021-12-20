@@ -2,11 +2,7 @@ import bcrypt from "bcrypt";
 import client from "../../client";
 import redisClient from "../../redis"
 import send from "../../coolsms"
-
-function validatePhone(text) {
-  const exp = /^01([0|1|6|7|8|9])?([0-9]{7,8})$/;
-  return exp.test(String(text).toLowerCase());
-};
+import { validatePhone } from "../../re";
 
 export default {
   Mutation: {

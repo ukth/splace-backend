@@ -3,12 +3,7 @@ import client from "../../client";
 import jwt from "jsonwebtoken";
 import { protectedResolver } from "../../users/users.utils";
 require("dotenv").config();
-
-
-function validatePassword(text) {
-  const exp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$?!@#$%^&*/])[A-Za-z\d$?!@#$%^&*/]{8,15}$/;
-  return exp.test(String(text).toLowerCase());
-};
+import validatePassword from "../../re"
 
 export default {
   Mutation: {

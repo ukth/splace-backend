@@ -1,22 +1,7 @@
 import client from "../../client";
 import { protectedResolver } from "../users.utils";
 import dayjs from 'dayjs';
-
-function validateUsername(text) {
-  if(text.length < 1 || text.length > 30) return false
-  const exp = /^[0-9a-z._]*$/;
-  return exp.test(String(text));
-};
-
-function validateUrl(text) {
-  const exp = /^[0-9a-z_\-.&?=:\/]*$/;
-  return exp.test(String(text));
-};
-
-function validateEmail(text) {
-  const exp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-  return exp.test(String(text));
-};
+import { validateUrl, validateUsername, validateEmail } from "../../re";
 
 export default {
   Mutation: {
