@@ -29,10 +29,10 @@ export default {
                 authorId: 4,
               },
               {
-                authorId: 5,
+                authorId: 2,
               },
               {
-                authorId: 65,
+                authorId: 5,
               }
             ],
             NOT: [

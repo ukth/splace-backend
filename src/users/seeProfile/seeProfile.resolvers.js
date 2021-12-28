@@ -9,6 +9,7 @@ export default {
           },
           select: {
             id: true,
+            name: true,
             username: true,
             profileImageUrl: true,
             profileMessage: true,
