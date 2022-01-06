@@ -33,7 +33,7 @@ export default {
             error: "ERROR5M12"
           };
         }
-        const a = await client.chatroom.update({
+        const updatedChat = await client.chatroom.update({
           where: {
             id: chatroomId
           },
@@ -46,7 +46,7 @@ export default {
           }
         });
 
-        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...a } })
+        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...updatedChat } })
 
         
         return {

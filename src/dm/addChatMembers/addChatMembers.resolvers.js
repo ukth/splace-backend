@@ -35,10 +35,10 @@ export default {
           }
         }
 
-        const myfollowers = loggedInUser.followers.map(follower => follower.id)
+        const followerIds = loggedInUser.followers.map(follower => follower.id)
         //console.log(myfollowings);
         for(var i = 0; i<memberIds.length; i++){
-          if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
+          if(!followerIds.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
             return {
               ok: false,
               error: "ERROR1M12"

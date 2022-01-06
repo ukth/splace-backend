@@ -41,6 +41,8 @@ export default {
             error: "ERROR1M16"
           }
         }
+        
+        
         if (isPersonal) {
           if (memberIds.length !== 2) {
             return {
@@ -87,7 +89,7 @@ export default {
           }
         }
 
-        const a = await client.chatroom.create({
+        const newChat = await client.chatroom.create({
           data: {
             title,
             isPersonal,
@@ -100,7 +102,7 @@ export default {
         });
 
         for (var i = 0; i < memberIds.length; i++) {
-          const b = await client.chatroomReaded.create({
+          const chatReaded = await client.chatroomReaded.create({
             data: {
               user: {
                 connect: {
@@ -109,16 +111,16 @@ export default {
               },
               chatroom: {
                 connect: {
-                  id: a.id
+                  id: newChat.id
                 }
               }
             }
           })
         }
 
-        const c = await client.chatroom.update({
+        const chatroom = await client.chatroom.update({
           where: {
-            id: a.id
+            id: newChat.id
           },
           data: {
             title,
@@ -130,12 +132,12 @@ export default {
           }
         });
 
-        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...c } })
+        pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...chatroom } })
 
 
         return {
           ok: true,
-          chatroom: c
+          chatroom
         };
       } catch (e) {
         console.log(e);

@@ -80,7 +80,7 @@ export default {
               }
             })
           }
-          const c = await client.chatroom.update({
+          const updatedChat = await client.chatroom.update({
             where: {
               id: newChatroom.id
             },
@@ -94,15 +94,15 @@ export default {
             }
           });
   
-          pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...c } })
+          pubsub.publish(CHATROOM_UPDATE, { chatroomUpdated: { ...updatedChat } })
           return {
             ok: true,
-            chatroom: c
+            chatroom: updatedChat
           }
         }
         return {
           ok: true,
-          chatroom: room
+          chatroom: updatedChat
         }
       } catch (e) {
         console.log(e);
