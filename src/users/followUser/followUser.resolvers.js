@@ -11,26 +11,31 @@ export default {
             error: "ERROR1112"
           }
         }
-        const target = await client.user.findUnique({ where: { id: targetId } });
+        const target = await client.user.findFirst({ 
+          where: { 
+            id: targetId ,
+            activate: true
+          } 
+        });
         if (!target) {
           return {
             ok: false,
             error: "ERROR2112"
           };
         }
-        const targetUser = await client.user.update({
+        const ok = await client.followLog.findFirst({
           where: {
-            id: targetId
-          },
-          data: {
-            followers: {
-              connect: {
-                id: loggedInUser.id
-              }
-            }
+            targetId: targetId,
+            requestUserId: loggedInUser.id
           }
-        });
+        })
 
+        if(ok){
+          return {
+            ok: false,
+            error: "already followed"
+          }
+        }
         const a = await client.followLog.create({
           data: {
             target: {

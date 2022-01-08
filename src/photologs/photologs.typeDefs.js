@@ -5,13 +5,13 @@ export default gql`
     id: Int!   
     imageUrls: [String]  
     photoSize: Int!
-    text: String   
+    text: String!   
     createdAt: String! 
     updatedAt: String!
-    totalLiked: Int
-    isILiked: Boolean
+    totalLiked: Int!
+    isILiked: Boolean!
     author: User!
-    splace: Splace  
+    splace: Splace!  
     seriesElements: [SeriesElement]
     categories: [Category]
     bigCategories: [BigCategory]

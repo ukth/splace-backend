@@ -12,20 +12,20 @@ generator client {
 
 model User {
   id         Int        @id @default(autoincrement())
-  username       String     @unique @db.VarChar(35)
-  name           String?     @db.VarChar(15)
-  email          String?     @db.VarChar(40)
-  password       String     @db.VarChar(30)
-  profileMessage String?    @db.VarChar(220)
-  profileImageUrl   String?    @db.VarChar(130)
+  username       String     @unique @db.Text
+  name           String?     @db.Text
+  email          String?     @db.Text
+  password       String     @db.Text
+  profileMessage String?    @db.Text
+  profileImageUrl   String?    @db.Text
   birthDay      DateTime?   
   createdAt       DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
-  authority      String     @db.VarChar(10) @default("user")
+  authority      String     @db.Text @default("user")
   credit       Int    @default(0)
   lockedCredit  Int   @default(0)
   url          String?   @db.Text
-  phone        String   @unique @db.VarChar(13)
+  phone        String   @unique @db.Text
   activate    Boolean   @default(true)
   preference  Int[]
   noticeReaded DateTime @default(now())
@@ -71,7 +71,7 @@ model User {
 
 model Photolog {
   id Int       @id @default(autoincrement())
-  imageUrls  String[]  @db.VarChar(130)
+  imageUrls  String[]  @db.Text
   photoSize  Int 
   text       String    @db.Text
   createdAt  DateTime  @default(now())
@@ -82,8 +82,8 @@ model Photolog {
   author       User      @relation(fields: [authorId], references: [id])
   authorId     Int
   
-  splace     Splace    @relation(fields: [splaceId], references: [id])
-  splaceId   Int
+  splace     Splace?    @relation(fields: [splaceId], references: [id])
+  splaceId   Int?
   
   series     SeriesElement[]
   
@@ -102,7 +102,7 @@ model Photolog {
 
 model Series {
   id  Int        @id @default(autoincrement())
-  title     String     @db.VarChar(35)
+  title     String     @db.Text
   createdAt DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   isPrivate Boolean @default(false)
@@ -115,6 +115,7 @@ model Series {
   scrapedUser ScrapedSeries[]
 
   hiddenBy  User[]   @relation("hiddenSeriesRelation")
+  @@unique([title, authorId])
 }
 
 model SeriesElement {
@@ -126,16 +127,17 @@ model SeriesElement {
   photologId  Int
   
   series Series @relation(fields: [seriesId], references: [id])
-  seriesId Int  
+  seriesId Int
+  @@unique([order,photologId,seriesId]) 
 }
 
 model Splace {
   id Int     @id @default(autoincrement())
-  name     String  @db.VarChar(30)
+  name     String  @db.Text
   lat Decimal @db.Decimal(11,8)
   long Decimal @db.Decimal(11,8)
-  address       String   @db.VarChar(50)
-  detailAddress String? @db.VarChar(30)
+  address       String   @db.Text
+  detailAddress String? @db.Text
   createdAt   DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   ownerId Int?
@@ -145,12 +147,12 @@ model Splace {
   noKids     Boolean @default(false)
   intro    String? @db.Text
   url      String? @db.Text
-  phone    String? @db.VarChar(13)
-  thumbnail String? @db.VarChar(130)
+  phone    String? @db.Text
+  thumbnail String? @db.Text
   activate Boolean @default(false)
   breakDays Int[]
-  menuUrls String[] @db.VarChar(130)
-  itemName String? @db.VarChar(35)
+  menuUrls String[] @db.Text
+  itemName String? @db.Text
   itemPrice Int?
   holidayBreak Boolean @default(false) 
 
@@ -170,6 +172,7 @@ model Splace {
   
   folders       Save[]
 
+  @@unique([name,lat,long])
 }
 
 model BusinessHour {
@@ -182,12 +185,14 @@ model BusinessHour {
   splace Splace @relation(fields: [splaceId], references: [id])
   splaceId  Int
   createdAt DateTime @default(now())
+
+  @@unique([splaceId,day])
 }
 
 model FixedContent {
   id Int      @id @default(autoincrement())
-  title          String   @db.VarChar(30)
-  imageUrls       String[]   @db.VarChar(130)
+  title          String   @db.Text
+  imageUrls       String[]   @db.Text
   photoSize Int @default(0)
   createdAt      DateTime @default(now())
   updatedAt      DateTime   @updatedAt
@@ -209,17 +214,19 @@ model Save {
 
   savedUser User     @relation(fields: [savedUserId], references: [id])
   savedUserId    Int
+  @@unique([splaceId,folderId])
 }
 
 model ScrapedLog {
   id    Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   
-  photolog    Photolog   @relation(fields: [photologId], references: [id])
-  photologId  Int
+  photolog    Photolog?   @relation(fields: [photologId], references: [id])
+  photologId  Int?
   
   scrapedUser User @relation(fields: [scrapedUserId], references: [id])
   scrapedUserId Int
+  @@unique([photologId,scrapedUserId])
 }
 
 model ScrapedSeries {
@@ -231,11 +238,12 @@ model ScrapedSeries {
   
   scrapedUser User @relation(fields: [scrapedUserId], references: [id])
   scrapedUserId Int
+  @@unique([seriesId,scrapedUserId])
 }
 
 model Folder {
   id  Int      @id @default(autoincrement())
-  title     String   @db.VarChar(30)
+  title     String   @db.Text
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   
@@ -246,7 +254,7 @@ model Folder {
 
 model Category {
   id Int @id @default(autoincrement())
-  name     String   @db.VarChar(35) @unique
+  name     String   @db.Text @unique
   
   photologs Photolog[]
   
@@ -257,7 +265,7 @@ model Category {
 
 model BigCategory {
   id Int @id @default(autoincrement())
-  name     String   @db.VarChar(35) @unique
+  name     String   @db.Text @unique
   
   photologs Photolog[]
   
@@ -268,8 +276,8 @@ model BigCategory {
 
 model Ratingtag {
   id Int @id @default(autoincrement())
-  name     String   @db.VarChar(35) @unique
-  color    String   @db.VarChar(10)
+  name     String   @db.Text @unique
+  color    String   @db.Text
   
   splaces   Splace[]
 
@@ -279,7 +287,7 @@ model Ratingtag {
 model Comment {
   id Int @id @default(autoincrement())
   
-  text String @db.VarChar(220)
+  text String @db.Text
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
 
@@ -296,7 +304,7 @@ model PaymentLog {
   id Int @id @default(autoincrement())
 
   customerId Int
-  merchantUId String @db.VarChar(50) @unique
+  merchantUId String @db.Text @unique
   credit Int
 
   creditGiven Boolean @default(true)
@@ -308,7 +316,7 @@ model PaymentLog {
 
 model Chatroom {
   id Int @id @default(autoincrement())
-  title String   @db.VarChar(25)
+  title String   @db.Text
   messages Message[]
   isPersonal Boolean
 
@@ -330,6 +338,8 @@ model ChatroomElement {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([chatroomId,userId])
 }
 
 model Message {
@@ -348,10 +358,10 @@ model Message {
 
 model Report {
   id Int @id @default(autoincrement())
-  sourceType String @db.VarChar(100)
+  sourceType String @db.Text
   sourceId Int?
   userId Int
-  reason String? @db.VarChar(200)
+  reason String? @db.Text
   createdAt DateTime @default(now())
 }
 
@@ -362,6 +372,7 @@ model FollowLog {
   requestUser User @relation("followLogRelation", fields: [requestUserId], references: [id])
   requestUserId Int
   createdAt DateTime @default(now())
+  @@unique([targetId,requestUserId])
 }
 
 
@@ -372,12 +383,13 @@ model LikeLog {
   requestUser User @relation("likeLogRelation", fields: [requestUserId], references: [id])
   requestUserId Int
   createdAt DateTime @default(now())
+  @@unique([targetId,requestUserId])
 }
 
 model Notice {
   id Int @id @default(autoincrement())
-  title String @db.VarChar(40)
-  imageUrls  String[]  @db.VarChar(130)
+  title String @db.Text
+  imageUrls  String[]  @db.Text
   text       String[]    @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -387,19 +399,20 @@ model OwnerInfo {
   id Int @id @default(autoincrement())
   userId Int
   splaceId Int 
-  name String @db.VarChar(30)
-  corpNum String @db.VarChar(50)
+  name String @db.Text
+  corpNum String @db.Text
   birthDay DateTime
   imageUrls String[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  @@unique([userId,splaceId])
 }
 
 model CreditGivenLog {
   id Int @id @default(autoincrement())
   userId Int
   credit Int
-  code String @db.VarChar(20)
+  code String @db.Text
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
 }
@@ -416,7 +429,7 @@ model SplaceRating {
 model SearchLog {
   id Int @id @default(autoincrement())
   userId Int
-  keyword String @db.VarChar(40)
+  keyword String @db.Text
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
 }

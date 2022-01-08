@@ -4,13 +4,9 @@ export default {
   Photolog: {
     totalLiked: async ({ id }) => {
       try {
-        const num = await client.user.count({
+        const num = await client.likeLog.count({
           where: {
-            likedPhotologs: {
-              some: {
-                id
-              },
-            },
+            targetId: id
           },
         })
         return num;
@@ -21,14 +17,9 @@ export default {
     },
     isILiked: async ({ id }, _, { loggedInUser }) => {
       try {
-        const yes = await client.user.findFirst({
+        const yes = await client.likeLog.findFirst({
           where: {
-            id: loggedInUser.id,
-            likedPhotologs: {
-              some: {
-                id
-              }
-            }
+            targetId: id
           },
         })
         //console.log(yes);
@@ -43,7 +34,7 @@ export default {
       const yes = await client.scrapedLog.findFirst({
         where: {
           photologId: id,
-          savedUserId: loggedInUser.id
+          scrapedUserId: loggedInUser.id
         }
       })
       return Boolean(yes);

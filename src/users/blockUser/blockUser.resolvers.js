@@ -5,16 +5,6 @@ export default {
   Mutation: {
     blockUser: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
       try {
-        /*const isFollowing = await client.user.findUnique({ where: { userId: loggedInUser.userId } })
-          .followings({
-            where: { userId: targetId }
-          })
-        if (isFollowing.length == 1) {
-          return {
-            ok: false,
-            error: "you already follow this user"
-          }
-        }*/
         if (targetId === loggedInUser.id || targetId == 1) {
           return {
             ok: false,

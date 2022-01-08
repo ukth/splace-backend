@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import client from "../../client";
 import redisClient from "../../redis"
 import send from "../../coolsms"
@@ -13,7 +12,8 @@ export default {
       try {
         const existingUser = await client.user.findFirst({
           where: {
-            phone
+            phone,
+            activate: true,
           },
         });
         if (existingUser && isRegister) {

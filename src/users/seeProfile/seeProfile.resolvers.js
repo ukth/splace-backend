@@ -6,15 +6,17 @@ export default {
         const profile = await client.user.findFirst({
           where: {
             id: userId,
+            activate: true,
           },
           select: {
             id: true,
             name: true,
             username: true,
+            phone: true,
             profileImageUrl: true,
             profileMessage: true,
             url: true,
-            joinedAt: true,
+            createdAt: true,
             updatedAt: true,
             authority: true,
           }

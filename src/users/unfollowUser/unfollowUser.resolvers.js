@@ -5,31 +5,23 @@ export default {
   Mutation: {
     unfollowUser: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
       try {
-        const target = await client.user.findUnique({ where: { id: targetId } });
-        if (targetId === loggedInUser.id) {
-          return {
-            ok: false,
-            error: "ERROR1114"
-          }
-        }
-        if (!target) {
-          return {
-            ok: false,
-            error: "ERROR2117"
-          };
-        }
-        await client.user.update({
+        const ok = await client.followLog.findFirst({
           where: {
-            id: loggedInUser.id
-          },
-          data: {
-            followings: {
-              disconnect: {
-                id: targetId
-              }
-            }
+            targetId,
+            requestUserId: loggedInUser.id
           }
-        });
+        })
+        if(!ok){
+          return {
+            ok: false,
+            error: "followlog X exist"
+          }
+        }
+        const a  = await client.followLog.delete({
+          where: {
+            id: ok.id
+          }
+        })
         return {
           ok: true,
         };

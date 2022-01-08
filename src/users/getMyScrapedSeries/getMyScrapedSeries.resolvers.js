@@ -1,4 +1,3 @@
-import { transformDocument } from "@prisma/client/runtime";
 import client from "../../client";
 import { protectedResolver } from "../users.utils";
 
@@ -9,7 +8,7 @@ export default {
       try{
       const scraps = await client.scrapedSeries.findMany({
         where: {
-          savedUserId: loggedInUser.id
+          scrapedUserId: loggedInUser.id
         },
         include:{
           series: {

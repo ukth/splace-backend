@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import client from "../../client";
-import searchEngine from "../../opensearch";
+
 
 export default {
   Mutation: {

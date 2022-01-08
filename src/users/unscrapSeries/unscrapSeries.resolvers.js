@@ -12,7 +12,7 @@ export default {
         const ok = await client.scrapedSeries.findFirst({
           where:{
             seriesId: scrapedSeriesId,
-            savedUser: {
+            scrapedUser: {
               id: loggedInUser.id
             }
           }

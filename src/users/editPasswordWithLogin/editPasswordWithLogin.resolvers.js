@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import client from "../../client";
-import jwt from "jsonwebtoken";
 import { protectedResolver } from "../../users/users.utils";
 require("dotenv").config();
 import validatePassword from "../../re"

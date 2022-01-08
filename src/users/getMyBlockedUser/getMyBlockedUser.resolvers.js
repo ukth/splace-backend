@@ -1,18 +1,18 @@
-import { transformDocument } from "@prisma/client/runtime";
 import client from "../../client";
 import { protectedResolver } from "../users.utils";
 
 
 export default {
   Query: {
-    getMyBlockedUser: protectedResolver(async (_, { }, { loggedInUser }) => {
+    getMyBlockingUser: protectedResolver(async (_, { }, { loggedInUser }) => {
       try {
         const users = await client.user.findMany({
           where: {
             blockingUser: {
               some: {
-                id: loggedInUser.id
-              }
+                id: loggedInUser.id,
+                activate: true
+              },
             }
           },
 
@@ -21,6 +21,7 @@ export default {
             username: true,
             profileImageUrl: true,
             name: true,
+            phone: true,
             followings: true,
             joinedAt: true,
             updatedAt: true,

@@ -15,6 +15,7 @@ export default {
         const profile = await client.user.findFirst({
           where: {
             username: username.toLowerCase(),
+            activate: true
           }
         })
         if(profile){

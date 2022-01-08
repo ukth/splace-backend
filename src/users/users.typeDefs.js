@@ -11,7 +11,7 @@ export default gql`
     profileImageUrl:   String
     folders: [Folder]
     birthDay: String
-    joinedAt:       String!
+    createdAt:       String!
     updatedAt:      String!
     authority: String!  
     followers:      [User]     
@@ -24,31 +24,31 @@ export default gql`
     isFollowing: Boolean!
     isBlocked: Boolean!
     totalLogsNumber: Int!
-    phone: String
+    phone: String!
     url: String
     scrapedLog: [ScrapedLog]
     scrapedSeries: [ScrapedSeries]
     buyRaffleLogs: [BuyRaffleLog]
     activate: Boolean!
-    unreadChatExist: Boolean
-    unreadNoticeExist: Boolean
+    unreadChatExist: Boolean!
+    unreadNoticeExist: Boolean!
     preference: [Int]
-    marketingAgree: Boolean
+    marketingAgree: Boolean!
   }
   
   type ScrapedLog {
     id: Int!
     createdAt: String!
     updatedAt: String!
-    photolog: Photolog
-    savedUser: User
+    photolog: Photolog!
+    savedUser: User!
   }
 
   type ScrapedSeries {
     id: Int!
     createdAt: String!
     updatedAt: String!
-    series: Series
-    savedUser: User
+    series: Series!
+    savedUser: User!
   }
 `;

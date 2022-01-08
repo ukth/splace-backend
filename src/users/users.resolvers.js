@@ -4,14 +4,13 @@ export default {
   User: {
     totalFollowing: async ({ id }) => {
       try {
-        const num = await client.user.count({
+        const num = await client.followLog.count({
           where: {
-            followers: {
-              some: {
-                id
-              },
-            },
-          },
+            requestUserId: id,
+            target: {
+              activate: true
+            }
+          }
         })
         return num;
       } catch (e) {
@@ -21,14 +20,13 @@ export default {
     },
     totalFollowers: async ({ id }) => {
       try {
-        const num = await client.user.count({
+        const num = await client.followLog.count({
           where: {
-            followings: {
-              some: {
-                id
-              },
-            },
-          },
+            targetId: id,
+            requestUser: {
+              activate: true
+            }
+          }
         })
         return num;
       } catch (e) {
@@ -47,17 +45,13 @@ export default {
         if (!loggedInUser) {
           return false;
         }
-        const exists = await client.user.findFirst({
+        const ok = await client.followLog.findFirst({
           where: {
-            id,
-            followers: {
-              some: {
-                id: loggedInUser.id,
-              },
-            },
-          },
-        });
-        return exists != null;
+            targetId: id,
+            requestUserId: loggedInUser.id,
+          }
+        })
+        return ok != null;
       } catch (e) {
         console.log(e);
         return false;

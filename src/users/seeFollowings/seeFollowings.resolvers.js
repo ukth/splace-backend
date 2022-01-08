@@ -15,24 +15,30 @@ export default {
             error: "ERROR2114",
           };
         }
-        if(userId != loggedInUser.id) {
+        if (userId != loggedInUser.id) {
           return {
             ok: false,
             error: "ERROR111#"
           }
         }
-        const followings = await client.user
-          .findUnique({ where: { id: userId } })
-          .followings({
-            where: {
+        const followLogs = await client.followLog.findMany({
+          where: {
+            requestUserId: userId,
+            target: {
               username: {
                 startsWith: keyword
-              }
-            },
-            take: 15,
-            ...(lastId && { cursor: { id: lastId } }),
-            skip: lastId ? 1 : 0,
-          });
+              },
+              activate: true
+            }
+          },
+          include: {
+            target: true
+          },
+          take: 15,
+          ...(lastId && { cursor: { id: lastId } }),
+          skip: lastId ? 1 : 0,
+        });
+        const followings = followLogs.map(followLog => followLog.target)
         return {
           ok: true,
           followings,

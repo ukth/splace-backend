@@ -18,9 +18,6 @@ export const getUser = async (token) => {
       where: {
         id,
         activate: true
-      },
-      include: {
-        followers: true
       }
     });
     if (user) {

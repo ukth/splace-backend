@@ -23,7 +23,7 @@ export default {
             id: loggedInUser.id
           },
           data: {
-            blockedUser: {
+            blockingUser: {
               disconnect: {
                 id: targetId
               }

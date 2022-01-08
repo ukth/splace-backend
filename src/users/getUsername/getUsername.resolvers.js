@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import client from "../../client";
 import jwt from "jsonwebtoken";
 require("dotenv").config();
@@ -15,7 +14,8 @@ export default {
 
         const user = await client.user.findFirst({
           where: {
-            phone: phoneOk
+            phone: phoneOk,
+            activate: true
           }
         })
         const now = new Date()

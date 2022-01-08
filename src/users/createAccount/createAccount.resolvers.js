@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import client from "../../client";
-import redisClient from "../../redis"
 import jwt from "jsonwebtoken";
 const { promisify } = require('util');
 require("dotenv").config();
@@ -22,7 +21,8 @@ export default {
               {
                 phone
               }
-            ]
+            ],
+            activate: true
           },
         });
         if (existingUser) {
