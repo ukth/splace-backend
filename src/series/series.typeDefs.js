@@ -8,9 +8,9 @@ export default gql`
     updatedAt: String!
     isPrivate: Boolean!
     author: User!
-    seriesElements: [SeriesElement]
+    photologs: [SeriesElement]
     isScraped: Boolean!
-    scrap: [ScrapedSeries]
+    scrapedUser: [ScrapedSeries]
   }
   type SeriesElement {
     id: Int!

@@ -13,7 +13,7 @@ export default {
             }
           },
           include: {
-            seriesElements: true
+            photologs: true
           }
         })
         //console.log(ok);
@@ -58,10 +58,10 @@ export default {
               id: photologIds[i]
             },
             include: {
-              seriesElements: true,
+              series: true,
             }
           })
-          if (a.seriesElements.length > 10) {
+          if (a.series.length > 10) {
             return {
               ok: false,
               error: "ERROR1216"

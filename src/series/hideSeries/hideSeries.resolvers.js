@@ -5,16 +5,6 @@ export default {
   Mutation: {
     hideSeries: protectedResolver(async (_, { targetId }, { loggedInUser }) => {
       try {
-        /*const isFollowing = await client.user.findUnique({ where: { userId: loggedInUser.userId } })
-          .followings({
-            where: { userId: targetId }
-          })
-        if (isFollowing.length == 1) {
-          return {
-            ok: false,
-            error: "you already follow this user"
-          }
-        }*/
         const target = await client.series.findUnique({ where: { id: targetId } });
         if (!target) {
           return {

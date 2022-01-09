@@ -3,13 +3,12 @@ import { protectedResolver } from "../../users/users.utils";
 import dayjs from 'dayjs';
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 
 async function updateTime(splaceId, day, times) {
   try {
-    const b = await client.timeSet.findFirst({
+    const b = await client.businessHour.findFirst({
       where: {
         splaceId,
         day
@@ -31,7 +30,7 @@ async function updateTime(splaceId, day, times) {
     const breakOpenT = times.length == 4 ? new Date(times[1]).toISOString() : null
     const breakCloseT = times.length == 4 ? new Date(times[2]).toISOString() : null
     //console.log(openT)
-    const a = await client.timeSet.update({
+    const a = await client.businessHour.update({
       where: {
         id: b.id
       },

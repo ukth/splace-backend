@@ -21,20 +21,7 @@ export default {
           },
         })
 
-        const log = await client.editFolderLog.create({
-          data: {
-            target: {
-              connect: {
-                id: folderId
-              }
-            },
-            requestUser: {
-              connect: {
-                id: loggedInUser.id
-              }
-            }
-          }
-        })
+        
         if (!ok) {
           return {
             ok: false,

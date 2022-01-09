@@ -6,7 +6,7 @@ export default {
       const yes = await client.scrapedSeries.findFirst({
         where: {
           seriesId: id,
-          savedUserId: loggedInUser.id
+          scrapedUserId: loggedInUser.id
         }
       })
       return Boolean(yes);

@@ -10,7 +10,7 @@ export default {
             id: targetId
           },
           data: {
-            hiddenUsers: {
+            hiddenBy: {
               disconnect: {
                 id: loggedInUser.id
               }

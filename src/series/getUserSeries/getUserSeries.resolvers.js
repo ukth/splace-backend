@@ -18,7 +18,7 @@ export default {
             createdAt: "desc",
           },
           include: {
-            seriesElements: {
+            photologs: {
               include: {
                 photolog: true,
               },

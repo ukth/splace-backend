@@ -2,18 +2,16 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Splace {
-    id:      Int!      
-    name:          String! 
+    id: Int!      
+    name: String! 
     lat: Float!
     lon: Float!     
-    location: String!
-    address: String
+    address: String!
     detailAddress: String
-    opearatingTimes: [String]
     createdAt:  String!
     updatedAt: String!
     ownerId: Int
-    timeSets: [TimeSet]
+    businessHours: [BusinessHour]
     itemName: String
     itemPrice: Int
     menuUrls: [String]
@@ -23,18 +21,17 @@ export default gql`
     bigCategories: [BigCategory]
     fixedContents: [FixedContent]
     photologs:     [Photolog]
-    totalPhotologs: Int
+    totalPhotologs: Int!
     breakDays: [Int]
-    saves: [Save]
+    folders: [Save]
     owner: User
-    kakaoId: Int
+    APIId: Int
     parking: Boolean!
     pets: Boolean!
     noKids: Boolean!
     intro: String
     url: String
     phone: String
-    moments: [Moment]
     thumbnail: String
     raffles: [Raffle]
     activate: Boolean!
@@ -58,7 +55,7 @@ export default gql`
     createdAt: String!
     updatedAt: String!
   }
-  type TimeSet {
+  type BusinessHour {
     id: Int!
     open: String
     close: String

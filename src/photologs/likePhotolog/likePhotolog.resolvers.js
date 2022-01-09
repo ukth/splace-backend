@@ -21,18 +21,18 @@ export default {
             error: "ERROR1212"
           }
         }
-        const a = await client.user.update({
+        const ok = await client.likeLog.findFirst({
           where: {
-            id: loggedInUser.id
-          },
-          data: {
-            likedPhotologs: {
-              connect: {
-                id: photologId
-              }
-            }
-          },
-        });
+            targetId: photologId,
+            requestUserId: loggedInUser.id
+          }
+        })
+        if(ok){
+          return {
+            ok: false,
+            error: "already liked"
+          }
+        }
         const log = await client.likeLog.create({
           data: {
             target: {

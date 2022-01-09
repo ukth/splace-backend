@@ -45,9 +45,9 @@ export default {
           requestUser: true,
         }
       })
-      const editFolderLogs = await client.editFolderLog.findMany({
+      const recentSaves = await client.save.findMany({
         where: {
-          target: {
+          folder: {
             members: {
               some: {
                 id: loggedInUser.id
@@ -59,15 +59,21 @@ export default {
           },
           NOT: [
             {
-              requestUserId: loggedInUser.id
+              savedUserId: loggedInUser.id
             }
           ]
         },
         include: {
-          target: true,
-          requestUser: true,
+          folder: true,
+          savedUser: true
         }
       })
+      const editFolderLogs = recentSaves.map( save => ({
+        id: save.id,
+        target: save.folder,
+        requestUser: save.savedUser,
+        createdAt: save.createdAt
+      }))
 
       return {
         ok: true,

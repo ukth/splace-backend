@@ -17,7 +17,7 @@ export default {
 
         const a = await client.splace.findFirst({
           where: {
-            kakaoId
+            APIId: kakaoId
           },
           include: {
             bigCategories: true,
@@ -82,7 +82,7 @@ export default {
             phone: place.phone.replace(/-/gi, ""),
             lat: place.y,
             lon: place.x,
-            kakaoId,
+            APIId: kakaoId,
             address: kakao_address,
             activate: true,
             intro: place.category_name
@@ -95,7 +95,7 @@ export default {
 
         for (var i = 0; i < 7; i++) {
           //console.log(1)
-          const c = await client.timeSet.create({
+          const c = await client.businessHour.create({
             data: {
               day: i,
               splace: {
@@ -118,7 +118,7 @@ export default {
         var document = {
           "id" : b.id,
           "name": b.name,
-          "address": address,
+          "address": b.address,
           "location": location,
           "intro": place.category_name
         }

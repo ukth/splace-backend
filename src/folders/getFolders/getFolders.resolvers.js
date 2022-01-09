@@ -30,7 +30,7 @@ export default {
           },
           include:{
             members: true,
-            saves: {
+            splaces: {
               include: {
                 splace: true,
               },

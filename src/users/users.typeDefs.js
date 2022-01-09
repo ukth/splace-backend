@@ -14,10 +14,10 @@ export default gql`
     createdAt:       String!
     updatedAt:      String!
     authority: String!  
-    followers:      [User]     
-    followings:     [User]     
+    followedBy:      [FollowLog]     
+    followings:     [FollowLog]     
     photologs:      [Photolog]
-    likedPhotologs: [Photolog]
+    likedPhotologs: [LikeLog]
     totalFollowing: Int!
     totalFollowers: Int!
     isMe: Boolean!

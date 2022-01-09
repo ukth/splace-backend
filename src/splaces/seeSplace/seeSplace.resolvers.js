@@ -12,7 +12,7 @@ export default {
             activate: true,
           },
           include:{
-            timeSets: true,
+            businessHours: true,
             ratingtags: true,
             categories: true,
             bigCategories: true,

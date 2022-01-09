@@ -45,24 +45,9 @@ export default {
             newIds.map(splaceId => ({
               splaceId,
               folderId,
-              userId: loggedInUser.id
+              savedUserId: loggedInUser.id
             }))
         });
-
-        const log = await client.editFolderLog.create({
-          data: {
-            target: {
-              connect: {
-                id: folderId
-              }
-            },
-            requestUser: {
-              connect: {
-                id: loggedInUser.id
-              }
-            }
-          }
-        })
 
         return {
           ok: true,

@@ -16,6 +16,6 @@ export default gql`
     createdAt: String!
     updatedAt: String!
     members: [User]
-    saves: [Save]
+    splaces: [Save]
   }
 `;

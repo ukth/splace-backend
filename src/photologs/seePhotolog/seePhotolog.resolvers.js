@@ -15,7 +15,7 @@ export default {
             categories: true,
             bigCategories: true,
             author: true,
-            seriesElements: {
+            series: {
               include: {
                 series: true
               }

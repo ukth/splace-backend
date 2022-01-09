@@ -48,7 +48,7 @@ model User {
   
   messages  Message[]
   
-  saves    Save[]
+  saves    FolderElement[]
   
   mySplaces Splace[] 
   
@@ -110,7 +110,7 @@ model Series {
   author      User       @relation(fields: [authorId], references: [id])
   authorId    Int
 
-  seriesElements SeriesElement[]
+  photologs SeriesElement[]
   
   scrapedUser ScrapedSeries[]
 
@@ -170,7 +170,7 @@ model Splace {
   
   photologs Photolog[]
   
-  folders       Save[]
+  folders       FolderElement[]
 
   @@unique([name,lat,long])
 }
@@ -202,7 +202,7 @@ model FixedContent {
   splaceId       Int
 }
 
-model Save {
+model FolderElement {
   id    Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   
@@ -247,7 +247,7 @@ model Folder {
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   
-  splaces     Save[]
+  splaces     FolderElement[]
 
   members User[]
 }

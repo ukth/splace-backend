@@ -16,9 +16,15 @@ export default {
           } 
         })
 
-        const myfollowers = loggedInUser.followers.map(follower => follower.id)
+        let isFollowing;
         for(var i = 0; i<memberIds.length; i++){
-          if(!myfollowers.includes(memberIds[i]) && memberIds[i] !== loggedInUser.id){
+          isFollowing = await client.followLog.findFirst({
+            where: {
+              targetId: loggedInUser.id,
+              requestUserId: memberIds[i]
+            }
+          })
+          if(!isFollowing && memberIds[i] !== loggedInUser.id){
             return {
               ok: false,
               error: "ERROR1B11"

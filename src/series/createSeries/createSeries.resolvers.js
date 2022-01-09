@@ -41,10 +41,10 @@ export default {
               id: photologIds[i]
             },
             include: {
-              seriesElements: true,
+              series: true,
             }
           })
-          if (b.seriesElements.length > 10) {
+          if (b.series.length > 10) {
             return {
               ok: false,
               error: "ERROR1216"

@@ -12,11 +12,11 @@ export default gql`
     isILiked: Boolean!
     author: User!
     splace: Splace!  
-    seriesElements: [SeriesElement]
+    series: [SeriesElement]
     categories: [Category]
     bigCategories: [BigCategory]
-    likedUser: [User]
-    scrap: [ScrapedLog]
+    likedBy: [LikeLog]
+    scrapedUser: [ScrapedLog]
     isPrivate: Boolean!
     isScraped: Boolean!
   }

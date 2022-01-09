@@ -9,16 +9,21 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const a = await client.user.update({
+        const ok = await client.likeLog.findFirst({
           where: {
-            id: loggedInUser.id
-          },
-          data: {
-            likedPhotologs: {
-              disconnect: {
-                id: photologId
-              }
-            }
+            targetId: photologId,
+            requestUserId: loggedInUser.id
+          }
+        })
+        if(!ok){
+          return {
+            ok: false,
+            error: "hadnt liked"
+          }
+        }
+        const a = await client.likeLog.delete({
+          where: {
+            id: ok.id
           },
         });
         //console.log(a);
