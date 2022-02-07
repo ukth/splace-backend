@@ -5,7 +5,7 @@ export default gql`
     ok: Boolean!
     error: String
     message: Message
-    readedRecord: ChatroomReaded
+    readedRecord: ChatroomElement
   }
   type Mutation {
     sendMessage(chatroomId: Int!, text: String!): sendMessageResult!

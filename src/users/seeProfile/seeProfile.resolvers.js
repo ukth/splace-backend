@@ -12,7 +12,6 @@ export default {
             id: true,
             name: true,
             username: true,
-            phone: true,
             profileImageUrl: true,
             profileMessage: true,
             url: true,

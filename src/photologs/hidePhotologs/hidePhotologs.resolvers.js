@@ -30,6 +30,17 @@ export default {
             }
           }
         });
+
+        const time = new Date().toISOString().slice(0, 23)
+        const table = dataset.table('hiddenPhotologs')
+        const rows = [
+          {
+            targetId: targetId,
+            requestUserId: loggedInUser.id,
+            createdAt: time 
+          }
+        ]
+        const log = await table.insert(rows)
         return {
           ok: true,
         };

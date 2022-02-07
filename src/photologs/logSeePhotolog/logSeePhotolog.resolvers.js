@@ -6,13 +6,16 @@ export default {
   Mutation: {
     logSeePhotolog: protectedResolver(async (_, { photologId }, { loggedInUser }) => {
       try {
-        const logging = await client.seePhotologLog.create({
-          data: {
+        const time = new Date().toISOString().slice(0, 23)
+        const table = dataset.table('seePhotologLog')
+        const rows = [
+          {
             userId: loggedInUser.id,
-            photologId
+            photologId: photologId,
+            createdAt: time
           }
-        })
-
+        ]
+        const log = await table.insert(rows)
         return {
           ok: true,
         };

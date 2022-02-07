@@ -6,12 +6,16 @@ export default {
   Mutation: {
     logSeeSeries: protectedResolver(async (_, { seriesId }, { loggedInUser }) => {
       try {
-        const logging = await client.seeSeriesLog.create({
-          data: {
+        const time = new Date().toISOString().slice(0, 23)
+        const table = dataset.table('seeSeriesLog')
+        const rows = [
+          {
             userId: loggedInUser.id,
-            seriesId
+            seriesId: seriesId,
+            createdAt: time
           }
-        })
+        ]
+        const log = await table.insert(rows)
         return {
           ok: true,
         };

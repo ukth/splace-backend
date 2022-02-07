@@ -14,6 +14,11 @@ export default {
           orderBy: {
             username: "asc",
           },
+          select: {
+            id: true,
+            username: true,
+            name: true,
+          }
         })
 
         const userbyname = await client.user.findMany({
@@ -26,6 +31,11 @@ export default {
           orderBy: {
             name: "asc",
           },
+          select: {
+            id: true,
+            username: true,
+            name: true
+          }
         })
 
         const users = userbyid.concat(userbyname)

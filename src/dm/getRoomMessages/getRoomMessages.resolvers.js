@@ -5,6 +5,18 @@ export default {
   Query: {
     getRoomMessages: protectedResolver(async (_, { chatroomId, lastId }, { loggedInUser }) => {
       try {
+        const ok = await client.chatroomElement.findFirst({
+          where: {
+            chatroomId,
+            userId: loggedInUser.id
+          }
+        })
+        if(!ok){
+          return {
+            ok: false,
+            error: "not in chatroom"
+          }
+        }
         const messages = await client.message.findMany({
           where: {
             chatroom: {

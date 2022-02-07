@@ -4,12 +4,11 @@ export default gql`
   type Chatroom {
     id: Int!
     title: String
-    members: [User]
+    members: [ChatroomElement]
     messages: [Message]
     createdAt: String!
     updatedAt: String!
     lastMessage: Message
-    chatroomReaded: [ChatroomReaded]
     isPersonal: Boolean!
   }
 
@@ -23,10 +22,10 @@ export default gql`
     isMine: Boolean!
   }
 
-  type ChatroomReaded {
+  type ChatroomElement{
     id: Int!
-    user: User
-    chatroom: Chatroom
+    user: User!
+    chatroom: Chatroom!
     createdAt: String!
     updatedAt: String!
   }

@@ -81,7 +81,7 @@ export default {
           },
         })
         for (var i = 0; i < memberIds.length; i++) {
-          const c = await client.chatroomReaded.create({
+          const c = await client.chatroomElement.create({
             data: {
               user: {
                 connect: {

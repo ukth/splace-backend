@@ -37,4 +37,10 @@ export default gql`
     requestUser: User!
     createdAt: String!
   }
+  type EditFolderLog {
+    id: Int!
+    target: Folder!
+    requestUser: User!
+    createdAt: String!
+  }
 `;

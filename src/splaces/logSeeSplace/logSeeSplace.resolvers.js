@@ -6,12 +6,16 @@ export default {
   Mutation: {
     logSeeSplace: protectedResolver(async (_, { splaceId }, { loggedInUser }) => {
       try {
-        const logging= await client.seeSplaceLog.create({
-          data: {
-            userId: loggedInUser.id,
-            splaceId: splaceId
+        const time = new Date().toISOString().slice(0, 23)
+        const table = dataset.table('likeLog')
+        const rows = [
+          {
+            targetId: log.targetId,
+            requestUserId: log.requestUserId,
+            createdAt: time 
           }
-        })
+        ]
+        const likeLog = await table.insert(rows)
         //console.log(splace)
         return {
           ok: true,

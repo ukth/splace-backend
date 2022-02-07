@@ -1,4 +1,4 @@
-import { transformDocument } from "@prisma/client/runtime";
+
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import { CHATROOM_UPDATE } from "../../constants"
@@ -20,14 +20,14 @@ export default {
               {
                 members: {
                   some: {
-                    id: loggedInUser.id
+                    userId: loggedInUser.id
                   }
                 }
               },
               {
                 members: {
                   some: {
-                    id: targetId
+                    userId: targetId
                   }
                 }
               }
@@ -38,7 +38,6 @@ export default {
             members: true,
             messages: true,
             lastMessage: true,
-            chatroomReaded: true
           }
         })
         if (!room) {
@@ -46,26 +45,12 @@ export default {
             data: {
               title: "",
               isPersonal: true,
-              members: {
-                connect: [
-                  {
-                    id: loggedInUser.id
-                  },
-                  {
-                    id: targetId
-                  }
-                ]
-              }
-            },
-            include: {
-              members: true,
-              messages: true,
-              lastMessage: true
             }
           })
           const memberIds = [loggedInUser.id, targetId]
+          
           for (var i = 0; i < memberIds.length; i++) {
-            const b = await client.chatroomReaded.create({
+            const b = await client.chatroomElement.create({
               data: {
                 user: {
                   connect: {
@@ -88,9 +73,10 @@ export default {
               title: "",
             },
             include: {
-              members: true,
+              members: {
+                user: true
+              },
               lastMessage: true,
-              chatroomReaded: true,
             }
           });
   

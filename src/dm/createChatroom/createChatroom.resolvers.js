@@ -23,12 +23,6 @@ export default {
             error: "ERROR1###"
           }
         }
-        if (isPersonal) {
-          return {
-            ok: false,
-            error: "ERROR1###"
-          }
-        }
         if (title.length < 1 && title.length > 20) {
           return {
             ok: false,
@@ -56,14 +50,14 @@ export default {
                 {
                   members: {
                     some: {
-                      id: memberIds[0]
+                      userId: memberIds[0]
                     }
                   }
                 },
                 {
                   members: {
                     some: {
-                      id: memberIds[1]
+                      userId: memberIds[1]
                     }
                   }
                 }
@@ -93,16 +87,11 @@ export default {
           data: {
             title,
             isPersonal,
-            members: {
-              connect: memberIds.map(memberId => ({
-                id: memberId
-              }))
-            }
           },
         });
 
         for (var i = 0; i < memberIds.length; i++) {
-          const chatReaded = await client.chatroomReaded.create({
+          const chatReaded = await client.chatroomElement.create({
             data: {
               user: {
                 connect: {
@@ -128,7 +117,6 @@ export default {
           include: {
             members: true,
             lastMessage: true,
-            chatroomReaded: true,
           }
         });
 

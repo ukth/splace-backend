@@ -32,7 +32,13 @@ export default {
             }
           },
           include: {
-            target: true
+            target: {
+              select: {
+                id: true,
+                username: true,
+                name: true
+              }
+            }
           },
           take: 15,
           ...(lastId && { cursor: { id: lastId } }),

@@ -14,18 +14,11 @@ export default {
             error: "ERROR1M18"
           }
         }
-        const ok = await client.chatroom.findFirst({ 
-          where: { 
-            id: chatroomId,
-            members: {
-              some: {
-                id: loggedInUser.id
-              }
-            } 
-          },
-          include: {
-            members: true,
-          } 
+        const ok = await client.chatroomElement.findFirst({
+          where: {
+            chatroomId,
+            userId: loggedInUser.id
+          }
         })
         
         if (!ok) {
@@ -35,8 +28,14 @@ export default {
           };
         }
         
-        const check = ok.members.filter(member => member.id == 1)
-        if(check.length != 0 && loggedInUser.id != 1) {
+        const suuper = await client.chatroomElement.findFirst({
+          where: {
+            chatroomId,
+            userId: 1
+          }
+        })
+
+        if(suuper != suuper && loggedInUser.id != 1) {
           return {
             ok: false,
             error: "ERROR1M12"
@@ -79,26 +78,9 @@ export default {
           }
         })
 
-
-        const readedRecord = await client.chatroomReaded.findFirst({
+        const updatedRecord = await client.chatroomElement.update({
           where: {
-            user: {
-              id: loggedInUser.id
-            },
-            chatroom: {
-              id: chatroomId
-            }
-          }
-        })
-        if(!ok){
-          return{
-            ok: false,
-            error: "ERROR4M19"
-          }
-        }
-        const updatedRecord = await client.chatroomReaded.update({
-          where: {
-            id: readedRecord.id
+            id: ok.id
           },
           data: {
             user: {

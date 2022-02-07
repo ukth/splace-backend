@@ -7,14 +7,10 @@ export default {
   Subscription: {
     newMessage: {
       subscribe: async (_, { chatroomId }, { loggedInUser }, info) => {
-        const ok = await client.chatroom.findFirst({ 
+        const ok = await client.chatroomElement.findFirst({ 
           where: { 
-            id: chatroomId,
-            members: {
-              some: {
-                id: loggedInUser.id
-              }
-            } 
+            chatroomId,
+            userId: loggedInUser.id 
           } 
         })
         if (!ok) {

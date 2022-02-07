@@ -6,14 +6,16 @@ export default {
   Mutation: {
     logGetSplacesByRatingtag: protectedResolver(async (_, { tagId }, { loggedInUser }) => {
       try {
-        const logging = await client.seeCategoryLog.create({
-          data: {
-            userId: loggedInUser.id,
-            categoryId: tagId,
-            categoryType: 0
+        const time = new Date().toISOString().slice(0, 23)
+        const table = dataset.table('likeLog')
+        const rows = [
+          {
+            targetId: log.targetId,
+            requestUserId: log.requestUserId,
+            createdAt: time 
           }
-        })
-
+        ]
+        const likeLog = await table.insert(rows)
         return {
           ok: true,
         };

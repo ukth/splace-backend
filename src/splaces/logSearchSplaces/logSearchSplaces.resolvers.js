@@ -15,12 +15,16 @@ export default {
     logSearchSplaces: protectedResolver(async (_, { keyword }, { loggedInUser }) => {
       try {
         if (keyword.length != 0) {
-          const logging = await client.searchLog.create({
-            data: {
-              userId: loggedInUser.id,
-              keyword: keyword
+          const time = new Date().toISOString().slice(0, 23)
+          const table = dataset.table('likeLog')
+          const rows = [
+            {
+              targetId: log.targetId,
+              requestUserId: log.requestUserId,
+              createdAt: time
             }
-          })
+          ]
+          const likeLog = await table.insert(rows)
         }
         //console.log(searchedSplaces)
         return {

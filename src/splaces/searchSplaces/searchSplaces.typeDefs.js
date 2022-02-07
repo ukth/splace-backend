@@ -10,6 +10,7 @@ export default gql`
     name : String!
     thumbnail: String,
     isSaved: Boolean!
+    photoSize: Int
   }
   type searchSplacesResult {
     ok: Boolean!

@@ -5,7 +5,7 @@ export default {
   Mutation: {
     quitChatroom: protectedResolver(async (_, { chatroomId }, { loggedInUser }) => {
       try {
-        const ok = await client.chatroomReaded.findFirst({
+        const ok = await client.chatroomElement.findFirst({
           where: {
             user: {
               id: loggedInUser.id
@@ -26,18 +26,7 @@ export default {
             id: ok.id
           }
         })
-        await client.chatroom.update({
-          where: {
-            id: chatroomId
-          },
-          data: {
-            members: {
-              disconnect: {
-                id: loggedInUser.id
-              }
-            },
-          }
-        });
+        
         // console.log(client);
         return {
           ok: true,

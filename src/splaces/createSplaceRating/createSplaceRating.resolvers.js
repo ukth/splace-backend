@@ -16,6 +16,18 @@ export default {
             rating,
           },
         });
+
+        const time = Date.now()
+        const table = dataset.table('splaceRating')
+        const rows = [
+          {
+            userId: loggedInUser.id,
+            splaceId: splaceId,
+            rating: rating,
+            createdAt: time
+          }
+        ]
+        const log = await table.insert(rows)
         //console.log(a);
         return {
           ok: true,

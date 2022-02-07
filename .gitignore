@@ -43,3 +43,5 @@ ko.vec
 
 #ebextenstion
 .platform/
+
+*.credentials.*

@@ -3,11 +3,12 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE2_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/client2"
 }
 
 model User {
@@ -32,15 +33,11 @@ model User {
   marketingAgree Boolean @default(false)     
 
   
-  folders       Folder[]
+  folders       FolderMember[]
   
   photologs      Photolog[]
   
   Series         Series[]
-  
-  scrapedLog       ScrapedLog[]
-  
-  scrapedSeries    ScrapedSeries[]
   
   comments     Comment[]
   
@@ -82,16 +79,14 @@ model Photolog {
   author       User      @relation(fields: [authorId], references: [id])
   authorId     Int
   
-  splace     Splace?    @relation(fields: [splaceId], references: [id])
-  splaceId   Int?
+  splace     Splace    @relation(fields: [splaceId], references: [id])
+  splaceId   Int
   
   series     SeriesElement[]
   
   categories   Category[]
 
-  bigCategories BigCategory[]
-
-  scrapedUser ScrapedLog[]
+  folder FolderElement[]
 
   comments Comment[]
 
@@ -103,16 +98,17 @@ model Photolog {
 model Series {
   id  Int        @id @default(autoincrement())
   title     String     @db.Text
+  thumbnail String? @db.Text
+  text String? @db.Text
   createdAt DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   isPrivate Boolean @default(false)
+  isForRec Boolean @default(false)
   
   author      User       @relation(fields: [authorId], references: [id])
   authorId    Int
 
   photologs SeriesElement[]
-  
-  scrapedUser ScrapedSeries[]
 
   hiddenBy  User[]   @relation("hiddenSeriesRelation")
   @@unique([title, authorId])
@@ -148,7 +144,6 @@ model Splace {
   intro    String? @db.Text
   url      String? @db.Text
   phone    String? @db.Text
-  thumbnail String? @db.Text
   activate Boolean @default(false)
   breakDays Int[]
   menuUrls String[] @db.Text
@@ -163,8 +158,6 @@ model Splace {
   ratingtags    Ratingtag[]   
   
   categories      Category[]
-
-  bigCategories   BigCategory[]
   
   fixedContents FixedContent[]
   
@@ -202,6 +195,22 @@ model FixedContent {
   splaceId       Int
 }
 
+model FolderMember {
+  id    Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  
+  authority Int
+  
+  folder    Folder   @relation(fields: [folderId], references: [id])
+  folderId Int
+  
+  user User? @relation(fields: [userId], references: [id])
+  userId  Int?
+
+  @@unique([userId,folderId])
+}
+
+
 model FolderElement {
   id    Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
@@ -209,37 +218,17 @@ model FolderElement {
   splace    Splace   @relation(fields: [splaceId], references: [id])
   splaceId  Int
   
+  photolog Photolog? @relation(fields: [photologId], references: [id])
+  photologId  Int?
+
   folder    Folder   @relation(fields: [folderId], references: [id])
   folderId  Int
 
   savedUser User     @relation(fields: [savedUserId], references: [id])
   savedUserId    Int
-  @@unique([splaceId,folderId])
+  @@unique([splaceId,photologId,folderId])
 }
 
-model ScrapedLog {
-  id    Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  
-  photolog    Photolog?   @relation(fields: [photologId], references: [id])
-  photologId  Int?
-  
-  scrapedUser User @relation(fields: [scrapedUserId], references: [id])
-  scrapedUserId Int
-  @@unique([photologId,scrapedUserId])
-}
-
-model ScrapedSeries {
-  id    Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  
-  series    Series   @relation(fields: [seriesId], references: [id])
-  seriesId  Int
-  
-  scrapedUser User @relation(fields: [scrapedUserId], references: [id])
-  scrapedUserId Int
-  @@unique([seriesId,scrapedUserId])
-}
 
 model Folder {
   id  Int      @id @default(autoincrement())
@@ -247,9 +236,9 @@ model Folder {
   createdAt DateTime @default(now())
   updatedAt      DateTime   @updatedAt
   
-  splaces     FolderElement[]
+  saves     FolderElement[]
 
-  members User[]
+  members FolderMember[]
 }
 
 model Category {
@@ -260,17 +249,6 @@ model Category {
   
   splaces   Splace[]
 
-  createdAt DateTime @default(now())
-}
-
-model BigCategory {
-  id Int @id @default(autoincrement())
-  name     String   @db.Text @unique
-  
-  photologs Photolog[]
-  
-  splaces   Splace[]
-  
   createdAt DateTime @default(now())
 }
 

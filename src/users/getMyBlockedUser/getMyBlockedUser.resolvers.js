@@ -19,14 +19,7 @@ export default {
           select: {
             id: true,
             username: true,
-            profileImageUrl: true,
             name: true,
-            phone: true,
-            followings: true,
-            joinedAt: true,
-            updatedAt: true,
-            activate: true,
-            authority: true,
           }
         })
         return {

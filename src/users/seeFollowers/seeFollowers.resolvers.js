@@ -27,7 +27,13 @@ export default {
             },
           },
           include: {
-            requestUser: true
+            requestUser: {
+              select: {
+                id: true,
+                username: true,
+                name: true
+              }
+            }
           },
           take: 15,
           ...(lastId && { cursor: { id: lastId } }),

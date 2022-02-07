@@ -10,7 +10,7 @@ export default {
           () => pubsub.asyncIterator(CHATROOM_UPDATE),
           ({ chatroomUpdated }, __) => {
             for(var i = 0; i < chatroomUpdated.members.length; i++){
-              if(chatroomUpdated.members[i].id == loggedInUser.id){
+              if(chatroomUpdated.members[i].userId == loggedInUser.id){
                 return true
               }
             }

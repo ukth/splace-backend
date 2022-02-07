@@ -17,14 +17,10 @@ export default {
             error: "ERROR1M17"
           }
         }
-        const ok = await client.chatroom.findFirst({
+        const ok = await client.chatroomElement.findFirst({
           where: {
-            id: chatroomId,
-            members: {
-              some: {
-                id: loggedInUser.id
-              }
-            }
+            chatroomId,
+            userId: loggedInUser.id
           }
         });
         if (!ok) {

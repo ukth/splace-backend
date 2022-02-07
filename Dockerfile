@@ -25,6 +25,7 @@ USER root
 LABEL MAINTAINER maknae <maknae@lunen.co.kr>
 
 ENV NODE_ENV=production
+ENV GOOGLE_APPLICATION_CREDENTIALS="/app/gcp.credentials.json"
 WORKDIR /app
 
 COPY package*.json ./

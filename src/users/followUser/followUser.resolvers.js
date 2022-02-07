@@ -51,6 +51,17 @@ export default {
           }
         })
 
+        const time = Date.now()
+        const table = dataset.table('followLog')
+        const rows = [
+          {
+            targetId: targetId,
+            requestUserId: loggedInUser.id,
+            createdAt: time
+          }
+        ]
+        const log = await table.insert(rows)
+
         return {
           ok: true,
         };

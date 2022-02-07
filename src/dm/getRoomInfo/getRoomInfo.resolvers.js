@@ -5,30 +5,32 @@ export default {
   Query: {
     getRoomInfo: protectedResolver(async (_, { chatroomId }, { loggedInUser }) => {
       try {
-        const room = await client.chatroom.findFirst({
+        const ok = await client.chatroomElement.findFirst({
           where: {
-            members: {
-              some: {
-                id: loggedInUser.id,
-              },
-            },
+            chatroomId,
+            userId: loggedInUser.id
+          }
+        })
+        if (!ok) {
+          return {
+            ok: false,
+            error: "ERROR5M13",
+          }
+        }
+        const room = await client.chatroom.findUnique({
+          where: {
             id: chatroomId
           },
           include: {
             members: true,
           }
         });
-        if(room){
-          return {
-            ok: true,
-            room,
-          }
-        } else {
-          return {
-            ok: false,
-            error: "ERROR5M13",
-          }
+
+        return {
+          ok: true,
+          room,
         }
+
       } catch (e) {
         console.log(e);
         return {

@@ -20,9 +20,8 @@ export default {
               updatedAt: "desc",
           },
           include: {
-            members: true,
             lastMessage: true,
-            chatroomReaded: {
+            members: {
               include:{
                 user: true,
                 chatroom: true,

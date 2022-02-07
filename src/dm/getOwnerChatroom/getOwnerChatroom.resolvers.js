@@ -28,14 +28,14 @@ export default {
               {
                 members: {
                   some: {
-                    id: loggedInUser.id
+                    userId: loggedInUser.id
                   }
                 }
               },
               {
                 members: {
                   some: {
-                    id: owner.id
+                    userId: owner.id
                   }
                 }
               }
@@ -54,26 +54,11 @@ export default {
             data: {
               title: "",
               isPersonal: true,
-              members: {
-                connect: [
-                  {
-                    id: loggedInUser.id
-                  },
-                  {
-                    id: owner.id
-                  }
-                ]
-              }
             },
-            include: {
-              members: true,
-              messages: true,
-              lastMessage: true
-            }
           })
           const memberIds = [loggedInUser.id, owner.id]
           for (var i = 0; i < memberIds.length; i++) {
-            const b = await client.chatroomReaded.create({
+            const b = await client.chatroomElement.create({
               data: {
                 user: {
                   connect: {

@@ -7,6 +7,6 @@ export default gql`
     users: [User]
   }
   type Query {
-    getMyBlockedUser: getMyBlockedUserResult
+    getMyBlockingUser: getMyBlockedUserResult
   }
 `;

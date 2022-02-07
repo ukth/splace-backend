@@ -9,7 +9,7 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        const ok = await client.chatroomReaded.findFirst({
+        const ok = await client.chatroomElement.findFirst({
           where: {
             user: {
               id: loggedInUser.id
@@ -25,7 +25,7 @@ export default {
             error: "ERROR5M15"
           }
         }
-        const a = await client.chatroomReaded.update({
+        const a = await client.chatroomElement.update({
           where: {
             id: ok.id
           },

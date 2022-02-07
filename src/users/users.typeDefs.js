@@ -6,14 +6,14 @@ export default gql`
     username:       String!   
     name:           String   
     email:          String   
-    password:       String!   
+    password:       String   
     profileMessage: String    
     profileImageUrl:   String
     folders: [Folder]
     birthDay: String
-    createdAt:       String!
-    updatedAt:      String!
-    authority: String!  
+    createdAt:       String
+    updatedAt:      String
+    authority: String  
     followedBy:      [FollowLog]     
     followings:     [FollowLog]     
     photologs:      [Photolog]
@@ -24,7 +24,7 @@ export default gql`
     isFollowing: Boolean!
     isBlocked: Boolean!
     totalLogsNumber: Int!
-    phone: String!
+    phone: String
     url: String
     scrapedLog: [ScrapedLog]
     scrapedSeries: [ScrapedSeries]

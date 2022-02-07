@@ -12,7 +12,7 @@ export default {
             id: chatroomId,
             members: {
               some: {
-                id: loggedInUser.id
+                userId: loggedInUser.id
               }
             }
           },
@@ -58,7 +58,7 @@ export default {
         }
 
         for (var i = 0; i < memberIds.length; i++) {
-          const b = await client.chatroomReaded.create({
+          const b = await client.chatroomElement.create({
             data: {
               user: {
                 connect: {

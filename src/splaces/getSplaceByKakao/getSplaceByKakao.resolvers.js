@@ -2,8 +2,6 @@ import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
 import searchEngine from "../../opensearch"
 import axios from "axios"
-import { buildSchema } from "graphql";
-import { CostExplorer } from "aws-sdk";
 require("dotenv").config();
 
 export default {

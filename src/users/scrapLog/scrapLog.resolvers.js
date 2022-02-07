@@ -35,6 +35,17 @@ export default {
             },
           },
         });
+
+        const time = Date.now()
+        const table = dataset.table('scrapedLog')
+        const rows = [
+          {
+            photologId: photologId,
+            scrapedUserId: loggedInUser.id,
+            createdAt: time
+          }
+        ]
+        const log = await table.insert(rows)
         //console.log(a);
         return {
           ok: true,

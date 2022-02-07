@@ -1,5 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import dataset from "../../bigquery";
 
 
 export default {
@@ -47,6 +48,18 @@ export default {
             }
           }
         })
+
+        const time = new Date().toISOString().slice(0, 23)
+        const table = dataset.table('likeLog')
+        const rows = [
+          {
+            targetId: log.targetId,
+            requestUserId: log.requestUserId,
+            createdAt: time 
+          }
+        ]
+        const log = await table.insert(rows)
+
         return {
           ok: true,
         };
